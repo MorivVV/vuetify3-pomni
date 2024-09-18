@@ -186,7 +186,7 @@ onMounted(() => {
   mqlFetchQuery<ICBP>(
     a,
     "http://localhost:3000/api/v2/restGet",
-    "e86e97d517deacce309deadc96d54ae5"
+    "e86e97d517deacce309deadc96d54ae5",
   ).then((r) => {
     console.log(r);
   });
