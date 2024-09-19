@@ -8,8 +8,13 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppFooter: typeof import('./components/AppFooter.vue')['default']
+    AutocompleteV: typeof import('./components/basic/AutocompleteV.vue')['default']
+    BtnIconsV: typeof import('./components/basic/BtnIconsV.vue')['default']
+    DataTableV: typeof import('./components/basic/DataTableV.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TextFieldV: typeof import('./components/basic/TextFieldV.vue')['default']
+    TextFielsV: typeof import('./components/basic/TextFielsV.vue')['default']
   }
 }

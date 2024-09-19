@@ -20,5 +20,6 @@ module.exports = {
     quotes: ["error", "double"],
     "vue/script-indent": "off",
     "arrow-parens": "off",
+    "vue/custom-event-name-casing": "off",
   },
 };

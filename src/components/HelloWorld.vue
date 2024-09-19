@@ -172,6 +172,7 @@ type ICBP = TMergeTInterface<
   IAliasTableFields<IConfaBlock, "b">,
   IAliasTableFields<IConfaBlock, "bp">
 >;
+
 const a: IJMQL<ICBP> = {
   from: ["confa.block:b", "confa.block:bp"],
   fields: ["b.content", "bp.content:pc", "b.id", "b.name"],
