@@ -1,20 +1,16 @@
 <template>
-  <v-tooltip top>
-    <template #activator="{ on, attrs }">
-      <span v-bind="attrs" v-on="on" v-html="text" />
-    </template>
-    <span v-html="tip" />
-  </v-tooltip>
+  <span>
+    <span v-html="text" />
+    <v-tooltip activator="parent" location="top">
+      <span v-html="tip" />
+    </v-tooltip>
+  </span>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
 
-export default defineComponent({
-  name: "TooltipTableHeader",
-  props: {
+defineProps({
     text: { type: String, default: "-", require: true },
     tip: { type: String, default: "-", require: true },
-  },
-});
+  });
 </script>
