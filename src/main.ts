@@ -12,9 +12,10 @@ import App from "./App.vue";
 
 // Composables
 import { createApp } from "vue";
+import moment from "moment";
 
 const app = createApp(App);
 
 registerPlugins(app);
-
+moment.locale("ru");
 app.mount("#app");

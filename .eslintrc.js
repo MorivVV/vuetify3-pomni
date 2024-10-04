@@ -17,9 +17,11 @@ module.exports = {
   rules: {
     "vue/multi-word-component-names": "off",
     semi: ["error", "always"],
-    quotes: ["error", "double"],
+    quotes: ["error", "double", { avoidEscape: true }],
+    camelcase: "off",
     "vue/script-indent": "off",
     "arrow-parens": "off",
     "vue/custom-event-name-casing": "off",
+    "vue/no-v-for-template-key-on-child": "warn",
   },
 };

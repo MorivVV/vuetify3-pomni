@@ -1,0 +1,45 @@
+export const routelogAudit = {
+  path: "audit",
+  order: 1000,
+  name: "AdminAudit",
+  title: "Аудит и логи",
+  icon: "access_time",
+  class: "blue--text",
+  component: () => import("@/components/elements/RouterLink.vue"),
+  meta: {
+    requiresAuth: true,
+    title: "Аудит и логи",
+    icon: "access_time",
+    class: "blue--text",
+  },
+  children: [
+    {
+      path: "/",
+      order: 10,
+      name: "AdminAudit",
+      title: "Аудит",
+      icon: "access_time",
+      class: "blue--text",
+      component: () => import("@/components/adminka/Audit.vue"),
+      meta: {
+        requiresAuth: true,
+        title: "Аудит",
+        icon: "access_time",
+        class: "blue--text",
+      },
+    },
+    {
+      path: "logs",
+      order: 10,
+      name: "AdminAuditServerLogs",
+      title: "Получение логов с сервера",
+      component: () => import("@/components/adminka/serverLogs/ServerLogs.vue"),
+      meta: {
+        requiresAuth: true,
+        title: "Получение логов с сервера",
+        icon: "view_list",
+        class: "blue--text",
+      },
+    },
+  ],
+};

@@ -1,0 +1,95 @@
+import { IKnowledgebaseCronJobsAudit } from "@/types/database/schemas/knowledgebase";
+import { DataTableHeader } from "vuetify";
+interface TipsDTH extends DataTableHeader<IKnowledgebaseCronJobsAudit> {
+  /** всплывающая подсказка для VTooltipTableHeader */
+  tip?: string;
+}
+export const cronJobsHeader: TipsDTH[] = [
+  {
+    text: "Название",
+    class: "pa-1",
+    value: "naimen",
+    divider: true,
+    tip: "Уникальное имя задания",
+    width: "20%",
+  },
+  {
+    text: "Скрипт",
+    class: "pa-1",
+    cellClass: "pa-1",
+    value: "kod_script",
+    divider: true,
+    tip: "Тип используемого скрипта",
+  },
+  {
+    text: "Хост",
+    class: "pa-1",
+    align: "center",
+    cellClass: "pa-1",
+    value: "cron_host_ip",
+    divider: true,
+    tip: "IP-адрес планировщика заданий",
+  },
+  {
+    text: "Время (сек.)",
+    class: "pa-1",
+    cellClass: ["pa-1"],
+    align: "center",
+    value: "period_hour",
+    divider: true,
+    tip: "Время последнего выполнения задания в секундах",
+    width: 40,
+  },
+  {
+    text: "Период запуска",
+    class: "pa-1",
+    cellClass: "pa-1",
+    value: "period_run_minute",
+    divider: true,
+    tip: "Как будет запускаться задание",
+  },
+  {
+    text: "Последний",
+    class: "pa-1",
+    cellClass: "pa-1",
+    align: "center",
+    value: "last_run",
+    divider: true,
+    tip: "Последний запуск задания",
+    width: 70,
+  },
+  {
+    text: "Результат",
+    class: "pa-1",
+    cellClass: ["pa-1", "text-break"],
+    value: "result",
+    divider: true,
+    tip: "Результат последнего выполнения",
+    width: "40%",
+  },
+  {
+    text: "Изменен",
+    class: "pa-1",
+    cellClass: "pa-1",
+    align: "center",
+    value: "date_modify",
+    divider: true,
+    tip: "Время последнего изменения скрипта",
+    width: 70,
+  },
+  {
+    text: "Пользователь",
+    class: "pa-1",
+    cellClass: "pa-1",
+    value: "kod_user",
+    divider: true,
+    tip: "Последний кто изменил скрипт",
+  },
+  {
+    text: "-",
+    cellClass: "pa-1",
+    value: "data-table-expand",
+    divider: true,
+    tip: "Развернуть",
+  },
+];

@@ -8,9 +8,9 @@ import VueRouter from "unplugin-vue-router/vite";
 import Vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 // Utilities
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import { fileURLToPath, URL } from "node:url";
-
+const env = loadEnv(import.meta.env, process.cwd());
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -55,7 +55,13 @@ export default defineConfig({
       },
     }),
   ],
-  define: { "process.env": {} },
+  define: {
+    "process.env": {},
+    NAIMEN_POMNI: JSON.stringify(env.VUE_APP_TITLE),
+    CLIENT_VERSION_ID: JSON.stringify(env.VITE_APP_VERSION_NUMBER),
+    CLIENT_VERSION_TEXT: JSON.stringify(env.VITE_APP_VERSION_TEXT),
+    ADMIN_EMAILS: JSON.stringify(env.VUE_ADMIN_EMAILS),
+  },
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
