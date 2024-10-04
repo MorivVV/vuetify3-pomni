@@ -30,6 +30,9 @@
 </template>
 
 <script setup lang="ts">
+import { TmdiIcons } from "@/const/mdiIcons";
+import { PropType } from "vue";
+
 const props = defineProps({
   action: { type: Function, default: () => false },
   dark: { type: Boolean, default: true },
@@ -38,7 +41,7 @@ const props = defineProps({
   loading: { type: Boolean, default: false },
   title: { type: String, default: "Ок" },
   url: { type: String, default: null },
-  icon: { type: String, default: "check" },
+  icon: { type: String as PropType<TmdiIcons>, default: "check" },
   color: { type: String, default: "primary" },
   colorbtn: { type: String, default: "white" },
   disabled: { type: Boolean, default: false },

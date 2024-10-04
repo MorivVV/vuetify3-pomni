@@ -3,7 +3,7 @@
     <v-col class="pa-1" cols="12">
       <v-card color="yellow lighten-5">
         <div class="card-content">
-          <v-row class="pa-0 ma-0" align="center">
+          <v-row align="center" class="pa-0 ma-0">
             <v-col class="pa-1" cols="5" md="3">
               <TextFielsV v-model="localJob.naimen" label="Название задания" />
             </v-col>
@@ -17,67 +17,66 @@
             </v-col>
             <v-col class="pa-1" cols="6" md="3">
               <v-row class="ma-0 pa-0">
-                <v-col cols="6" class="ma-0 pa-1">
+                <v-col class="ma-0 pa-1" cols="6">
                   <DatetimePickerVVue
                     v-model="localJob.period_start"
-                    outlined
-                    dense
-                    :time-picker-props="timeProps"
                     :date-picker-props="{ 'first-day-of-week': 1 }"
-                    time-format="HH:mm:ss"
+                    dense
                     label="Первый запуск с"
+                    outlined
+                    time-format="HH:mm:ss"
+                    :time-picker-props="timeProps"
                   />
                 </v-col>
-                <v-col cols="6" class="ma-0 pa-1">
+                <v-col class="ma-0 pa-1" cols="6">
                   <DatetimePickerVVue
                     v-model="localJob.period_end"
-                    outlined
-                    dense
-                    :time-picker-props="timeProps"
                     :date-picker-props="{ 'first-day-of-week': 1 }"
                     datetime="timestamp"
-                    time-format="HH:mm:ss"
+                    dense
                     label="Выполнять до"
+                    outlined
+                    time-format="HH:mm:ss"
+                    :time-picker-props="timeProps"
                   />
                 </v-col>
               </v-row>
             </v-col>
-            <v-col cols="2" class="d-flex justify-end pa-1">
+            <v-col class="d-flex justify-end pa-1" cols="2">
               <span
                 class="font-weight-bold mr-2 pt-1"
                 :class="localJob.active ? '' : 'red--text'"
-                >{{ localJob.active ? "Задание Вкл" : "Задание Выкл" }}</span
-              >
+              >{{ localJob.active ? "Задание Вкл" : "Задание Выкл" }}</span>
               <SwitchV
                 v-model="localJob.active"
-                inset
                 color="green accent-4"
+                inset
                 title="Статус активности задания"
               />
               <LoaderCircle v-if="jobRunning" />
               <BtnIconsVVue
                 v-else
-                :disabled="!editLevel()"
-                color="red"
-                class="mr-2"
                 :action="runJob"
-                icon="play_arrow"
+                class="mr-2"
+                color="red"
+                :disabled="!editLevel()"
+                icon="play"
                 title="Немедленный запуск задания"
               />
               <BtnIconsVVue
-                :disabled="!editLevel()"
-                color="purple"
-                class="mr-2"
                 :action="cloneJob"
-                icon="control_point_duplicate"
+                class="mr-2"
+                color="purple"
+                :disabled="!editLevel()"
+                icon="content-duplicate"
                 title="Клонировать"
               />
 
               <BtnIconsVVue
-                :disabled="!editLevel() || changeVal"
-                color="blue"
-                class="mr-2"
                 :action="saveJob"
+                class="mr-2"
+                color="blue"
+                :disabled="!editLevel() || changeVal"
                 icon="save"
                 title="Сохранить изменения"
               />
@@ -88,59 +87,64 @@
               <AutocompleteV
                 v-model="localJob.period_run_month"
                 clearable
-                label="Месяц"
-                :items="months"
-                item-value="id"
                 item-text="name"
+                item-value="id"
+                :items="months"
+                label="Месяц"
               />
             </v-col>
             <v-tooltip top>
               <template #activator="{ on, attrs }">
-                <v-col class="pa-1" cols="12" md="2" v-bind="attrs" v-on="on">
+                <v-col
+                  class="pa-1"
+                  cols="12"
+                  md="2"
+                  v-bind="attrs"
+                  v-on="on"
+                >
                   <AutocompleteV
                     v-model="localJob.period_run_week_array"
-                    multiple
                     clearable
-                    label="День недели (множественный выбор)"
-                    :items="weekdays"
-                    item-value="id"
                     item-text="short"
-                  /> </v-col
-              ></template>
+                    item-value="id"
+                    :items="weekdays"
+                    label="День недели (множественный выбор)"
+                    multiple
+                  /> </v-col></template>
               <span>Пустое поле для ежедневного запуска</span>
             </v-tooltip>
             <v-col class="pa-1" cols="6" md="1">
               <AutocompleteV
                 v-model="localJob.period_run_day"
                 clearable
-                label="Число"
-                :items="days"
-                item-value="id"
                 item-text="name"
+                item-value="id"
+                :items="days"
+                label="Число"
               />
             </v-col>
             <v-col class="pa-1" cols="6" md="2">
               <AutocompleteV
                 v-model="localJob.period_run_hour_array"
-                multiple
                 clearable
-                label="Час по МСК (множественный выбор)"
-                :items="hours"
-                item-value="id"
                 item-text="name"
+                item-value="id"
+                :items="hours"
+                label="Час по МСК (множественный выбор)"
+                multiple
               />
             </v-col>
             <v-col class="pa-1" cols="6" md="1">
               <AutocompleteV
                 v-model="localJob.period_run_minute"
-                clearable
                 :class="{
                   'red lighten-3': validateMinutes(localJob),
                 }"
-                label="Минута"
-                :items="minutes"
-                item-value="id"
+                clearable
                 item-text="name"
+                item-value="id"
+                :items="minutes"
+                label="Минута"
               />
             </v-col>
             <v-col class="pa-1" cols="6" md="1">
@@ -149,28 +153,28 @@
                 :class="{
                   'red lighten-3': Number(localJob.interval_min) <= 0,
                 }"
-                type="number"
                 :clearable="false"
                 label="Интервал в минутах"
+                type="number"
               />
             </v-col>
             <v-col class="pa-1" cols="6" md="1">
               <TextFielsV
                 v-model="localJob.timeout"
-                type="number"
-                :clearable="false"
                 :class="{
                   'red lighten-3': Number(localJob.timeout) >= 60,
                 }"
+                :clearable="false"
                 label="Ожидание запуска (сек)"
+                type="number"
               />
             </v-col>
             <v-col class="pa-1" cols="6" md="2">
               <TextFielsV
                 v-model="localJob.cron_host_ip"
-                :readonly="!adminLevel()"
                 :clearable="false"
                 label="Хост планировщика"
+                :readonly="!adminLevel()"
               />
             </v-col>
           </v-row>
@@ -180,8 +184,8 @@
                 v-if="jobParams.length > 0"
                 :job-params="jobParams"
                 :param-value="localJob.parameters"
-                @changeParam="changeParam"
-                @changeStart="changeVal = true"
+                @change-param="changeParam"
+                @change-start="changeVal = true"
               />
             </v-col>
           </v-row>
@@ -189,56 +193,56 @@
             <v-col class="pa-1" cols="12">
               <v-textarea
                 v-model="localJob.parameters"
-                outlined
                 dense
                 hide-details
                 label="Параметры"
+                outlined
               />
             </v-col>
           </v-row>
           <v-row class="pa-0 ma-0">
             <v-col class="pa-1" cols="6" md="2">
               <TextFielsV
-                :value="localJob.date_add"
                 :disabled="true"
                 label="Добавлен"
+                :value="localJob.date_add"
               />
             </v-col>
             <v-col class="pa-1" cols="6" md="2">
               <TextFielsV
-                :value="convertTime(String(localJob.last_run))"
                 :disabled="true"
                 label="Последний запуск"
+                :value="convertTime(String(localJob.last_run))"
               />
             </v-col>
             <v-col class="pa-1" cols="6" md="2">
               <TextFielsV
-                :value="convertTime(String(localJob.last_done))"
                 :class="{
                   'red accent-2': localJob.last_done < localJob.last_run,
                 }"
                 :disabled="true"
                 label="Успешное выполнение"
+                :value="convertTime(String(localJob.last_done))"
               />
             </v-col>
             <v-col class="pa-1" cols="6" md="2">
               <TextFielsV
-                :value="convertTime(localJob.task.nextRun())"
                 :disabled="true"
                 label="Следующий запуск"
+                :value="convertTime(localJob.task.nextRun())"
               />
             </v-col>
             <v-col class="pa-1" cols="6" md="2">
               <TextFielsV
-                :value="localJob.date_modify"
                 :disabled="true"
                 label="Изменен"
+                :value="localJob.date_modify"
               />
             </v-col>
             <v-col class="pa-1" cols="6" md="2">
               <div class="border rounded pa-1 pt-2 grey--text">
                 <span class="">Изм. </span>
-                <UserFioVue :user_id="localJob.kod_user" type-name="short" />
+                <UserFioVue type-name="short" :user_id="localJob.kod_user" />
               </div>
             </v-col>
           </v-row>
@@ -247,7 +251,7 @@
       <CronJobHistory
         v-if="!jobRunning"
         :kod-job="localJob.id"
-        @getCronJobs="$emit('getCronJobs')"
+        @get-cron-jobs="$emit('getCronJobs')"
       />
     </v-col>
   </v-row>
@@ -263,7 +267,7 @@ import CronJobParamsVue from "./CronJobParams.vue";
 import { useDateConstStore } from "@/store/modules/dateConst";
 import { useAdminStore } from "@/store/modules/admin";
 import DatetimePickerVVue from "../../basic/DatetimePickerV.vue";
-import { dataApiComposition } from "@/compositionApi/dataApi";
+import { dataApiComposition, toast } from "@/compositionApi/dataApi";
 import { routeAccessLevelCalculate } from "@/compositionApi/accessLevelCalculate";
 import CronJobHistory from "./CronJobHistory.vue";
 import { IKnowledgebaseCronJobs } from "@/types/database/schemas/knowledgebase";
@@ -271,7 +275,6 @@ import moment from "moment";
 
 import LoaderCircle from "@/components/basic/LoaderCircle.vue";
 import projectDebug from "@/functions/projectDebug";
-import { toast } from "@/compositionApi/dataApi";
 import TextFielsV from "@/components/basic/TextFielsV.vue";
 import AutocompleteV from "@/components/basic/AutocompleteV.vue";
 import { momentFormatFull } from "@/const/timeFormats";
@@ -404,8 +407,7 @@ const saveJob = () => {
 
   try {
     if (localJob.value.parameters) JSON.parse(localJob.value.parameters);
-    if (validateMinutes(localJob.value))
-      throw { message: "Не указаны минуты для запуска" };
+    if (validateMinutes(localJob.value)) { throw { message: "Не указаны минуты для запуска" }; }
     r_update({
       to: "cron_jobs",
       set: {
