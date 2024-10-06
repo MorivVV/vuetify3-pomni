@@ -34,7 +34,7 @@ export const useAutorizationStore = defineStore("autorization", {
     userProfile: [],
     toUrl: "/",
     Fio: cookieRead("FIO"),
-    token: cookieRead("HASHIP"), //localStorage.getItem('token') || '',
+    token: cookieRead("HASHIP"), // localStorage.getItem('token') || '',
     user: cookieRead("USER"),
     user_id: cookieRead("DIU"),
     user_access_level: [] as { kod_user: number; access_level: number }[],
@@ -42,25 +42,25 @@ export const useAutorizationStore = defineStore("autorization", {
     user_configs: [] as IConfigIndividualUserSettings[],
   }),
   getters: {
-    isLoggedIn(state): boolean {
+    isLoggedIn (state): boolean {
       return !!state.token;
     },
-    userFio(state): string {
+    userFio (state): string {
       return state.Fio;
     },
-    userId(state): string {
+    userId (state): string {
       return state.user_id;
     },
-    userToken(state): string {
+    userToken (state): string {
       return state.token;
     },
-    goToUrl(state): string {
+    goToUrl (state): string {
       return state.toUrl;
     },
-    userAddressBook(state) {
+    userAddressBook (state) {
       return state.userInfo as unknown as IUserInfo;
     },
-    userLogin(state): string {
+    userLogin (state): string {
       return state.user;
     },
   },

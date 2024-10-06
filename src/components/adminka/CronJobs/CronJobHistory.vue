@@ -1,26 +1,26 @@
 <template>
   <DataTableV
-    :headers="jobHistoryHeader"
-    :items="hisory"
-    :item-class="jobColor"
-    :items-per-page="5"
     caption="История запусков"
     class="elevation-1 min-line-height"
+    :headers="jobHistoryHeader"
+    :item-class="jobColor"
+    :items="hisory"
+    :items-per-page="5"
   >
     <template #expanded-top>
-      <v-row class="ma-0 pa-0" align="center">
-        <v-col cols="3" class="ma-0 pa-0">
+      <v-row align="center" class="ma-0 pa-0">
+        <v-col class="ma-0 pa-0" cols="3">
           <SwitchV v-model="autoupdate" label="Автообновление" />
         </v-col>
 
-        <v-col cols="3" class="ma-0 pa-0">
+        <v-col class="ma-0 pa-0" cols="3">
           <TextFielsV
             v-model="intervalTime"
             :disabled="autoupdate"
             label="Период обновления (сек)"
           />
         </v-col>
-        <v-col cols="3" class="ma-0 pa-0">
+        <v-col class="ma-0 pa-0" cols="3">
           <TextFielsV v-model="historyLimit" label="Вывод записей(шт)" />
         </v-col>
       </v-row>
@@ -32,12 +32,12 @@
       {{ item.pid }}
       <BtnIconsV
         v-if="!item.time_end"
+        :action="() => killJob(item.id)"
+        color="white"
+        colorbtn="red"
         icon="close"
         :loading="killLoading"
         title="Принудительно завершить выполнение"
-        :action="() => killJob(item.id)"
-        colorbtn="red"
-        color="white"
       />
     </template>
     <template #[`item.time_start`]="{ item }">
@@ -57,18 +57,13 @@
     </template>
     <template #[`item.time_len`]="{ item }">
       <span v-if="item.time_len">
-        <span v-if="'hours' in item.time_len"
-          >{{ item.time_len.hours }}ч.
+        <span v-if="'hours' in item.time_len">{{ item.time_len.hours }}ч.
         </span>
-        <span v-if="'minutes' in item.time_len"
-          >{{ item.time_len.minutes }}мин.
+        <span v-if="'minutes' in item.time_len">{{ item.time_len.minutes }}мин.
         </span>
-        <span v-if="'seconds' in item.time_len"
-          >{{ item.time_len.seconds }}сек.
+        <span v-if="'seconds' in item.time_len">{{ item.time_len.seconds }}сек.
         </span>
-        <span v-if="'milliseconds' in item.time_len"
-          >{{ item.time_len.milliseconds }}мс</span
-        >
+        <span v-if="'milliseconds' in item.time_len">{{ item.time_len.milliseconds }}мс</span>
       </span>
     </template>
   </DataTableV>
@@ -76,7 +71,7 @@
 
 <script setup lang="ts">
 import { jobHistoryHeader } from "./jobHistoryHeader";
-import { ref, defineProps, watch, onBeforeUnmount } from "vue";
+import { defineProps, onBeforeUnmount, ref, watch } from "vue";
 import { dataApiComposition, toast } from "@/compositionApi/dataApi";
 import { IKnowledgebaseCronJobsAudit } from "@/types/database/schemas/knowledgebase";
 import TextFielsV from "@/components/basic/TextFielsV.vue";

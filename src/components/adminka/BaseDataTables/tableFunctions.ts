@@ -119,10 +119,10 @@ export const getDataTable = (
     {
       fields: [...selectedFields.map((e) => e.column_name)],
       from: (schema + "." + table) as EKNOWLEGEBASE,
-      sort: sort,
+      sort,
       filter,
-      limit: limit,
-      page: page,
+      limit,
+      page,
       tuz: kod_database_tuz,
     },
     "dataTable",

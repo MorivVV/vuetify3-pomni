@@ -1,14 +1,24 @@
-import { R } from "node_modules/unplugin-vue-router/dist/options-yBvUhD_i.d.mts";
+import { TmdiIcons } from "@/const/mdiIcons";
 import { RouteRecordSingleView } from "vue-router";
-
+type TVColors = "blue" | "red" | "green" | "yellow" | "orange" | "purple" | "pink" | "gray" | "deep-purple" | "indigo" | "teal" | "cyan" | "blue-gray" | "lime" | "amber" | "deep-orange" | "brown" | "grey" | "light-blue" | "light-green" | "black";
+type TVColorsTone = "lighten" | "darken";
+type TVColorsToneLevel = "1" | "2" | "3" |"4" | "5" |"6" | "7" | "8" | "9" | "10";
+export type TVuetifyColorsClassText = `text-${TVColors}` | `text-${TVColors}-${TVColorsTone}-${TVColorsToneLevel}`;
+export interface IRouteMeta {
+  requiresAuth: boolean;
+  title?: string;
+  icon?: `mdi-${TmdiIcons}`;
+  class?: TVuetifyColorsClassText;
+}
 export interface Route extends RouteRecordSingleView {
   name: string;
-  order: number;
+  order?: number;
   path: string;
   href?: string;
   title?: string;
-  icon?: string;
-  class?: string;
+  icon?: `mdi-${TmdiIcons}`;
+  class?: TVuetifyColorsClassText;
+  meta?: IRouteMeta;
   children?: Array<Route>;
   component?: any;
 }
@@ -157,6 +167,17 @@ export interface TableInfoPG {
   tableowner: string;
   tablespace: string;
 }
+export interface IUserFio {
+  active: boolean;
+  family: string;
+  first_name: string;
+  id: number;
+  login: string;
+  second_name: string;
+  sm_contact_name: string;
+  sm_full_name: string;
+  tabnum: number;
+}
 export interface UserBZFio extends IUserFio {
   fio: string;
   short: string;
@@ -169,17 +190,7 @@ export interface UserBZFio extends IUserFio {
   id: number;
   family: string;
 }
-export interface IUserFio {
-  active: boolean;
-  family: string;
-  first_name: string;
-  id: number;
-  login: string;
-  second_name: string;
-  sm_contact_name: string;
-  sm_full_name: string;
-  tabnum: number;
-}
+
 export interface IPost {
   active: boolean;
   cat: Array<number>;

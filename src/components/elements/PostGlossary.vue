@@ -37,7 +37,7 @@ export default defineComponent({
     ...mapState(usePostDataStore, ["terms_list", "search"]),
   },
   methods: {
-    searchView(text) {
+    searchView (text) {
       if (this.search.length > 2) {
         text = text.replace(
           new RegExp(this.search.split("+").join("|"), "gi"),

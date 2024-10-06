@@ -10,7 +10,9 @@
   "dependencies": {
     "@mdi/font": "7.4.47",
     "@morivvv/json-sql-builder": "^2.3.0",
+    "@vueuse/core": "^11.1.0",
     "chart.js": "^4.4.4",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "core-js": "^3.37.1",
     "crypto-js": "^4.2.0",
     "date-fns": "^4.1.0",

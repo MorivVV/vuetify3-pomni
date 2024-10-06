@@ -1,7 +1,7 @@
 import { BasicPlanform } from "./BasicPlatform";
 
 export class Texture extends BasicPlanform {
-  constructor(
+  constructor (
     canvas: CanvasRenderingContext2D,
     pointX: number,
     pointY: number,
@@ -29,7 +29,8 @@ export class Texture extends BasicPlanform {
     );
     this.conflict = false;
   }
-  setCoord(x: number, y: number) {
+
+  setCoord (x: number, y: number) {
     if (x < 700) {
     } else {
       super.setCoord((this.pointX - x) / 16, (this.pointY - y) / 16);

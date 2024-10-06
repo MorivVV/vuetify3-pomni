@@ -13,8 +13,7 @@
       class="close material-icons"
       title="убрать фильтр"
       @click="removeFilter(ind)"
-      >close</i
-    >
+    >close</i>
   </v-chip>
 </template>
 
@@ -27,7 +26,7 @@ export default defineComponent({
     val: { type: String, required: true },
     ind: { type: String, required: true },
   },
-  setup() {
+  setup () {
     const { reasonList } = toRefs(useAuditDataStore());
     const filterName = {
       auddate: "Дата аудита",
@@ -42,7 +41,7 @@ export default defineComponent({
     return { reasonList, filterName };
   },
   computed: {
-    nameChip(): string {
+    nameChip (): string {
       let value = this.val;
       if (this.ind === "reason") {
         value = this.reasonList[this.val].NAIMEN;
@@ -51,11 +50,11 @@ export default defineComponent({
     },
   },
   methods: {
-    removeFilter(id: string) {
+    removeFilter (id: string) {
       const newQuery = { ...this.$route.query };
       const path = this.$route.path;
       delete newQuery[id];
-      this.$router.replace({ path: path, query: newQuery });
+      this.$router.replace({ path, query: newQuery });
     },
   },
 });

@@ -15,9 +15,9 @@
           <v-col class="font-weight-bold" cols="10">
             {{ u.title }}
           </v-col>
-          <v-divider />
         </v-row>
       </v-expansion-panel-title>
+      <v-divider class="pa-0 ma-0" />
       <v-expansion-panel-text class="pt-0 pb-0 blue-grey lighten-5">
         <v-expansion-panels :id="uniq_id" accordion>
           <MenuElement
@@ -38,7 +38,7 @@
     >
       <v-row align="center">
         <v-col cols="2">
-          <v-icon :class="u.meta?.class">
+          <v-icon :class="u.meta?.class" size="24">
             {{ u.meta?.icon }}
           </v-icon>
         </v-col>

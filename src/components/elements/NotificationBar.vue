@@ -1,20 +1,16 @@
 <template>
   <span class="ml-5">
     <v-badge
-      bordered
-      left
-      bottom
-      :dot="reLoadNotify"
-      offset-x="12"
-      offset-y="4"
       :color="maxColor"
       :content="contetnt"
+      :dot="reLoadNotify"
+      location="bottom left"
     >
       <BtnIconsV
-        :color="maxColor"
-        icon="notifications_none"
-        title="Просмотр уведомлений"
         :action="openBar"
+        :color="maxColor"
+        icon="bell"
+        title="Просмотр уведомлений"
       />
     </v-badge>
   </span>

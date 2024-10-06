@@ -4,12 +4,12 @@
       <v-col class="pa-0 ma-0">
         <v-textarea
           v-model.lazy="mailObjectJSON[key]"
-          :label="name + '(' + key + ')'"
-          rows="1"
-          row-height="20"
-          outlined
           dense
           hide-details
+          :label="name + '(' + key + ')'"
+          outlined
+          row-height="20"
+          rows="1"
         />
       </v-col>
     </v-row>
@@ -54,9 +54,9 @@ watch(
   (val) => {
     if (timer.value) clearInterval(timer.value);
     timer.value = setInterval(() => {
-      val["to"] = checkMailString(val["to"]);
-      val["cc"] = checkMailString(val["cc"]);
-      val["bc"] = checkMailString(val["bc"]);
+      val.to = checkMailString(val.to);
+      val.cc = checkMailString(val.cc);
+      val.bc = checkMailString(val.bc);
       emit("input", JSON.stringify(val));
     }, 300);
   },

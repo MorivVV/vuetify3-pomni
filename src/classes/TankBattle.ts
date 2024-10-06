@@ -9,7 +9,7 @@ export class Tank {
   pulya: any;
   uuid: string;
   skin: string;
-  constructor(
+  constructor (
     x: number,
     y: number,
     skin: string,

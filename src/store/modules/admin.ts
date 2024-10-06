@@ -1937,7 +1937,7 @@ export const useAdminStore = defineStore("admin", {
   }),
   actions: {},
   getters: {
-    mdiIconsList() {
+    mdiIconsList () {
       const mdiIconsList: { naimen: string; value: string }[] = [];
       const object = this.mdiIcons;
       for (const key in object) {

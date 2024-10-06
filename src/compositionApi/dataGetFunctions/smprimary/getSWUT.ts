@@ -38,12 +38,12 @@ export const getSWUTFilters = (
   }
 
   if (clusterList.length) {
-    filter["kod_cluster"] = clusterList.map((e) => ({ "ci.kod_cluster": e }));
+    filter.kod_cluster = clusterList.map((e) => ({ "ci.kod_cluster": e }));
   }
 
   if (groupList.length) {
-    filter["kod_group"] = groupList.map((e) => ({ "wg.kod_group": e }));
-    filter["kod_group"] = filter["kod_group"].concat(
+    filter.kod_group = groupList.map((e) => ({ "wg.kod_group": e }));
+    filter.kod_group = filter.kod_group.concat(
       groupList.map((e) => ({ "wg.id": e }))
     );
   }

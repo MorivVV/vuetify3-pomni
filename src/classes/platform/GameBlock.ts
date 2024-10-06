@@ -1,7 +1,7 @@
 import { BasicPlanform } from "./BasicPlatform";
 
 export class GameBlock extends BasicPlanform {
-  constructor(
+  constructor (
     canvas: CanvasRenderingContext2D,
     pointX: number,
     pointY: number,
@@ -28,7 +28,8 @@ export class GameBlock extends BasicPlanform {
       crop
     );
   }
-  setCoord(x: number, y: number) {
+
+  setCoord (x: number, y: number) {
     if (x < 700) {
     } else {
       super.setCoord((this.pointX + 700 - x) / 2, (this.pointY - y) / 2);

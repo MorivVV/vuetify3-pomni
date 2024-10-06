@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-row
-      class="ma-0 pa-0 blue darken-4 rounded-lg rounded-b-0"
       align="center"
+      class="ma-0 pa-0 blue darken-4 rounded-lg rounded-b-0"
     >
-      <v-col cols="auto" class="pa-0">
+      <v-col class="pa-0" cols="auto">
         <v-btn color="primary" to="/confa">
           <v-icon> arrow_back </v-icon>
           К списку страниц
@@ -15,29 +15,29 @@
       </v-col>
       <v-col cols="auto">
         <BtnIconsVVue
-          title="Удалить страницу"
-          icon="delete"
           :action="deletePage"
           color="white"
           colorbtn="red"
           :disabled="!editLevel()"
+          icon="delete"
+          title="Удалить страницу"
         />
       </v-col>
     </v-row>
     <v-row class="ma-0">
-      <v-col cols="12" md="2" class="teal lighten-5 pa-1">
+      <v-col class="teal lighten-5 pa-1" cols="12" md="2">
         <v-row class="ml-1">
           <div class="text-h5 ma-1 mt-2 mb-2">Разделы</div>
         </v-row>
         <ConfBlocksVue />
       </v-col>
-      <v-col cols="12" md="10" class="pa-0 ma-0">
+      <v-col class="pa-0 ma-0" cols="12" md="10">
         <v-row class="pa-1 ma-0 light-blue lighten-5">
           <v-col class="text-h4 text-center pa-0 ma-0">
             <span>{{ nameBlock }}</span>
             <v-btn
-              icon
               fab
+              icon
               small
               @click="(editNameBlock = true), (newNameBlock = nameBlock)"
             >
@@ -45,8 +45,8 @@
             </v-btn>
             <v-dialog
               v-model="editNameBlock"
-              transition="dialog-top-transition"
               max-width="600"
+              transition="dialog-top-transition"
             >
               <v-card>
                 <v-toolbar color="primary" dark>
@@ -59,12 +59,12 @@
                 </v-card-text>
                 <v-card-actions class="justify-end">
                   <BtnIconsVVue
-                    title="Удалить раздел"
-                    icon="delete"
                     :action="deleteBlock"
                     color="white"
                     colorbtn="red"
                     :disabled="!editLevel()"
+                    icon="delete"
+                    title="Удалить раздел"
                   />
                   <v-spacer />
                   <v-btn @click="editBlock"> Изменить </v-btn>
@@ -79,16 +79,16 @@
             v-for="cont in content"
             :key="'content_' + cont.id"
             :data-content="cont"
-            @editContent="getContent"
+            @edit-content="getContent"
           />
         </div>
-        <v-row v-else justify="center" class="ma-1">
+        <v-row v-else class="ma-1" justify="center">
           <v-col cols="auto">
             <div class="text-h5 mt-2 mb-1">Записи отсутствуют</div>
           </v-col>
         </v-row>
         <v-row v-if="blocks.length" class="ma-0 pt-2 pb-2 green lighten-5">
-          <v-col cols="12" class="pa-1">
+          <v-col class="pa-1" cols="12">
             <TextTinyMCEVue v-model="contentBlock" />
           </v-col>
           <v-col col="auto">
@@ -98,7 +98,7 @@
           </v-col>
         </v-row>
         <v-row v-else>
-          <v-col col="auto" class="text-center red--text">
+          <v-col class="text-center red--text" col="auto">
             Необходимо добавить раздел
           </v-col>
         </v-row>
@@ -217,7 +217,7 @@ const deletePage = () => {
       .then((check) => {
         if (check) {
           router.push({
-            path: `/confa`,
+            path: "/confa",
           });
         }
       });

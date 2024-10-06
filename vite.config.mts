@@ -10,65 +10,69 @@ import Vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 // Utilities
 import { defineConfig, loadEnv } from "vite";
 import { fileURLToPath, URL } from "node:url";
-const env = loadEnv(import.meta.env, process.cwd());
+
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    VueRouter({
-      dts: "src/typed-router.d.ts",
-    }),
-    Layouts(),
-    AutoImport({
-      imports: [
-        "vue",
-        {
-          "vue-router/auto": ["useRoute", "useRouter"],
-        },
-      ],
-      dts: "src/auto-imports.d.ts",
-      eslintrc: {
-        enabled: true,
-      },
-      vueTemplate: true,
-    }),
-    Components({
-      dts: "src/components.d.ts",
-    }),
-    Vue({
-      template: { transformAssetUrls },
-    }),
-    // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
-    Vuetify({
-      autoImport: true,
-      styles: {
-        configFile: "src/styles/settings.scss",
-      },
-    }),
-    Fonts({
-      google: {
-        families: [
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd());
+  console.log(env);
+  return {
+    plugins: [
+      VueRouter({
+        dts: "src/typed-router.d.ts",
+      }),
+      Layouts(),
+      AutoImport({
+        imports: [
+          "vue",
           {
-            name: "Roboto",
-            styles: "wght@100;300;400;500;700;900",
+            "vue-router/auto": ["useRoute", "useRouter"],
           },
         ],
-      },
-    }),
-  ],
-  define: {
-    "process.env": {},
-    NAIMEN_POMNI: JSON.stringify(env.VUE_APP_TITLE),
-    CLIENT_VERSION_ID: JSON.stringify(env.VITE_APP_VERSION_NUMBER),
-    CLIENT_VERSION_TEXT: JSON.stringify(env.VITE_APP_VERSION_TEXT),
-    ADMIN_EMAILS: JSON.stringify(env.VUE_ADMIN_EMAILS),
-  },
-  resolve: {
-    alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+        dts: "src/auto-imports.d.ts",
+        eslintrc: {
+          enabled: true,
+        },
+        vueTemplate: true,
+      }),
+      Components({
+        dts: "src/components.d.ts",
+      }),
+      Vue({
+        template: { transformAssetUrls },
+      }),
+      // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
+      Vuetify({
+        autoImport: true,
+        styles: {
+          configFile: "src/styles/settings.scss",
+        },
+      }),
+      Fonts({
+        google: {
+          families: [
+            {
+              name: "Roboto",
+              styles: "wght@100;300;400;500;700;900",
+            },
+          ],
+        },
+      }),
+    ],
+    define: {
+      "process.env": {},
+      NAIMEN_POMNI: JSON.stringify(env.VITE_APP_TITLE),
+      CLIENT_VERSION_ID: JSON.stringify(env.VITE_APP_VERSION_NUMBER),
+      CLIENT_VERSION_TEXT: JSON.stringify(env.VITE_APP_VERSION_TEXT),
+      ADMIN_EMAILS: JSON.stringify(env.VITE_ADMIN_EMAILS),
     },
-    extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".vue"],
-  },
-  server: {
-    port: 8000,
-  },
+    resolve: {
+      alias: {
+        "@": fileURLToPath(new URL("./src", import.meta.url)),
+      },
+      extensions: [".js", ".json", ".jsx", ".mjs", ".ts", ".tsx", ".vue"],
+    },
+    server: {
+      port: 8000,
+    },
+  };
 });

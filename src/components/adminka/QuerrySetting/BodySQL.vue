@@ -2,12 +2,12 @@
   <div>
     <label class="text-caption">Текст SQL запроса</label>
     <v-card
+      class="overflow-auto"
+      elevation="0"
       max-height="500"
       :outlined="false"
-      elevation="0"
-      class="overflow-auto"
     >
-      <v-card-text class="pre" v-html="sqlViewChange"></v-card-text>
+      <v-card-text class="pre" v-html="sqlViewChange" />
     </v-card>
   </div>
 </template>
@@ -51,10 +51,11 @@ const sqlHLtext = (sql1: string, sql2: string) => {
             break;
           }
         }
-        if (upCheck)
-          sql.push(
+        if (upCheck) {
+ sql.push(
             `<span class="${props.color} pl-1 pr-1">${s1[index]}</span>`
           );
+}
       } else {
         sql.push(`<span class="${props.color} pl-1 pr-1">${s1[index]}</span>`);
       }

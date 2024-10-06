@@ -24,7 +24,7 @@ export class BasicPlanform {
   protected positionView: "left" | "right" = "right";
   protected canvas: CanvasRenderingContext2D;
   protected img: HTMLImageElement;
-  constructor(
+  constructor (
     canvas: CanvasRenderingContext2D,
     pointX: number,
     pointY: number,
@@ -62,7 +62,7 @@ export class BasicPlanform {
     }
   }
 
-  draw() {
+  draw () {
     this.mirror = 1;
     if (this.positionView === "left") {
       this.canvas.translate(
@@ -92,35 +92,44 @@ export class BasicPlanform {
     }
   }
 
-  setCoord(x: number, y: number) {
+  setCoord (x: number, y: number) {
     this.pointX = x;
     if (this.workGravity()) this.pointY = y;
   }
-  get canMove() {
+
+  get canMove () {
     return this.move;
   }
-  set canMove(value: boolean) {
+
+  set canMove (value: boolean) {
     this.move = value;
   }
-  workGravity() {
+
+  workGravity () {
     return this.gravity;
   }
-  setSkin(img: HTMLImageElement) {
+
+  setSkin (img: HTMLImageElement) {
     this.img = img;
   }
-  canCrash() {
+
+  canCrash () {
     return this.conflict;
   }
-  canDestroy() {
+
+  canDestroy () {
     return this.destroy;
   }
-  getX() {
+
+  getX () {
     return this.pointX;
   }
-  getY() {
+
+  getY () {
     return this.pointY;
   }
-  getAbsolutePosition() {
+
+  getAbsolutePosition () {
     const x1 = this.pointX + this.offsetX;
     const y1 = this.pointY + this.offsetY;
     return {
@@ -130,7 +139,8 @@ export class BasicPlanform {
       y2: y1 + this.height * this.size,
     };
   }
-  cross(obj: BasicPlanform) {
+
+  cross (obj: BasicPlanform) {
     if (!this.canCrash()) return false;
     if (!obj.canCrash()) return false;
     const coordinates1 = this.getAbsolutePosition();

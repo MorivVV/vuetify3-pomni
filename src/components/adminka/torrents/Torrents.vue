@@ -6,9 +6,9 @@
         v-for="torrent in torrentList"
         :key="'row_' + torrent.title"
         cols="12"
+        lg="3"
         md="4"
         xl="2"
-        lg="3"
       >
         <TorrentCartVue :torrent="torrent" />
       </v-col>
@@ -23,11 +23,11 @@ import { dataApiComposition } from "@/compositionApi/dataApi";
 
 export default defineComponent({
   components: { TorrentCartVue },
-  setup() {
+  setup () {
     const { r_fetch } = dataApiComposition();
     return { r_fetch };
   },
-  data() {
+  data () {
     return {
       torrentList: [
         {
@@ -192,11 +192,11 @@ export default defineComponent({
       ] as TorrentInfo[],
     };
   },
-  mounted() {
+  mounted () {
     this.getTor();
   },
   methods: {
-    getTor() {
+    getTor () {
       this.r_fetch("torrents", {
         action: "list",
       }).then((r) => (this.torrentList = r));

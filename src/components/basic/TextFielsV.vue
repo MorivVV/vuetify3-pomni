@@ -33,6 +33,7 @@
 </template>
 
 <script lang="ts">
+import { TmdiIcons } from "@/const/mdiIcons";
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
@@ -63,11 +64,11 @@ export default defineComponent({
       default: null,
     },
     prependIcon: {
-      type: String as PropType<string | undefined>,
+      type: String as PropType<`mdi-${TmdiIcons}` | undefined>,
       default: null,
     },
     appendOuterIcon: {
-      type: String as PropType<string | null>,
+      type: String as PropType<TmdiIcons | undefined>,
       default: null,
     },
     placeholder: {
@@ -94,7 +95,7 @@ export default defineComponent({
       default: null,
     },
     appendIcon: {
-      type: String,
+      type: String as PropType<TmdiIcons | undefined>,
       default: "",
     },
     maxlength: {

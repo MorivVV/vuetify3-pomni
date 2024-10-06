@@ -18,18 +18,18 @@
           Значения переменных зависят от текущего дня
         </v-card-title>
         <v-card-text class="pa-1 ma-0">
-          С 27 февраля 2024г добавлены вычисляемые параметры <br />
+          С 27 февраля 2024г добавлены вычисляемые параметры <br>
           Данные параметры можно подставлять в любые поля заданий по расписанию
-          <br />
+          <br>
           При запуске заданий параметр будет вычисляться в зависимости от даты
-          запуска <br />
+          запуска <br>
           Чтобы посмотреть примеры, в поиске по параметрам задания можно найти
           firstDayOfQuart или yesterDate
         </v-card-text>
         <v-card-title class="ma-0 pa-1 text-subtitle-1 grey lighten-4">
           <v-row class="ma-0">
-            <v-col cols="3" class="pa-0"> Переменная </v-col>
-            <v-col cols="3" class="pa-0"> Вычислено </v-col>
+            <v-col class="pa-0" cols="3"> Переменная </v-col>
+            <v-col class="pa-0" cols="3"> Вычислено </v-col>
             <v-col class="pa-0"> Описание </v-col>
           </v-row>
         </v-card-title>
@@ -40,16 +40,16 @@
             :key="'param_' + param.text"
             class="ma-1"
           >
-            <v-col cols="3" class="pa-0"> {{ `\$\{${val}\}` }} </v-col>
-            <v-col cols="3" class="pa-0">= {{ param.value }}</v-col>
+            <v-col class="pa-0" cols="3"> {{ `\$\{${val}\}` }} </v-col>
+            <v-col class="pa-0" cols="3">= {{ param.value }}</v-col>
             <v-col class="pa-0">=> {{ param.text }}</v-col>
           </v-row>
         </v-card-text>
 
-        <v-divider></v-divider>
+        <v-divider />
 
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-btn color="primary" text @click="dialog = false"> Закрыть </v-btn>
         </v-card-actions>
       </v-card>

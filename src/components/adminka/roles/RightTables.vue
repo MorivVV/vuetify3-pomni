@@ -6,18 +6,24 @@
         <v-col cols="6">
           <AutocompleteVVue
             v-model="newTables"
-            prepend-icon="add_location"
-            multiple
-            hide-selected
-            label="Выбрать таблицы"
             hide-details=""
-            :items="lastTableList"
-            item-value="table"
+            hide-selected
             item-text="table"
+            item-value="table"
+            :items="lastTableList"
+            label="Выбрать таблицы"
+            multiple
+            prepend-icon="add_location"
           />
         </v-col>
         <v-col cols="auto">
-          <v-btn fab x-small color="blue" dark @click="addRightTables">
+          <v-btn
+            color="blue"
+            dark
+            fab
+            x-small
+            @click="addRightTables"
+          >
             <v-icon>add</v-icon>
           </v-btn>
         </v-col>
@@ -27,14 +33,14 @@
       <v-row>
         <v-col cols="12">
           <v-data-table
+            class="elevation-1 striped red lighten-4"
             dense
             :headers="headerRT"
             :items="rights_table"
             :items-per-page="10"
-            class="elevation-1 striped red lighten-4"
           >
             <template #[`item.tablename`]="{ item }">
-              <v-btn outlined small block class="text-lowercase">
+              <v-btn block class="text-lowercase" outlined small>
                 {{ item.tablename }}
               </v-btn>
             </template>
@@ -62,11 +68,11 @@ import AutocompleteVVue from "@/components/basic/AutocompleteV.vue";
 
 export default defineComponent({
   components: { AutocompleteVVue },
-  setup() {
+  setup () {
     const { r_get, r_update, r_insert } = dataApiComposition();
     return { r_get, r_update, r_insert };
   },
-  data() {
+  data () {
     return {
       newTables: [],
     };
@@ -74,7 +80,7 @@ export default defineComponent({
   computed: {
     ...mapState(useAdminStore, ["rights_table"]),
     ...mapState(usePostgreStore, ["tableList"]),
-    headerRT(): DataTableHeader[] {
+    headerRT (): DataTableHeader[] {
       const header: DataTableHeader[] = [
         {
           text: "id",
@@ -104,7 +110,7 @@ export default defineComponent({
 
       return header;
     },
-    lastTableList(): any[] {
+    lastTableList (): any[] {
       return this.tableList.filter(
         (e) =>
           this.rights_table
@@ -113,11 +119,11 @@ export default defineComponent({
       );
     },
   },
-  mounted() {
+  mounted () {
     this.getDataBaseTables().then(() => this.getRightsTable());
   },
   methods: {
-    getDataBaseTables() {
+    getDataBaseTables () {
       return this.r_get(
         {
           fields: [
@@ -137,14 +143,14 @@ export default defineComponent({
         usePostgreStore
       );
     },
-    getRightsTable() {
+    getRightsTable () {
       return this.r_get(
         { from: "rights_table", sort: ["naimen"] },
         "rights_table",
         useAdminStore
       );
     },
-    changeRightTable(item: any) {
+    changeRightTable (item: any) {
       return this.r_update({
         to: "rights_table",
         set: item,
@@ -153,7 +159,7 @@ export default defineComponent({
         },
       });
     },
-    addRightTables() {
+    addRightTables () {
       if (this.newTables.length === 0) {
         this.$toast({ html: "Необходимо выбрать таблицу" });
         return;

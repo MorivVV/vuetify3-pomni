@@ -52,7 +52,7 @@ export default defineComponent({
     streamName: String,
   },
   methods: {
-    playerStart() {
+    playerStart () {
       this.$emit("viewPlayer");
     },
   },

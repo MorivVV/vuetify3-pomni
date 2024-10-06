@@ -3,10 +3,10 @@
     <v-col cols="2">
       <DataTableV
         v-model="selected"
-        :items="inbox_mail"
         :headers="mailHeaders"
-        single-select
+        :items="inbox_mail"
         show-select
+        single-select
       >
         <template #[`item.subject`]="{ item }">
           <div class="blue--text">{{ item.subject }}</div>
@@ -14,7 +14,7 @@
         </template>
       </DataTableV>
     </v-col>
-    <v-col cols="10"> <div v-html="selected[0]?.html"></div> </v-col>
+    <v-col cols="10"> <div v-html="selected[0]?.html" /> </v-col>
   </v-row>
 </template>
 

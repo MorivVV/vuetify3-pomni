@@ -1,7 +1,7 @@
 <template>
   <v-container class="login-form mt-5">
     <v-card class="ma-1">
-      <v-row class="green white--text ma-0">
+      <v-row class="bg-green white--text ma-0">
         <v-col class="text-center">
           <div v-if="isLoggedIn" class="text-h4 mt-2 mb-1">
             Недостаточно прав для доступа
@@ -11,66 +11,66 @@
       </v-row>
 
       <v-row class="ma-1 pt-3">
-        <v-col cols="10" offset-md="1" class="pa-0">
+        <v-col class="pa-0" cols="10" offset-md="1">
           <TextFielsV
             v-model="login"
-            prepend-icon="account_circle"
             label="Введите логин"
+            prepend-icon="mdi-account-circle"
           />
         </v-col>
       </v-row>
       <v-row class="ma-1 pt-1">
-        <v-col cols="10" offset-md="1" class="pa-0">
+        <v-col class="pa-0" cols="10" offset-md="1">
           <TextFielsV
             id="password"
             v-model="password"
-            required
-            name="password"
-            label="Введите пароль"
-            prepend-icon="fingerprint"
-            type="password"
             class="validate"
+            label="Введите пароль"
+            name="password"
+            prepend-icon="mdi-fingerprint"
+            required
+            type="password"
             @keypress.native.enter="authorize"
           />
         </v-col>
       </v-row>
       <v-row class="ma-1">
-        <v-col cols="4" class="text-center">
+        <v-col class="text-center" cols="4">
           <BtnIconsVVue
             :action="authorize"
-            :disabled="login === '' || password === ''"
-            icon="input"
-            title="Войти"
-            colorbtn="green"
             color="white"
+            colorbtn="green"
+            :disabled="login === '' || password === ''"
+            icon="location-enter"
+            title="Войти"
           />
         </v-col>
-        <v-col cols="4" class="text-center">
+        <v-col class="text-center" cols="4">
           <BtnIconsVVue
             :action="resetPassword"
-            icon="no_encryption"
-            title="Забыл пароль (разблокировака)"
-            colorbtn="pink"
             color="white"
+            colorbtn="pink"
+            icon="lock-off"
+            title="Забыл пароль (разблокировака)"
           />
         </v-col>
-        <v-col cols="4" class="text-center">
+        <v-col class="text-center" cols="4">
           <BtnIconsVVue
             :action="() => $router.push('/register')"
-            icon="group_add"
-            title="Зарегистрироваться"
-            colorbtn="blue"
             color="white"
+            colorbtn="blue"
+            icon="account-plus"
+            title="Зарегистрироваться"
           />
         </v-col>
       </v-row>
 
       <v-row v-if="user_access_level.length" class="ma-0">
-        <v-col cols="12" class="pa-0">
+        <v-col class="pa-0" cols="12">
           <span class="pl-2">
             Список пользователей с доступом в {{ toUrl }}
           </span>
-          <v-divider></v-divider>
+          <v-divider />
         </v-col>
 
         <v-col
@@ -80,32 +80,25 @@
           cols="auto"
         >
           <v-chip
-            small
             class="pa-1"
             :color="levels.find((e) => e.id === user.access_level)?.color"
+            small
           >
-            <v-tooltip top>
-              <template #activator="{ on, attrs }">
-                <div v-bind="attrs" v-on="on">
-                  <UserFio :user_id="user.kod_user" />
-                </div>
-              </template>
-
-              <span>{{
-                levels.find((e) => e.id === user.access_level)?.name
-              }}</span>
-            </v-tooltip>
+            <UserFio :user_id="user.kod_user" />
+            <v-tooltip activator="parent" top><span>{{
+              levels.find((e) => e.id === user.access_level)?.name
+            }}</span></v-tooltip>
           </v-chip>
         </v-col>
       </v-row>
     </v-card>
     <v-card v-if="reset.active" class="card">
       <v-row class="ma-1 orange center">
-        <v-col cols="12" class="text-center">
+        <v-col class="text-center" cols="12">
           <div class="text-h4 mt-2 mb-1">Восстановление пароля</div>
           <div>
             Вы должны иметь доступ к электронной почте, через которую была
-            осуществелна регистрация.<br />
+            осуществелна регистрация.<br>
             На электронную почту будет отправлен код подтверждения
           </div>
         </v-col>
@@ -115,19 +108,19 @@
         <v-col cols="7" offset-md="2">
           <TextFielsV
             v-model="reset.tabnum"
-            prepend-icon="perm_identity"
             label="Введите табельный номер"
+            prepend-icon="mdi-account-outline"
           />
         </v-col>
 
         <v-col>
           <BtnIconsVVue
             :action="getAccount"
+            color="white"
+            colorbtn="blue"
             :disabled="!reset.tabnum"
             icon="cached"
             title="Проверить"
-            colorbtn="blue"
-            color="white"
           />
         </v-col>
       </v-row>
@@ -136,20 +129,20 @@
         <v-col cols="7" offset-md="2">
           <TextFielsV
             v-model="reset.email"
-            prepend-icon="account_circle"
-            :label="'Найден пользователь ' + reset.login"
             disabled
+            :label="'Найден пользователь ' + reset.login"
+            prepend-icon="mdi-account-circle"
           />
         </v-col>
 
         <v-col>
           <BtnIconsVVue
             :action="sendValidate"
-            icon="contact_mail"
-            :disabled="!reset.email"
-            title="Выслать код проверки"
-            colorbtn="blue"
             color="white"
+            colorbtn="blue"
+            :disabled="!reset.email"
+            icon="card-account-mail"
+            title="Выслать код проверки"
           />
         </v-col>
       </v-row>
@@ -157,18 +150,18 @@
         <v-col cols="7" offset-md="2">
           <TextFielsV
             v-model="reset.question"
-            prepend-icon="vpn_key"
             label="Введите код подтверждения"
+            prepend-icon="mdi-vpn"
           />
         </v-col>
 
         <v-col>
           <BtnIconsVVue
             :action="getPassword"
+            color="white"
+            colorbtn="green"
             icon="check"
             title="Сбросить пароль"
-            colorbtn="green"
-            color="white"
           />
         </v-col>
       </v-row>

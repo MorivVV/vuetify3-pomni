@@ -5,13 +5,13 @@
     </v-col>
     <v-col cols="12">
       <v-data-table
+        class="elevation-1 striped orange lighten-4"
         dense
-        :loading="loading"
-        show-expand
         :headers="headerElements"
         :items="accessDataTable"
         :items-per-page="10"
-        class="elevation-1 striped orange lighten-4"
+        :loading="loading"
+        show-expand
       >
         <template #expanded-item="{ headers, item }">
           <td :colspan="headers.length">
@@ -19,7 +19,7 @@
           </td>
         </template>
         <template #[`item.tablename`]="{ item }">
-          <v-btn outlined small block class="text-lowercase">
+          <v-btn block class="text-lowercase" outlined small>
             {{ item.tablename }}
           </v-btn>
         </template>
@@ -32,7 +32,7 @@
         <template #[`item.element`]="{ item }">
           <v-row>
             <v-col cols="12">
-              <v-card height="30" class="overflow-auto">
+              <v-card class="overflow-auto" height="30">
                 {{ item.element }}
               </v-card>
             </v-col>
@@ -56,12 +56,12 @@ export default defineComponent({
     tableId: { type: Number, required: true },
     roleId: { type: Number, required: true },
   },
-  setup() {
+  setup () {
     const { r_get, r_insert, r_delete, r_ajax, checkDataModify } =
       dataApiComposition();
     return { r_get, r_insert, r_delete, r_ajax, checkDataModify };
   },
-  data() {
+  data () {
     return {
       loading: true,
       rights_elements: [] as IRightElement[],
@@ -70,14 +70,14 @@ export default defineComponent({
   },
   computed: {
     ...mapState(useAdminStore, ["rights_table"]),
-    tableName(): EKNOWLEGEBASE {
+    tableName (): EKNOWLEGEBASE {
       const name = String(
         this.rights_table.find((e: { id: number }) => e.id === this.tableId)
           ?.naimen
       );
       return name as EKNOWLEGEBASE;
     },
-    accessDataTable(): any[] {
+    accessDataTable (): any[] {
       return this.dataTable.map((e: any) => {
         const accessElement = this.rights_elements.filter(
           (r: any) => r.table_identificator === e.id
@@ -90,7 +90,7 @@ export default defineComponent({
         };
       });
     },
-    headerElements(): DataTableHeader[] {
+    headerElements (): DataTableHeader[] {
       const header: DataTableHeader[] = [
         {
           text: "Вкл",
@@ -115,7 +115,7 @@ export default defineComponent({
       return header;
     },
   },
-  mounted() {
+  mounted () {
     this.loading = true;
     Promise.all([this.getRightsElements(), this.getDataFromTable()]).then(
       () => {
@@ -124,14 +124,14 @@ export default defineComponent({
     );
   },
   methods: {
-    getDataFromTable() {
+    getDataFromTable () {
       return this.r_get({
         from: this.tableName,
         sort: ["-1"],
         limit: 100,
       }).then((r) => (this.dataTable = r));
     },
-    getRightsElements() {
+    getRightsElements () {
       return this.r_get<string>({
         from: "rights_elements",
         filter: { kod_role: this.roleId, kod_table: this.tableId },
@@ -141,7 +141,7 @@ export default defineComponent({
         this.rights_elements = r as IRightElement[];
       });
     },
-    fullAccess() {
+    fullAccess () {
       this.loading = true;
       return this.r_ajax({
         sqlname: "addRoleTableAccess",
@@ -160,7 +160,7 @@ export default defineComponent({
           this.loading = false;
         });
     },
-    changeRightRow(item: any) {
+    changeRightRow (item: any) {
       if (item.access) {
         this.r_insert({
           to: "rights_elements",

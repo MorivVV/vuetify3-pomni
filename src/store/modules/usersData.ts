@@ -18,7 +18,7 @@ export const useUserDataStore = defineStore("userData", {
   }),
 
   getters: {
-    usersFio(state: UserState) {
+    usersFio (state: UserState) {
       interface IUP {
         fio: string;
         short: string;
@@ -57,7 +57,7 @@ export const useUserDataStore = defineStore("userData", {
       }
       return fioData;
     },
-    usersFioArray(state: UserState): IUserFullInfo[] {
+    usersFioArray (state: UserState): IUserFullInfo[] {
       const fioData = state.users_fio.map((user: User) => {
         let fio = user.family;
         let short = fio;

@@ -16,8 +16,8 @@
           <td>
             <v-checkbox
               v-model="p.get_bags"
-              hide-details
               class="ma-0 pa-0"
+              hide-details
               @change="updateProject(p.id, p.get_bags)"
             />
           </td>
@@ -28,8 +28,8 @@
           <td>
             <v-checkbox
               v-model="p.get_bags"
-              hide-details
               class="ma-0 pa-0"
+              hide-details
               @change="updateProject(p.id, p.get_bags)"
             />
           </td>
@@ -54,37 +54,37 @@ interface IJiraProject {
   get_bags: boolean;
 }
 export default defineComponent({
-  setup() {
+  setup () {
     const { r_get, r_update } = dataApiComposition();
     return { r_get, r_update };
   },
   computed: {
     ...mapState(useJiraStore, ["projectList"]),
-    projectBug(): IJiraProject[] {
+    projectBug (): IJiraProject[] {
       const bug = this.projectList.filter((e) => e.get_bags);
       return bug;
     },
-    projectNoBug(): IJiraProject[] {
+    projectNoBug (): IJiraProject[] {
       const bug = this.projectList.filter((e) => !e.get_bags);
       return bug;
     },
   },
-  mounted() {
+  mounted () {
     this.getProjects();
   },
   methods: {
-    updateProject(id: number, val: boolean) {
+    updateProject (id: number, val: boolean) {
       this.r_update<keyof IKnowledgebaseJiraProjects>({
         to: "jira.jira_projects",
         set: {
           get_bags: val,
         },
         filter: {
-          id: id,
+          id,
         },
       }).then((r) => this.$toast({ html: r.count }));
     },
-    getProjects() {
+    getProjects () {
       this.r_get<keyof IKnowledgebaseJiraProjects>(
         {
           from: "jira.jira_projects",

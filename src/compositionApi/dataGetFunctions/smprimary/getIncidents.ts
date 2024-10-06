@@ -7,13 +7,13 @@ import {
 import {
   ISmprimaryAsCluster,
   ISmprimaryContctsm1,
-  ISmprimaryProbsummarym1,
-  ISmprimaryScrelationm1,
   ISmprimaryHpcauditprobsummarym1,
-  ISmprimarySbjiraissuem1,
+  ISmprimaryProbsummarym1,
   ISmprimaryRootcausem1,
   ISmprimarySbimcausem1,
+  ISmprimarySbjiraissuem1,
   ISmprimarySbreferencea7,
+  ISmprimaryScrelationm1,
 } from "@/types/database/schemas/smprimary";
 import { ICreateTableFields } from "@/types/database/service";
 import { restGet, restGetType } from "@/types/restApi";
@@ -38,7 +38,7 @@ export const getIncidentFilters = (
     ICreateTableFields<keyof ISmprimaryProbsummarym1, "im">
   > = {};
   filter["im.p_hpc_status"] = statusList.map((s) => ({
-    [`im.p_hpc_status`]: `=:${s}`,
+    "im.p_hpc_status": `=:${s}`,
   }));
 
   if (ciList.length) {
@@ -48,14 +48,14 @@ export const getIncidentFilters = (
   }
 
   if (clusterList.length) {
-    filter["kod_cluster"] = clusterList.map((e) => ({
+    filter.kod_cluster = clusterList.map((e) => ({
       "ci.kod_cluster": `=:${e}`,
     }));
   }
 
   if (groupList.length) {
-    filter["kod_group"] = groupList.map((e) => ({ "wg.kod_group": `=:${e}` }));
-    filter["kod_group"] = filter["kod_group"].concat(
+    filter.kod_group = groupList.map((e) => ({ "wg.kod_group": `=:${e}` }));
+    filter.kod_group = filter.kod_group.concat(
       groupList.map((e) => ({ "wg.id": `=:${e}` }))
     );
   }

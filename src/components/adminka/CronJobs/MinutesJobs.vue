@@ -6,11 +6,11 @@ cols="1"
 
 <script lang="ts">
 import moment from "moment";
-window.moment = moment;
 import { defineComponent } from "vue";
 import { mapState } from "pinia";
 import { useAdminStore } from "@/store/modules/admin";
 import { IKnowledgebaseCronJobs } from "@/types/database/schemas/knowledgebase";
+window.moment = moment;
 
 export default defineComponent({
   props: {
@@ -18,17 +18,17 @@ export default defineComponent({
     hour: Number,
     week: Number,
   },
-  data() {
+  data () {
     return {
       active: false,
     };
   },
   computed: {
     ...mapState(useAdminStore, ["jobs", "job_scripts"]),
-    activeJobs(): IKnowledgebaseCronJobs[] {
+    activeJobs (): IKnowledgebaseCronJobs[] {
       return this.jobs.filter((e) => e.active);
     },
-    checkJobs(): string {
+    checkJobs (): string {
       let color = "white";
       const week = this.week as number;
       const hour = this.hour;
@@ -93,7 +93,7 @@ export default defineComponent({
       return color;
     },
   },
-  mounted() {
+  mounted () {
     setTimeout(() => {
       this.active = true;
     }, 5);

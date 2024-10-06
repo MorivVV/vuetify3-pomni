@@ -2,14 +2,15 @@
   <v-dialog v-model="dialog" persistent width="60%">
     <v-card class="blue lighten-5">
       <v-card-title class="ma-0 pa-0 text-h5 blue white--text">
-        <v-row class="ma-0 pa-0" align="center">
+        <v-row align="center" class="ma-0 pa-0">
           <v-col class="ma-0 pa-0">
             <div class="text-center">BazLook</div>
           </v-col>
           <v-col class="pa-0 white--text" cols="auto">
-            <i class="material-icons pointer red ma-1" @click="closeForm"
-              >close</i
-            >
+            <i
+              class="material-icons pointer red ma-1"
+              @click="closeForm"
+            >close</i>
           </v-col>
         </v-row>
       </v-card-title>
@@ -18,32 +19,30 @@
           <v-col>
             <a @click="genMailUrl">Открыть от своего имени (Outlook)</a>
           </v-col>
-          <v-col cols="auto" class="pa-0 text-center">
+          <v-col class="pa-0 text-center" cols="auto">
             <v-row class="ma-0">
-              <v-col cols="auto" class="pa-1">
+              <v-col class="pa-1" cols="auto">
                 <span>
                   <CheckBoxTitleV
                     v-model="mail.sms"
-                    prepend-icon="sms"
                     color="red"
                     label="SMS"
+                    prepend-icon="sms"
                     title="Отправка СМС через API"
                   />
                 </span>
               </v-col>
               <v-col class="pa-0">
-                <span
-                  >всего СМС {{ svodSMS.all_count }} <br />
+                <span>всего СМС {{ svodSMS.all_count }} <br>
                   за месяц {{ svodSMS.count_month }} с начала месяца
-                  {{ svodSMS.count_curr_month }}</span
-                >
+                  {{ svodSMS.count_curr_month }}</span>
               </v-col>
               <v-col class="pa-2 pt-1 pb-1" cols="auto">
                 <BtnIconsV
                   :action="sendMail"
-                  icon="mail"
-                  colorbtn="orange darken-3"
                   color="white"
+                  colorbtn="orange darken-3"
+                  icon="mail"
                   title="Отправить письмо"
                 />
               </v-col>
@@ -61,10 +60,10 @@
           <v-col class="pa-0" cols="4">
             <AutocompleteV
               class="white"
-              :label="`Добавить группу рассылки (${mailFocus})`"
-              :items="mail_groups"
               item-text="group_name"
               item-value="id"
+              :items="mail_groups"
+              :label="`Добавить группу рассылки (${mailFocus})`"
               @input="getMailGroup"
             />
           </v-col>
@@ -75,8 +74,14 @@
             <v-autocomplete
               v-if="emails.length"
               v-model="mail.toArray"
-              label="Введите адрес получателя"
-              :items="emails"
+              v-model:search-input="searchTo"
+              auto-select-first
+              chips
+              class="mt-1 white"
+              clearable
+              deletable-chips
+              dense
+              hide-details
               :item-text="
                 (e) =>
                   `${e.email}${
@@ -84,28 +89,28 @@
                   }`
               "
               item-value="id"
-              auto-select-first
-              class="mt-1 white"
-              outlined
-              chips
-              dense
-              hide-details
-              clearable
-              deletable-chips
+              :items="emails"
+              label="Введите адрес получателя"
               multiple
+              outlined
               small-chips
-              :search-input.sync="searchTo"
               @change="searchTo = ''"
-              @update:search-input="addNewEmail"
               @focus="() => setFocus('to')"
+              @update:search-input="addNewEmail"
             />
           </v-col>
           <v-col class="over-y200 pa-0" cols="12">
             <v-autocomplete
               v-if="emails.length"
               v-model="mail.copyArray"
-              label="Копия"
-              :items="emails"
+              v-model:search-input="searchCopy"
+              auto-select-first
+              chips
+              class="mt-1 white"
+              clearable
+              deletable-chips
+              dense
+              hide-details
               :item-text="
                 (e) =>
                   `${e.email}${
@@ -113,20 +118,14 @@
                   }`
               "
               item-value="id"
-              auto-select-first
-              class="mt-1 white"
-              outlined
-              chips
-              dense
-              hide-details
-              clearable
-              deletable-chips
+              :items="emails"
+              label="Копия"
               multiple
+              outlined
               small-chips
-              :search-input.sync="searchCopy"
               @change="searchCopy = ''"
-              @update:search-input="addNewEmail"
               @focus="() => setFocus('copy')"
+              @update:search-input="addNewEmail"
             />
           </v-col>
         </v-row>
@@ -135,23 +134,19 @@
           <v-col class="pa-1 ma-1 over-y">
             <v-textarea
               v-model="mail.text"
-              class="white"
               auto-grow
+              class="white"
               counter
-              outlined
               label="Тело письма"
+              outlined
             />
-            <label v-if="attachment.length"
-              >Вложения: {{ attachment.length }} шт</label
-            >
+            <label v-if="attachment.length">Вложения: {{ attachment.length }} шт</label>
           </v-col>
         </v-row>
         <v-row v-else class="ma-0">
           <v-col class="pa-0 over-y">
             <TextTinyMCEVue v-model="mail.text" label="Тело письма" />
-            <label v-if="attachment.length"
-              >Вложения: {{ attachment.length }} шт</label
-            >
+            <label v-if="attachment.length">Вложения: {{ attachment.length }} шт</label>
           </v-col>
         </v-row>
       </v-card-text>
@@ -256,7 +251,7 @@ const sendMail = () => {
     mail.value.text += "<br>Отправленно из " + NAIMEN_POMNI;
     mail.value.text += "<br>Инициатор: <b>" + userFio.value + "</b>";
   } else {
-    mail.value.text += ` 
+    mail.value.text += `
         ${userFio.value}`;
   }
 
@@ -305,10 +300,8 @@ const getMailGroup = (id: string) => {
   const group = mail_list.value
     .filter((e) => e.kod_group === +id)
     .map((e) => e.kod_email);
-  if (mailFocus.value === "to")
-    mail.value.toArray = [...mail.value.toArray, ...group];
-  if (mailFocus.value === "copy")
-    mail.value.copyArray = [...mail.value.copyArray, ...group];
+  if (mailFocus.value === "to") { mail.value.toArray = [...mail.value.toArray, ...group]; }
+  if (mailFocus.value === "copy") { mail.value.copyArray = [...mail.value.copyArray, ...group]; }
 };
 const addNewEmail = (s: string) => {
   if (!s) return;

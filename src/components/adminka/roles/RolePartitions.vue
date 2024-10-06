@@ -1,34 +1,40 @@
 <template>
   <v-card>
     <v-row align="center" class="ma-1">
-      <v-col cols="4" class="text-h4 text-right"> Разделы </v-col>
+      <v-col class="text-h4 text-right" cols="4"> Разделы </v-col>
       <v-col cols="4">
         <AutocompleteVVue
           v-model="newPartition.kod_access"
           auto-select-first
-          prepend-icon="add_location"
-          multiple
           clearable
-          label="Выбрать раздел"
-          :items="lastPartition"
-          item-value="id"
           item-text="namien"
+          item-value="id"
+          :items="lastPartition"
+          label="Выбрать раздел"
+          multiple
+          prepend-icon="add_location"
         />
       </v-col>
       <v-col cols="2">
         <AutocompleteVVue
           v-model="newPartition.access_level"
-          outlined
-          label="Уровень доступа"
-          :items="levels"
-          item-value="id"
-          item-text="name"
           dense
           hide-details
+          item-text="name"
+          item-value="id"
+          :items="levels"
+          label="Уровень доступа"
+          outlined
         />
       </v-col>
       <v-col cols="auto">
-        <v-btn fab x-small color="blue" dark @click="addPartition">
+        <v-btn
+          color="blue"
+          dark
+          fab
+          x-small
+          @click="addPartition"
+        >
           <v-icon>add</v-icon>
         </v-btn>
       </v-col>
@@ -37,12 +43,12 @@
     <v-list
       v-for="partition in partitionList"
       :key="roleId + '_partition_' + partition.id"
-      color="amber lighten-5"
       class="pa-0"
+      color="amber lighten-5"
       dense
     >
       <v-divider />
-      <PartitionVue :partition="partition" @delPartition="changeRolesAccess" />
+      <PartitionVue :partition="partition" @del-partition="changeRolesAccess" />
     </v-list>
   </v-card>
 </template>
@@ -66,11 +72,11 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
+  setup () {
     const { r_insert, checkDataModify } = dataApiComposition();
     return { r_insert, checkDataModify };
   },
-  data() {
+  data () {
     return {
       newPartition: {
         kod_access: null as null | number[],
@@ -87,24 +93,24 @@ export default defineComponent({
       "roles_users",
       "levels",
     ]),
-    partitionList(): IRoleAccess[] {
+    partitionList (): IRoleAccess[] {
       let list: IRoleAccess[] = [];
       list = this.roles_access.filter(
         (u: { kod_role: number }) => u.kod_role === this.roleId
       );
       return list;
     },
-    lastPartition(): IPartitionAccess[] {
+    lastPartition (): IPartitionAccess[] {
       return this.partitions.filter(
         (e) => this.partitionList.map((p) => p.kod_access).indexOf(e.id) === -1
       );
     },
   },
   methods: {
-    changeRolesAccess() {
+    changeRolesAccess () {
       this.$emit("RolesAccess");
     },
-    addPartition() {
+    addPartition () {
       if (this.newPartition.kod_access === null) {
         this.$toast({ html: "Необходимо указать раздел" });
         return;

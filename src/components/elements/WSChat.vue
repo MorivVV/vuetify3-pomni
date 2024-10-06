@@ -7,30 +7,30 @@
           <v-select
             v-model="channel"
             dense
-            outlined
             hide-details
-            :items="ws_channels"
-            item-value="id"
             item-text="naimen"
+            item-value="id"
+            :items="ws_channels"
             label="Канал"
+            outlined
           />
         </v-col>
         <v-col cols="5">
           <v-select
             v-model="room"
             dense
-            outlined
             hide-details
-            :items="ws_room"
-            item-value="id"
             item-text="naimen"
+            item-value="id"
+            :items="ws_room"
             label="Комната"
+            outlined
           />
         </v-col>
         <v-col cols="auto">
           <SubscribeWSVue
             :room="room"
-            @getSubscribes="
+            @get-subscribes="
               () => {
                 getSubscribes(userToken).then((r) => {
                   if (r.map((e) => e.id).indexOf(room) === -1) {
@@ -53,14 +53,13 @@
               <BtnIconsVVue :action="send" icon="send" title="Отправить" />
             </v-col>
 
-            <v-col v-if="messPrivate" cols="auto" class="col chip">
+            <v-col v-if="messPrivate" class="col chip" cols="auto">
               <v-chip>
                 Лично для {{ messPrivate
                 }}<i
                   class="material-icons pointer"
                   @click="privateMessage('', '')"
-                  >close</i
-                >
+                >close</i>
               </v-chip>
             </v-col>
           </v-row>
@@ -72,7 +71,7 @@
           :key="'mess_' + mess.id + mess.kod_user"
           :message="mess"
           :num="ind"
-          @privateMess="privateMessage"
+          @private-mess="privateMessage"
         />
       </v-card>
     </v-container>
@@ -90,7 +89,7 @@ import StatusWSVue from "./wschat/StatusWS.vue";
 import MessagesWSVue from "./wschat/MessagesWS.vue";
 import { useWebsocketStore } from "@/store/modules/websocket";
 import { useAutorizationStore } from "@/store/modules/autorization";
-import { getChannels, getRooms, getHistory, getSubscribes } from "./wsChatData";
+import { getChannels, getHistory, getRooms, getSubscribes } from "./wsChatData";
 import { IKnowledgebaseWsSubscribes } from "@/types/database/schemas/knowledgebase";
 
 defineProps({

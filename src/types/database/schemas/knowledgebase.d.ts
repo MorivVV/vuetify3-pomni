@@ -645,7 +645,7 @@ export interface IKnowledgebaseCronJobsAudit {
     milliseconds: number;
   };
 }
-/**связка пользователей с IP адресами */
+/** связка пользователей с IP адресами */
 export interface IKnowledgebaseBzUserIp {
   id: number;
   kod_user: number;

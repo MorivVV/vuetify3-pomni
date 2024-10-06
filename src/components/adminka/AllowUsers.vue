@@ -8,7 +8,7 @@
             :action="checkPartitions"
             color="white"
             colorbtn="purple"
-            icon="sync_problem"
+            icon="sync-circle"
             title="Синхронизировать разделы в БД"
           />
         </v-col>
@@ -16,7 +16,7 @@
           <TextFielsV
             v-model="sPartition"
             label="Поиск по разделам"
-            prepend-icon="search"
+            prepend-icon="search-web"
           />
         </v-col>
       </v-row>
@@ -32,13 +32,10 @@
       </v-expansion-panels>
       <v-row class="ma-1">
         <v-col>
-          <v-text-field
+          <TextFielsV
             v-model="sFio"
-            dense
-            hide-details
             label="Поиск по пользователю"
-            outlined
-            prepend-icon="search"
+            prepend-icon="mdi-magnify"
           />
         </v-col>
       </v-row>
@@ -95,7 +92,7 @@ import {
 } from "@/types/database/schemas/knowledgebase";
 import { getAccess, getGraph } from "./AllowUsers/accessMetods";
 import TextFielsV from "../basic/TextFielsV.vue";
-import { IPartitionAccess } from "@/types/global";
+import { IPartitionAccess, Route } from "@/types/global";
 
 const parseRecursive = (
   r: Route,

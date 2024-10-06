@@ -6,21 +6,21 @@
           <div class="text-h4 mt-2 mb-1">Регистрация по табельному номеру</div>
         </v-col>
       </v-row>
-      <v-row class="ma-1 text-center" justify="center" align="center">
+      <v-row align="center" class="ma-1 text-center" justify="center">
         <v-col cols="6">
           <TextFielsV
             v-model="tabnum"
-            prepend-icon="account_circle"
             :label="'Введите свой Табельный №'"
+            prepend-icon="account-circle"
           />
         </v-col>
         <v-col cols="1">
           <BtnIconsVVue
-            colorbtn="green"
-            color="white"
-            title="Проверка регистрации"
             :action="register"
+            color="white"
+            colorbtn="green"
             :disabled="tabnum.length < 4"
+            title="Проверка регистрации"
           />
         </v-col>
       </v-row>
@@ -70,14 +70,14 @@
           <TextFielsV v-model="question" label="Секретный ключ из почты" />
         </v-col>
 
-        <v-col cols="1" class="text-center">
+        <v-col class="text-center" cols="1">
           <BtnIconsVVue
             :action="activate"
-            title="Активировать"
-            icon="check"
             color="white"
             colorbtn="blue"
             :disabled="question.length !== 32"
+            icon="check"
+            title="Активировать"
           />
         </v-col>
       </v-row>
@@ -111,7 +111,7 @@ const activate = () => {
   const q = question.value.trim();
   r_fetch(
     "activate",
-    { id: id, question: q },
+    { id, question: q },
     "userInfo",
     useAutorizationStore
   );

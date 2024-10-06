@@ -18,7 +18,7 @@
         >
           {{ block.name }}
         </v-col>
-        <v-col cols="12" class="pa-0">
+        <v-col class="pa-0" cols="12">
           <ConfBlock
             :key="'sub_block_' + block.id"
             v-model="activeBlock"

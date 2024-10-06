@@ -1,18 +1,18 @@
 <template>
   <BtnIconsVVue
     v-if="subScribe"
+    :action="removeSubscribe"
     color="white"
     colorbtn="green"
     icon="notifications_active"
-    :action="removeSubscribe"
     title="Отписаться"
   />
   <BtnIconsVVue
     v-else
+    :action="addSubscribe"
     color="white"
     colorbtn="btn-small grey"
     icon="notifications_none"
-    :action="addSubscribe"
     title="Подписаться"
   />
 </template>
@@ -32,14 +32,14 @@ export default defineComponent({
   props: {
     room: { type: [Number, String], default: 1 },
   },
-  setup() {
+  setup () {
     const { r_insert, r_delete } = dataApiComposition();
     return { r_insert, r_delete };
   },
   computed: {
     ...mapState(useWebsocketStore, ["ws_subscribes"]),
     ...mapGetters(useAutorizationStore, ["userId", "userToken"]),
-    subScribe() {
+    subScribe () {
       let subScribe = false;
       if (
         this.ws_subscribes.find(
@@ -52,7 +52,7 @@ export default defineComponent({
     },
   },
   methods: {
-    addSubscribe() {
+    addSubscribe () {
       this.r_insert({
         to: "ws_subscribes",
         fields: {
@@ -64,7 +64,7 @@ export default defineComponent({
         .then(() => this.$emit("getSubscribes"))
         .then(() => this.$toast({ html: "Подписка включена" }));
     },
-    removeSubscribe() {
+    removeSubscribe () {
       this.r_delete({
         from: "ws_subscribes",
         filter: {

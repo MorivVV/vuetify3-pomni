@@ -3,19 +3,19 @@
     <div class="container">
       <div class="lighten-5 add-form" :class="modalClass">
         <ModalHeaderVue
-          :modal-class="modalClass"
           :form-cancel="formCancel"
-          :title="title"
-          :form-ok="formOk"
           :form-delete="formDelete"
+          :form-ok="formOk"
+          :modal-class="modalClass"
+          :title="title"
         />
 
         <slot />
 
         <ModalHeaderVue
-          :modal-class="modalClass"
           :form-cancel="formCancel"
           :form-ok="formOk"
+          :modal-class="modalClass"
         />
       </div>
     </div>

@@ -10,8 +10,8 @@
         <div v-bind="attrs" v-on="on">
           <v-checkbox
             v-model="lazyValue"
-            class="ma-0 pa-0"
             :append-icon="appendIcon"
+            class="ma-0 pa-0"
             :color="color"
             :dark="dark"
             dense

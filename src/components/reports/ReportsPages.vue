@@ -4,10 +4,10 @@
     <DataTableV
       v-else
       caption="Отчеты"
-      show-expand
-      :items="reports"
-      :headers="tableHeader"
       class="green lighten-5"
+      :headers="tableHeader"
+      :items="reports"
+      show-expand
     >
       <template #[`item.date_add`]="{ item }">
         {{ moment(item.date_add).format(momentFormatFullShort) }}
@@ -18,12 +18,12 @@
         }}</span>
       </template>
       <template #[`item.naimen`]="{ item }">
-        <a target="_blank" :href="`/reports/page/${item.id}`">{{
+        <a :href="`/reports/page/${item.id}`" target="_blank">{{
           item.naimen
         }}</a>
       </template>
       <template #expanded-item="{ headers, item }">
-        <td :colspan="headers.length" class="ma-0 pa-0">
+        <td class="ma-0 pa-0" :colspan="headers.length">
           <ReportHistory :report-id="item.id" :report-name="item.naimen" />
         </td>
       </template>

@@ -38,11 +38,11 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
+  setup () {
     const { r_get, r_ajax, r_update } = dataApiComposition();
     return { r_get, r_ajax, r_update };
   },
-  data() {
+  data () {
     return {
       newTables: [],
     };
@@ -50,7 +50,7 @@ export default defineComponent({
   computed: {
     ...mapState(useAdminStore, ["rights_table"]),
     ...mapState(usePostgreStore, ["tableList"]),
-    headerRT() {
+    headerRT () {
       const header = [
         {
           text: "id",
@@ -81,7 +81,7 @@ export default defineComponent({
 
       return header;
     },
-    lastTableList(): any {
+    lastTableList (): any {
       return this.tableList.filter(
         (e) =>
           this.rights_table
@@ -90,11 +90,11 @@ export default defineComponent({
       );
     },
   },
-  mounted() {
+  mounted () {
     this.getDataBaseTables().then(() => this.getRightsTable());
   },
   methods: {
-    getDataBaseTables() {
+    getDataBaseTables () {
       return this.r_get(
         {
           fields: [
@@ -114,7 +114,7 @@ export default defineComponent({
         usePostgreStore
       );
     },
-    getRightsTable() {
+    getRightsTable () {
       return this.r_get(
         { from: "rights_table", sort: ["naimen"] },
         "rights_table",
@@ -122,7 +122,7 @@ export default defineComponent({
       );
     },
 
-    changeRightTable(item: any) {
+    changeRightTable (item: any) {
       return this.r_update({
         to: "rights_table",
         set: item,
@@ -131,7 +131,7 @@ export default defineComponent({
         },
       });
     },
-    addRightTables() {
+    addRightTables () {
       if (this.newTables.length === 0) {
         this.$toast({ html: "Необходимо выбрать таблицу" });
         return;

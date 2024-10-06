@@ -1,6 +1,6 @@
 import { IParserURLPattern, IParserURLResource } from "@/types/global";
 
-function quoted(text: string): string {
+function quoted (text: string): string {
   return "=%22" + text + "%22";
 }
 

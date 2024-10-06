@@ -6,25 +6,25 @@ import {
 } from "@/types/database/schemas/knowledgebase";
 import {
   ISmprimaryAsLiderOps,
+  ISmprimaryAssignmentm1,
   ISmprimaryClusters,
   ISmprimaryContctsm1,
   ISmprimaryDevice2m1,
-  ISmprimaryProbsummarym1,
-  ISmprimarySbriskm1,
-  ISmprimaryRootcausem1,
-  ISmprimaryRootcsetsksm1,
-  ISmprimarySbrisktaskm1,
   ISmprimaryHpcauditrootcausem1,
   ISmprimaryHpcauditsbriskm1,
+  ISmprimaryProbsummarym1,
+  ISmprimaryRootcausem1,
+  ISmprimaryRootcsetsksm1,
+  ISmprimarySbapprovalm1,
+  ISmprimarySbimcausem1,
+  ISmprimarySbimtaskm1,
   ISmprimarySbrequestm1,
   ISmprimarySbrequesttaskm1,
-  ISmprimaryAssignmentm1,
-  ISmprimarySbsoftupdatetaskm1,
-  ISmprimarySbimcausem1,
-  ISmprimarySbapprovalm1,
-  ISmprimarySbimtaskm1,
-  ISmprimarySbroutineworksm1,
+  ISmprimarySbriskm1,
+  ISmprimarySbrisktaskm1,
   ISmprimarySbroutinetaskm1,
+  ISmprimarySbroutineworksm1,
+  ISmprimarySbsoftupdatetaskm1,
 } from "@/types/database/schemas/smprimary";
 import {
   // IJiraComments,
@@ -143,7 +143,7 @@ export const useServiceManagerStore = defineStore("service_manager", {
   }),
 
   getters: {
-    activeRegSetting(state) {
+    activeRegSetting (state) {
       let actSetting = state.sm_url_patterns;
       if (actSetting.length > 0) {
         actSetting = actSetting.filter((e) => e.avcive);
@@ -151,7 +151,7 @@ export const useServiceManagerStore = defineStore("service_manager", {
 
       return actSetting;
     },
-    urlResource(state) {
+    urlResource (state) {
       return state.url_resource;
     },
   },

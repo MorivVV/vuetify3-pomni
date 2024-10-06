@@ -1,28 +1,28 @@
 <template>
   <v-row class="ma-1">
     <v-col cols="12">
-      <v-card :class="{ green: user.active }" class="horizontal lighten-5">
+      <v-card class="horizontal lighten-5" :class="{ green: user.active }">
         <v-row>
-          <v-col cols="auto" class="card-image">
+          <v-col class="card-image" cols="auto">
             <img
               v-if="user.fullphoto"
-              :style="{ width: '140px', margin: '5px' }"
               :src="'data:image/png; base64, ' + user.fullphoto"
-            />
+              :style="{ width: '140px', margin: '5px' }"
+            >
             <img
               v-else-if="user.photo30"
-              :style="{ width: '100px', margin: '25px' }"
               :src="'data:image/png; base64, ' + user.photo30"
-            />
+              :style="{ width: '100px', margin: '25px' }"
+            >
             <img
               v-else
-              :style="{ width: '140px', margin: '5px' }"
               src="\images\system\f2.png"
-            />
+              :style="{ width: '140px', margin: '5px' }"
+            >
           </v-col>
           <v-col>
             <v-row>
-              <v-col cols="3" class="pa-1">
+              <v-col class="pa-1" cols="3">
                 <div class="card-content">
                   <p class="text-h5">
                     {{ user.empfamilyname }} {{ user.empgivenname }}
@@ -40,7 +40,7 @@
                 </div>
               </v-col>
 
-              <v-col cols="3" class="pa-1">
+              <v-col class="pa-1" cols="3">
                 <div class="card-content">
                   <label class="text-caption">Логин {{ NAIMEN_SITE }}</label>
                   <p>{{ user.login || "нет" }}</p>
@@ -59,47 +59,39 @@
                 </div>
               </v-col>
 
-              <v-col cols="3" class="pa-1">
+              <v-col class="pa-1" cols="3">
                 <div class="card-content">
                   <label class="text-caption">Подразделение</label>
                   <p>{{ user.deptname }}</p>
                   <label class="text-caption">Agile</label>
                   <p>{{ user.agileroles }}</p>
-                  <label class="text-caption"
-                    >Функциональный руководитель</label
-                  >
+                  <label class="text-caption">Функциональный руководитель</label>
                   <p>{{ user.funcdir }}</p>
                   <label class="text-caption">Линейный руководитель</label>
                   <p>{{ user.dir }}</p>
                 </div>
               </v-col>
 
-              <v-col cols="3" class="pa-1">
+              <v-col class="pa-1" cols="3">
                 <div class="card-content">
                   <label class="text-caption">Внутренний</label>
                   <p>{{ user.empinnerphone }}</p>
                   <label class="text-caption">Мобильный</label>
                   <p>{{ user.empmobilephone }}</p>
-                  <label v-if="user.emailalpha"
-                    >Почта Alpha
+                  <label v-if="user.emailalpha">Почта Alpha
                     {{
                       user.mainmail === user.emailalpha ? "(основная)" : ""
-                    }}</label
-                  >
+                    }}</label>
                   <p>{{ user.emailalpha }}</p>
-                  <label v-if="user.emailomega"
-                    >Почта Omega
+                  <label v-if="user.emailomega">Почта Omega
                     {{
                       user.mainmail === user.emailomega ? "(основная)" : ""
-                    }}</label
-                  >
+                    }}</label>
                   <p>{{ user.emailomega }}</p>
-                  <label v-if="user.emailsigma"
-                    >Почта Sigma
+                  <label v-if="user.emailsigma">Почта Sigma
                     {{
                       user.mainmail === user.emailsigma ? "(основная)" : ""
-                    }}</label
-                  >
+                    }}</label>
                   <p>{{ user.emailsigma }}</p>
                 </div>
               </v-col>

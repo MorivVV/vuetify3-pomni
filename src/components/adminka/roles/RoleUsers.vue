@@ -1,39 +1,39 @@
 <template>
   <v-card>
     <v-row align="center" class="ma-1">
-      <v-col cols="4" class="text-h4 text-right"> Пользователи </v-col>
+      <v-col class="text-h4 text-right" cols="4"> Пользователи </v-col>
       <v-col cols="4">
         <AutocompleteVVue
           v-model="newUser.kod_user"
           auto-select-first
-          hide-selected
-          multiple
           clearable
-          prepend-icon="group_add"
-          label="Выбрать пользователя"
-          :items="lastUsers"
-          item-value="id"
+          hide-selected
           item-text="full"
+          item-value="id"
+          :items="lastUsers"
+          label="Выбрать пользователя"
+          multiple
+          prepend-icon="group_add"
         />
       </v-col>
       <v-col cols="2">
         <AutocompleteVVue
           v-model="newUser.access_level"
-          outlined
-          label="Уровень доступа"
-          :items="levels"
-          item-value="id"
-          item-text="name"
           dense
           hide-details
+          item-text="name"
+          item-value="id"
+          :items="levels"
+          label="Уровень доступа"
+          outlined
         />
       </v-col>
       <v-col cols="auto">
         <BtnIconsV
-          icon="add"
-          colorbtn="blue"
-          color="white"
           :action="addUser"
+          color="white"
+          colorbtn="blue"
+          icon="add"
           title="Добавить пользователя"
         />
       </v-col>
@@ -41,12 +41,12 @@
     <v-list
       v-for="user in userList"
       :key="roleId + '_user_' + user.kod_user"
-      color="blue lighten-5"
       class="pa-0 ma-0"
+      color="blue lighten-5"
       dense
     >
       <v-divider />
-      <UserVue :user="user" @delUser="changeRolesUsers" />
+      <UserVue :user="user" @del-user="changeRolesUsers" />
     </v-list>
   </v-card>
 </template>

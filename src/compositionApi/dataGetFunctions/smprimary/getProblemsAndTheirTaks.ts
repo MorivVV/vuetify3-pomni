@@ -121,12 +121,12 @@ export const getProblemFilters = (
   }
 
   if (clusterList.length) {
-    filter["kod_cluster"] = clusterList.map((e) => ({ "ci.kod_cluster": e }));
+    filter.kod_cluster = clusterList.map((e) => ({ "ci.kod_cluster": e }));
   }
 
   if (groupList.length) {
-    filter["kod_group"] = groupList.map((e) => ({ "wg.kod_group": e }));
-    filter["kod_group"] = filter["kod_group"].concat(
+    filter.kod_group = groupList.map((e) => ({ "wg.kod_group": e }));
+    filter.kod_group = filter.kod_group.concat(
       groupList.map((e) => ({ "wg.id": e }))
     );
   }
@@ -215,12 +215,12 @@ export const getProblemsTaskFilters = (
   }
 
   if (clusterList.length) {
-    filter["kod_cluster"] = clusterList.map((e) => ({ "ci.kod_cluster": e }));
+    filter.kod_cluster = clusterList.map((e) => ({ "ci.kod_cluster": e }));
   }
 
   if (groupList.length) {
-    filter["kod_group"] = groupList.map((e) => ({ "wg.kod_group": e }));
-    filter["kod_group"] = filter["kod_group"].concat(
+    filter.kod_group = groupList.map((e) => ({ "wg.kod_group": e }));
+    filter.kod_group = filter.kod_group.concat(
       groupList.map((e) => ({ "wg.id": e }))
     );
   }
@@ -239,10 +239,11 @@ export const getHpcauditrootcausem1 = (problems_ids: string[] = []) => {
           "au.p_id"?: `=:${string}`;
         }[]
       | undefined;
-    if (problems_ids.length)
+    if (problems_ids.length) {
       problems = problems_ids.map((e) => ({
         "au.p_id": `=:${e}`,
       }));
+    }
     r_get<string>(
       {
         from: [`${ESMPRIMARY.hpcauditrootcausem1}:au`],

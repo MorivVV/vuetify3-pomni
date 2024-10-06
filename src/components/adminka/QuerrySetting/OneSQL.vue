@@ -4,8 +4,8 @@
     <OneSQLviewVue
       v-else
       :ssq="ssq"
-      @getSSQ="$emit('getSSQ')"
       @edit-sql="changeEdit"
+      @get-s-s-q="$emit('getSSQ')"
     />
   </v-row>
 </template>

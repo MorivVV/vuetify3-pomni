@@ -4,25 +4,26 @@
       <v-col cols="2">
         <AutocompleteV
           v-model="data_base"
-          label="База данных"
-          :items="[{ id: null, bd: 'Все' }].concat(bd_list)"
           item-text="bd"
           item-value="id"
-          prepend-icon="settings_input_hdmi"
+          :items="[{ id: null, bd: 'Все' }].concat(bd_list)"
+          label="База данных"
+          prepend-icon="mdi-video-input-hdmi"
         />
         <AutocompleteV
           v-model="kod_driver"
-          label="ТУЗ"
-          :items="[{ id: 0, naimen: 'Все' }].concat(bd_list_tuz)"
           item-text="naimen"
           item-value="id"
-          prepend-icon="account_box"
+          :items="[{ id: 0, naimen: 'Все' }].concat(bd_list_tuz)"
+          label="ТУЗ"
+          prepend-icon="mdi-account-box"
         />
       </v-col>
       <v-col cols="2">
         <AutocompleteV
           v-model="kod_user"
-          label="Автор/редактор"
+          item-text="fio"
+          item-value="id"
           :items="
             [{ id: 0, fio: 'Все' }].concat(
               usersFioArray
@@ -30,8 +31,7 @@
                 .map((e) => ({ id: e.id, fio: e.fio }))
             )
           "
-          item-value="id"
-          item-text="fio"
+          label="Автор/редактор"
         />
       </v-col>
 
@@ -42,7 +42,7 @@
           @keypress.enter="getSSQ"
         />
       </v-col>
-      <v-col cols="6" class="pa-2 pl-0 ma-0">
+      <v-col class="pa-2 pl-0 ma-0" cols="6">
         <SearchInput :use-state="useAdminStore" />
       </v-col>
     </v-row>
@@ -55,10 +55,10 @@
               Запросы разделяются по типу от используемой БД: Oracle или
               PostgreSQL. Запросы, для которых выбран ТУЗ будут выполняться на
               внешних БД на которые настроен ТУЗ.
-              <br />
+              <br>
               Если выбрать PostgresSQL и не указывать ТУЗ, то запросы будут
               выполняться на БД АС ПоМни.
-              <br />
+              <br>
               При добавлении нового запроса, он будет создаваться в виде
               пустышки с названием 1a_newAjax_{количество_всех_запросов+1}.
               Такой запрос всегда будет иметь БД = PostgresSQL и ТУЗ - пусто
@@ -71,7 +71,7 @@
                 При использовании параметров обязательно указывайте на какой БД
                 будет выполняться запрос (ORACLE/PostgreSQL)
               </span>
-              <br />
+              <br>
               Параметры в запросе указываются как ключевые слова, которые
               начинаются с двоеточия
               <div class="ml-4">
@@ -108,19 +108,19 @@
       </v-col>
     </v-row>
     <v-row class="pa-0 ma-1 mb-n4 ml-4 mr-4 pl-4 pr-4">
-      <v-col offset-md="1" cols="auto" class="pa-1 ma-0">
+      <v-col class="pa-1 ma-0" cols="auto" offset-md="1">
         <BtnIconsVVue
-          :disabled="!addLevel"
-          colorbtn="blue darken-2"
-          color="white"
-          class="small-btn"
           :action="addOpen"
-          icon="add"
+          class="small-btn"
+          color="white"
+          colorbtn="blue darken-2"
+          :disabled="!addLevel"
+          icon="plus"
           title="Добавить новый запрос"
         />
       </v-col>
       <v-col class="pa-1 ma-0">
-        <v-pagination v-model="page" :length="calcPages" color="pink" />
+        <v-pagination v-model="page" color="pink" :length="calcPages" />
       </v-col>
     </v-row>
     <v-row v-if="loading" align="center" justify="center">
@@ -132,11 +132,11 @@
       v-for="ssq in sqlQuery"
       :key="ssq.id"
       :ssq="ssq"
-      @getSSQ="getSSQ"
+      @get-s-s-q="getSSQ"
     />
 
     <v-col cols="12">
-      <v-pagination v-model="page" :length="calcPages" color="pink" />
+      <v-pagination v-model="page" color="pink" :length="calcPages" />
     </v-col>
     <v-dialog v-model="addDialog" width="80%">
       <div v-if="addDialog">
@@ -166,7 +166,6 @@ import { routeAccessLevelCalculate } from "@/compositionApi/accessLevelCalculate
 import { useUserDataStore } from "@/store/modules/usersData";
 import AutocompleteV from "../basic/AutocompleteV.vue";
 import { useRoute, useRouter } from "vue-router";
-import { Dictionary } from "vue-router/types/router";
 import TextFielsV from "../basic/TextFielsV.vue";
 import LoaderCircle from "../basic/LoaderCircle.vue";
 import OneSQLedit from "./QuerrySetting/OneSQLedit.vue";
@@ -219,9 +218,6 @@ const getRouteParams = () => {
       case "kod_user":
         kod_user.value = Number(element);
         break;
-      case "kod_user":
-        kod_user.value = Number(element);
-        break;
       case "limit":
         perPage.value = Number(element);
         break;
@@ -241,7 +237,7 @@ const calcPages = computed(() => {
 const getSQLName = (sql_name: string) =>
   r_get<keyof IKnowledgebaseSysSqlQuery>({
     from: "sys_sql_query",
-    filter: { sql_name: sql_name },
+    filter: { sql_name },
   });
 const addOpen = () => {
   newAjax.value = {};
@@ -326,25 +322,25 @@ const getConfigDataBases = () => {
 };
 const replaceURL = () => {
   const query:
-    | Dictionary<string | (string | null)[] | null | undefined>
+    | Record<string, string | (string | null)[] | null | undefined>
     | undefined = {};
   if (kod_user.value) {
-    query["kod_user"] = String(kod_user.value);
+    query.kod_user = String(kod_user.value);
   }
   if (search.value) {
-    query["sql_name"] = String(search.value);
+    query.sql_name = String(search.value);
   }
   if (sql_text.value) {
-    query["sql_text"] = String(sql_text.value);
+    query.sql_text = String(sql_text.value);
   }
   if (kod_driver.value) {
-    query["kod_database_tuz"] = String(kod_driver.value);
+    query.kod_database_tuz = String(kod_driver.value);
   }
   if (perPage.value) {
-    query["limit"] = String(perPage.value);
+    query.limit = String(perPage.value);
   }
   if (resultMin.value) {
-    query["page"] = String(page.value);
+    query.page = String(page.value);
   }
   if (JSON.stringify(route.query) !== JSON.stringify(query)) {
     router.replace({ query });
@@ -404,7 +400,7 @@ const getSSQ = (calcCount = true) => {
     from: "cron_jobs",
     fields: ["count(1):cnt_script"],
     filter: {
-      parameters: `@@~:ssq.sql_name`,
+      parameters: "@@~:ssq.sql_name",
     },
   };
   r_get<string | ICreateTableFields<keyof IKnowledgebaseSysSqlQuery, "ssq">>(
@@ -422,8 +418,8 @@ const getSSQ = (calcCount = true) => {
   ).then(() => {
     loading.value = false;
   });
-  if (calcCount)
-    r_get<string | ICreateTableFields<keyof IKnowledgebaseSysSqlQuery, "ssq">>({
+  if (calcCount) {
+ r_get<string | ICreateTableFields<keyof IKnowledgebaseSysSqlQuery, "ssq">>({
       fields: ["count(1):cnt"],
       from: ["sys_sql_query:ssq"],
       filter,
@@ -435,6 +431,7 @@ const getSSQ = (calcCount = true) => {
       r_state(useAdminStore, "searchCount", count);
       replaceURL();
     });
+}
 };
 
 watch(search, () => getSSQ());

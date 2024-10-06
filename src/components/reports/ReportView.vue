@@ -2,37 +2,33 @@
   <div>
     <DataTableV
       :caption="reportName"
-      :items-per-page="20"
       :items="report"
+      :items-per-page="20"
       :loading="loadingReport"
     >
       <template #expanded-top>
-        <v-col cols="auto" class="pa-1">
+        <v-col class="pa-1" cols="auto">
           <v-row>
             <v-col cols="4">
-              <span v-if="reportRowCount > report.length" class="purple--text"
-                >По умолчанию выводятся первые {{ reportDefaultLimit }} строк из
+              <span
+                v-if="reportRowCount > report.length"
+                class="purple--text"
+              >По умолчанию выводятся первые {{ reportDefaultLimit }} строк из
                 {{ reportRowCount }}. Полный отчет можно получить нажав по
-                кнопке, либо скачать в эксель</span
-              >
+                кнопке, либо скачать в эксель</span>
             </v-col>
             <v-col cols="auto">
               <BtnIconsV
+                :action="() => loadReportData()"
                 color="primary"
                 :colorbtn="loadingReport ? 'primary' : 'white'"
-                :loading="loadingReport"
                 icon="file_download"
+                :loading="loadingReport"
                 title="Получить полный отчет"
-                :action="() => loadReportData()"
               />
             </v-col>
             <v-col cols="auto">
               <BtnIconsV
-                color="green"
-                :colorbtn="loadingReport ? 'green' : 'white'"
-                icon="mdi-microsoft-excel"
-                title="Скачать XLSX"
-                :loading="loadingReport"
                 :action="
                   () => {
                     loadingReport = true;
@@ -41,6 +37,11 @@
                     );
                   }
                 "
+                color="green"
+                :colorbtn="loadingReport ? 'green' : 'white'"
+                icon="mdi-microsoft-excel"
+                :loading="loadingReport"
+                title="Скачать XLSX"
               />
             </v-col>
           </v-row>
@@ -63,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, toRefs } from "vue";
+import { onMounted, ref, toRefs } from "vue";
 import DataTableV from "../basic/DataTableV.vue";
 import {
   IReportsReportColumns,

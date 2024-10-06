@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-col class="top-menu" :class="{ 'menu-view': subMenuView }" cols="auto">
-      <BtnIconsVVue
+      <BtnIconsV
         :action="
           () => {
             menuView = true;
@@ -11,34 +11,29 @@
         icon="menu"
         title="Открыть меню"
       />
-      <BtnIconsVVue
+      <BtnIconsV
         :action="
           () => {
             goTo(0, {});
           }
         "
         color="green"
-        icon="expand-less"
+        icon="arrow-up"
         title="Прокрутить вверх"
       />
     </v-col>
-    <v-toolbar color="blue" dense elevation="4">
+    <v-app-bar color="blue" density="compact" elevation="4">
+      <template #prepend>
+        <BtnIconsV
+          :action="openCloseMenu"
+          color="blue"
+          icon="menu"
+          title="Открыть меню"
+        />
+      </template>
+      <v-app-bar-title class="text-h4 white--text">{{ NAIMEN_SITE }}</v-app-bar-title>
       <v-row align="center" class="ma-0 white--text">
-        <v-col cols="auto">
-          <BtnIconsVVue
-            :action="
-              () => {
-                menuView = true;
-              }
-            "
-            color="blue"
-            icon="menu"
-            title="Открыть меню"
-          />
-        </v-col>
-        <v-col class="text-h4 white--text" cols="auto">
-          {{ NAIMEN_SITE }}
-        </v-col>
+        <v-col cols="auto" />
 
         <v-col class="text-center pa-0 ma-0">
           <span
@@ -48,10 +43,10 @@
           >
             <v-btn class="pa-1" plain text :to="{ name: p.name }">
               <span
-                class="white pa-1 mr-1 rounded"
+                class="bg-white pa-1 mr-1 rounded"
                 style="display: inline-block"
               >
-                <v-icon :class="p.meta?.class ?? 'white'">
+                <v-icon :class="p.meta?.class ?? 'white'" size="24">
                   {{ p.meta?.icon }}
                 </v-icon>
               </span>
@@ -63,26 +58,17 @@
         </v-col>
         <v-col cols="2" />
       </v-row>
-    </v-toolbar>
+      <template #append>
+        <Secure @open-notify="openBar" />
+      </template>
+    </v-app-bar>
     <NotificationList
       :notification-view="notificationView"
       @open-notify="openBar"
     />
     <v-navigation-drawer v-model="menuView" fixed temporary :width="350">
       <v-expansion-panels accordion hover tile>
-        <v-list-item class="blue">
-          <span class="mr-3">
-            <BtnIconsVVue
-              :action="openMenu"
-              color="blue"
-              icon="chevron_left"
-              title="Свернуть меню"
-            />
-          </span>
-          <v-row align="center" class="ma-0 blue white--text menu">
-            {{ NAIMEN_SITE }}
-          </v-row>
-        </v-list-item>
+
         <MenuElementVue
           v-for="u in props.urls"
           :key="'parent_' + u.href"
@@ -98,13 +84,12 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </v-navigation-drawer>
-    <Secure @open-notify="openBar" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { onBeforeMount, onMounted, PropType, ref, watch } from "vue";
-import BtnIconsVVue from "../basic/BtnIconsV.vue";
+import BtnIconsV from "../basic/BtnIconsV.vue";
 import MenuElementVue from "./Menu/MenuElement.vue";
 import WSChatVue from "./WSChat.vue";
 import { useRoute } from "vue-router";
@@ -138,8 +123,8 @@ const subMenuView = ref(false);
 const menuView = ref(false);
 const NAIMEN_SITE = ref(NAIMEN_POMNI);
 
-const openMenu = () => {
-  menuView.value = false;
+const openCloseMenu = () => {
+  menuView.value = !menuView.value;
 };
 const scrollDown = () => {
   if (document.documentElement.scrollTop >= 50 && !menuView.value) {
@@ -183,9 +168,5 @@ onBeforeMount(() => {
   padding: 5px;
   transition: 0.2s ease-out;
 }
-.menu {
-  height: 48px;
-  font-size: 2.1rem;
-  /* padding-top: 7px; */
-}
+
 </style>

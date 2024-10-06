@@ -5,14 +5,13 @@
         <v-col cols="2">
           <TextFielsV
             v-model.trim="modSsq.sql_name"
-            :rules="[validateRules]"
             label="sql_name"
+            :rules="[validateRules]"
           />
           <span
             v-if="!validateRules(modSsq.sql_name)"
             class="red--text text-caption"
-            >Используются недопустимые символы</span
-          >
+          >Используются недопустимые символы</span>
         </v-col>
         <v-col cols="4">
           <TextFielsV v-model="modSsq.sql_params" label="Входные параметры" />
@@ -30,18 +29,18 @@
         <v-col cols="2">
           <SelectV
             v-model="modSsq.data_base"
-            label="База данных"
-            :items="bd_list"
             item-text="bd"
             item-value="id"
+            :items="bd_list"
+            label="База данных"
             prepend-icon="settings_input_hdmi"
           />
           <AutocompleteV
             v-model="modSsq.kod_database_tuz"
-            label="ТУЗ"
-            :items="[{ id: null, naimen: 'Нет' }].concat(bd_list_tuz)"
             item-text="naimen"
             item-value="id"
+            :items="[{ id: null, naimen: 'Нет' }].concat(bd_list_tuz)"
+            label="ТУЗ"
             prepend-icon="account_box"
           >
             <template #item="{ item }">
@@ -51,17 +50,17 @@
             </template>
           </AutocompleteV>
         </v-col>
-        <v-col cols="1" class="text-right">
+        <v-col class="text-right" cols="1">
           <BtnIconsVVue
-            colorbtn="red"
-            color="white"
-            title="Выйти из режима редактирования"
             :action="
               () => {
                 $emit('edit-sql', false);
               }
             "
+            color="white"
+            colorbtn="red"
             icon="close"
+            title="Выйти из режима редактирования"
           />
         </v-col>
       </v-row>
@@ -71,17 +70,17 @@
           <v-textarea
             :id="'query' + modSsq.id"
             v-model="modSsq.sql_query"
-            outlined
             hide-details
             label="Текст SQL запроса"
+            outlined
           />
         </v-col>
         <BtnIconsVVue
           :action="saveChange"
-          :disabled="!validateRules(modSsq.sql_name)"
           color="white"
-          icon="save"
           colorbtn="blue"
+          :disabled="!validateRules(modSsq.sql_name)"
+          icon="save"
           title="Сохранить запрос"
         />
       </v-row>

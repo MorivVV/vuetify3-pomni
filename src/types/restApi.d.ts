@@ -1,7 +1,7 @@
 import { currentAuthUser, currentTimestamp } from "@/const/globalRestAPI";
 import {
-  type TBDMODTABLES as TMOD,
   type TBDALLTABLES as TALL,
+  type TBDMODTABLES as TMOD,
 } from "@/const/schemaEnums";
 import { type TBDHOMETABLES } from "@/const/schemaEnumsHome";
 type TBDALLTABLES = `${TALL | TBDHOMETABLES}`;

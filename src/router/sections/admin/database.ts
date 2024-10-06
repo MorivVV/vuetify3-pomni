@@ -1,16 +1,18 @@
-const routeDatabase = {
+import { Route } from "@/types/global";
+
+const routeDatabase: Route = {
   path: "database",
   order: 1000,
   name: "AdminQuerySettingRoot",
   title: "Работа с БД",
-  icon: "build",
-  class: "blue--text",
+  icon: "mdi-database",
+  class: "text-blue",
   component: () => import("@/components/elements/RouterLink.vue"),
   meta: {
     requiresAuth: true,
     title: "Работа с БД",
-    icon: "build",
-    class: "blue--text",
+    icon: "mdi-database",
+    class: "text-blue",
   },
   children: [
     {
@@ -22,8 +24,8 @@ const routeDatabase = {
       meta: {
         requiresAuth: true,
         title: "Ajax запросы",
-        icon: "font_download",
-        class: "deep-purple--text text--darken-1",
+        icon: "mdi-download",
+        class: "text-deep-purple-darken-1",
       },
     },
     {
@@ -35,8 +37,8 @@ const routeDatabase = {
       meta: {
         requiresAuth: true,
         title: "Управление БД Таблицы",
-        icon: "view_list",
-        class: "blue--text text--darken-3",
+        icon: "mdi-view-list",
+        class: "text-blue-darken-3",
       },
     },
   ],

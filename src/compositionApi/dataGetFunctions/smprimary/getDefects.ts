@@ -1,5 +1,5 @@
 import { dataApiComposition } from "@/compositionApi/dataApi";
-import { EKNOWLEGEBASE, ESMPRIMARY, EJIRA } from "@/const/schemaEnums";
+import { EJIRA, EKNOWLEGEBASE, ESMPRIMARY } from "@/const/schemaEnums";
 import { useServiceManagerStore } from "@/store/modules/ServiceManagerData";
 import {
   IJiraDefects,
@@ -7,9 +7,8 @@ import {
   IJiraIssueService,
 } from "@/types/database/schemas/jira";
 import { ICreateTableFields } from "@/types/database/service";
-import { restGetType } from "@/types/restApi";
+import { restGet, restGetType } from "@/types/restApi";
 import { filterSMGroup } from "./filterSMGroup";
-import { restGet } from "@/types/restApi";
 import {
   IKnowledgebaseWorkGroup,
   IKnowledgebaseWorkGroupEmployees,
@@ -200,8 +199,8 @@ export const getDefectsFilter = (
   }
 
   if (groupList.length) {
-    filter["kod_group"] = groupList.map((e) => ({ "wg.kod_group": e }));
-    filter["kod_group"] = filter["kod_group"].concat(
+    filter.kod_group = groupList.map((e) => ({ "wg.kod_group": e }));
+    filter.kod_group = filter.kod_group.concat(
       groupList.map((e) => ({ "wg.id": e }))
     );
   }

@@ -1,20 +1,26 @@
 <template>
-  <v-navigation-drawer v-model="view" width="400" app fixed right hide-overlay>
+  <v-navigation-drawer
+    v-model="view"
+    app
+    fixed
+    hide-overlay
+    right
+    width="400"
+  >
     <v-list-item>
       <v-list-item-content>
         <v-list-item-title>Список всплывавших уведомлений</v-list-item-title>
       </v-list-item-content>
       <v-list-item-action>
         <v-icon
-          title="Закрыть панель"
           color="blue"
+          title="Закрыть панель"
           @click="() => emit('open-notify', false)"
-          >close</v-icon
-        >
+        >close</v-icon>
       </v-list-item-action>
     </v-list-item>
 
-    <v-divider></v-divider>
+    <v-divider />
 
     <v-list dense>
       <v-list-item v-for="item in info" :key="item.timecreate">
@@ -25,20 +31,14 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title
-            >{{ $moment(item.timecreate).format(momentFormatFull) }} ({{
-              $moment(item.timecreate).fromNow()
-            }}
-            )</v-list-item-title
-          >
-          <v-list-item-title
-            ><span v-html="item.text"></span
-          ></v-list-item-title>
+          <v-list-item-title>{{ $moment(item.timecreate).format(momentFormatFull) }} ({{
+            $moment(item.timecreate).fromNow()
+          }}
+            )</v-list-item-title>
+          <v-list-item-title><span v-html="item.text" /></v-list-item-title>
         </v-list-item-content>
         <v-list-item-action>
-          <v-icon title="Очистить" color="red" @click="() => clearNotify(item)"
-            >delete_forever</v-icon
-          >
+          <v-icon color="red" title="Очистить" @click="() => clearNotify(item)">delete_forever</v-icon>
         </v-list-item-action>
       </v-list-item>
     </v-list>

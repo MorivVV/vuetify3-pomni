@@ -10,9 +10,9 @@
         <div v-bind="attrs" v-on="on">
           <v-switch
             v-model="lazyValue"
+            :append-icon="appendIcon"
             class="ma-0 pa-0"
             :color="color"
-            :append-icon="appendIcon"
             :dark="dark"
             dense
             :disabled="disabled"

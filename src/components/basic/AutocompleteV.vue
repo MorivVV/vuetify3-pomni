@@ -38,6 +38,7 @@
 </template>
 
 <script setup lang="ts" generic="T extends Record<string, any>">
+import { TmdiIcons } from "@/const/mdiIcons";
 import { SelectItemKey, ValidationRule, ValueItem } from "@/types/components";
 import {
   ref,
@@ -103,11 +104,11 @@ interface IAutocomplete {
   /** заголовок поля */
   label?: string;
   /** иконка перед полем */
-  prependIcon?: string;
+  prependIcon?: `mdi-${TmdiIcons}` | "";
   /** текст в поле по умолчанию */
   placeholder?: string;
   /** иконка после поля */
-  appendIcon?: string;
+  appendIcon?: `mdi-${TmdiIcons}` | "";
   /** правила проверки значения */
   rules?: ValidationRule[];
 }

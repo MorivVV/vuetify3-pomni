@@ -91,7 +91,7 @@ export const saveUserSetting = (
       fields: {
         kod_user: currentAuthUser,
         route_name: route.name,
-        parameter_key: parameter_key,
+        parameter_key,
         parameter_value: value,
       },
     });

@@ -6,13 +6,12 @@ import {
   IKnowledgebaseWorkGroupEmployees,
 } from "@/types/database/schemas/knowledgebase";
 import {
-  ISmprimarySbapprovalm1,
   ISmprimaryCm3rm1,
   ISmprimaryCm3rm2,
+  ISmprimarySbapprovalm1,
 } from "@/types/database/schemas/smprimary";
 import { ICreateTableFields } from "@/types/database/service";
-import { restGetType } from "@/types/restApi";
-import { restGet } from "@/types/restApi";
+import { restGet, restGetType } from "@/types/restApi";
 import { filterSMGroup } from "./filterSMGroup";
 const { r_get } = dataApiComposition();
 export type ISmZNI = Pick<
@@ -52,12 +51,12 @@ export const getZNIFilters = (
   }
 
   if (clusterList.length) {
-    filter["kod_cluster"] = clusterList.map((e) => ({ "ci.kod_cluster": e }));
+    filter.kod_cluster = clusterList.map((e) => ({ "ci.kod_cluster": e }));
   }
 
   if (groupList.length) {
-    filter["kod_group"] = groupList.map((e) => ({ "wg.kod_group": e }));
-    filter["kod_group"] = filter["kod_group"].concat(
+    filter.kod_group = groupList.map((e) => ({ "wg.kod_group": e }));
+    filter.kod_group = filter.kod_group.concat(
       groupList.map((e) => ({ "wg.id": e }))
     );
   }
@@ -112,14 +111,14 @@ export const getZNI = (
         "zni.p_initial_impact:impact",
         "zni_risk.p_sb_risk:risk",
         stage_work_approval as restGet<any>,
-        //"string_agg(sogl.p_assignee_name, ', '):stage_work_approval",
-        //"CASE WHEN sogl.p_status = 'Согласовано' THEN concat('Согласовано: ', listagg(sogl.p_assignee_name, ', ')) WHEN sogl.p_status = 'На согласовании' THEN concat('На согласовании: ', listagg(sogl.p_assignee_name, ', ')) WHEN sogl.p_status = 'Отклонено' THEN concat('Отклонено: ', listagg(sogl.p_assignee_name, ', ')) WHEN sogl.p_status = 'Отозвано' THEN concat('Отозвано: ', listagg(sogl.p_assignee_name, ', ')) WHEN sogl.p_status = 'Отменено' THEN concat('Отменено: ', listagg(sogl.p_assignee_name, ', ')) WHEN sogl.p_status = 'Зарегистрировано' THEN concat('Зарегистрировано: ', listagg(sogl.p_assignee_name, ', ')) ELSE '' END:stage_work_approval",
+        // "string_agg(sogl.p_assignee_name, ', '):stage_work_approval",
+        // "CASE WHEN sogl.p_status = 'Согласовано' THEN concat('Согласовано: ', listagg(sogl.p_assignee_name, ', ')) WHEN sogl.p_status = 'На согласовании' THEN concat('На согласовании: ', listagg(sogl.p_assignee_name, ', ')) WHEN sogl.p_status = 'Отклонено' THEN concat('Отклонено: ', listagg(sogl.p_assignee_name, ', ')) WHEN sogl.p_status = 'Отозвано' THEN concat('Отозвано: ', listagg(sogl.p_assignee_name, ', ')) WHEN sogl.p_status = 'Отменено' THEN concat('Отменено: ', listagg(sogl.p_assignee_name, ', ')) WHEN sogl.p_status = 'Зарегистрировано' THEN concat('Зарегистрировано: ', listagg(sogl.p_assignee_name, ', ')) ELSE '' END:stage_work_approval",
         "zni.p_planned_start:plan_start",
         "zni.p_planned_end:plan_finish",
         "zni.p_hpc_next_breach:ks",
       ],
       from: [
-        //`${ESMPRIMARY.sbapprovalm1}:sogl`,
+        // `${ESMPRIMARY.sbapprovalm1}:sogl`,
         `${ESMPRIMARY.cm3rm1}:zni`,
         `${ESMPRIMARY.cm3rm2}:zni_risk`,
         `${ESMPRIMARY.as_cluster}:ci`,
@@ -128,8 +127,8 @@ export const getZNI = (
         `${EKNOWLEGEBASE.work_group}:wg`,
       ],
       join: [
-        //"zni.p_number=(+)sogl.p_parent_id", //должен быть inner join "zni.p_number=(+)sogl.p_parent_id",
-        //"zni.p_number=sogl.p_parent_id(+)",
+        // "zni.p_number=(+)sogl.p_parent_id", //должен быть inner join "zni.p_number=(+)sogl.p_parent_id",
+        // "zni.p_number=sogl.p_parent_id(+)",
         "zni.p_affected_item=ci.logical_name",
         "zni.p_number=(+)zni_risk.p_number",
         "zni.p_hpc_assignee_name=(+)c.p_full_name",
@@ -141,7 +140,7 @@ export const getZNI = (
         "zni.p_number",
         "zni.p_orig_date_entered",
         "zni.p_hpc_tpl_name",
-        //"CASE WHEN zni.p_hpc_tpl_name = 'Внедрение инфраструктуры' THEN 'Да' ELSE '' END",
+        // "CASE WHEN zni.p_hpc_tpl_name = 'Внедрение инфраструктуры' THEN 'Да' ELSE '' END",
         "zni.p_hpc_status",
         "zni.p_hpc_affected_item_name",
         "zni.p_brief_description",

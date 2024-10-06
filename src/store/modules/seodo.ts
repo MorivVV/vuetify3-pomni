@@ -14,14 +14,14 @@ export const useSeodoStore = defineStore("seodo", {
     seodoId: [],
   }),
   getters: {
-    autoKeyWords(state: any) {
+    autoKeyWords (state: any) {
       const obj: any = {};
       for (const w of state.key_words) {
         obj[w.key_word] = null;
       }
       return obj;
     },
-    employeesSeo(state: any) {
+    employeesSeo (state: any) {
       let emp = [];
       if (state.employees.length && state.seodoId) {
         emp = state.employees.filter((e: any) => ~state.seodoId.indexOf(e._id));

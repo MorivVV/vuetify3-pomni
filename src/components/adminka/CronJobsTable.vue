@@ -1,32 +1,32 @@
 <template>
   <DataTableV
-    :show-expand="true"
-    :items="taskJobs"
     :caption="`Список заданий  (${jobCount})`"
-    :loading="loadingJob"
-    :server-items-length="+jobCount ? +jobCount : 10"
     class="purple lighten-5 min-line-height"
     :headers="cronJobsHeader"
     :item-class="colorLight"
+    :items="taskJobs"
     :items-per-page="15"
+    :loading="loadingJob"
+    :server-items-length="+jobCount ? +jobCount : 10"
+    :show-expand="true"
     @options-sync="optSync"
   >
     <template #expanded-top="">
       <v-row class="pa-0 ma-0">
-        <v-col cols="4" class="pa-1 ma-0">
+        <v-col class="pa-1 ma-0" cols="4">
           <AutocompleteV
             v-model="filter.kod_script"
             class="mb-1"
-            label="Скрипт"
             :items="jobScriptList"
+            label="Скрипт"
           />
           <AutocompleteV
             v-model="filter.kod_user"
-            label="Пользователь"
             :items="userList"
+            label="Пользователь"
           />
         </v-col>
-        <v-col cols="4" class="pa-1 ma-0">
+        <v-col class="pa-1 ma-0" cols="4">
           <TextFielsV
             v-model="filter.naimen"
             class="mb-1"
@@ -34,19 +34,19 @@
           />
           <TextFielsV v-model.lazy="filter.parameters" label="Параметры" />
         </v-col>
-        <v-col cols="4" class="pa-1 ma-0">
+        <v-col class="pa-1 ma-0" cols="4">
           <v-row class="pa-0 ma-0">
             <v-col class="pa-0 ma-0">
               <AutocompleteV
                 v-model="filter.active"
-                label="Статус"
                 class="mb-1"
                 :class="jobStatus.find((e) => e.id === filter.active)?.color"
                 :clearable="false"
-                :items="jobStatus"
-                item-value="id"
                 item-text="short"
-            /></v-col>
+                item-value="id"
+                :items="jobStatus"
+                label="Статус"
+              /></v-col>
             <v-col class="pa-0 ml-1">
               <TextFielsV v-model="filter.cron_host_ip" label="Хост (IP)" />
             </v-col>
@@ -57,12 +57,12 @@
       </v-row>
     </template>
     <template #expanded-item="{ headers, item }">
-      <td :colspan="headers.length" class="ma-0 pa-0">
+      <td class="ma-0 pa-0" :colspan="headers.length">
         <div class="d-flex justify-center">
           <CronJobOneBody
-            style="width: 97vw"
             :j="item"
-            @getCronJobs="getCronJobs"
+            style="width: 97vw"
+            @get-cron-jobs="getCronJobs"
           />
         </div>
       </td>
@@ -71,10 +71,9 @@
       <v-icon
         class="ml-n3 mr-1"
         :color="item.chain ? 'blue' : item.active ? 'green' : 'red'"
-        >play_circle_filled</v-icon
-      >
+      >play_circle_filled</v-icon>
       <span class="text-h6 purple--text">{{ item.naimen }}</span>
-      <span v-if="item.chain" class="blue--text"><br />{{ item.chain }}</span>
+      <span v-if="item.chain" class="blue--text"><br>{{ item.chain }}</span>
     </template>
     <template #[`item.period_hour`]="{ item }">
       {{ item.task.getWorkTime() }}
@@ -108,7 +107,7 @@ import { useAdminStore } from "@/store/modules/admin";
 import { useUserDataStore } from "@/store/modules/usersData";
 import type { CronJobTask } from "@/types/cronjobs";
 import { computed, onMounted, onUnmounted, ref, toRefs, watch } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import DataTableV from "../basic/DataTableV.vue";
 import CronJobOneBody from "./CronJobs/CronJobOneBody.vue";
 import { cronJobsHeader } from "./CronJobs/cronJobsHeader";
@@ -120,11 +119,11 @@ import TextFielsV from "../basic/TextFielsV.vue";
 import AutocompleteV from "../basic/AutocompleteV.vue";
 import CronCalcParams from "./CronJobs/CronCalcParams.vue";
 import {
+  getCronJobsCount,
+  getCronJobsData,
   getCronScripts,
   getScriptParams,
   getUsers,
-  getCronJobsData,
-  getCronJobsCount,
 } from "./CronJobs/cronJobsData";
 
 interface IFilter {
@@ -293,8 +292,8 @@ getUsers()
 const interval = ref(0);
 const inputTimeout = ref(0);
 onMounted(() => {
-  if (filter.value.active === "runing")
-    interval.value = setInterval(
+  if (filter.value.active === "runing") {
+ interval.value = setInterval(
       () =>
         getCronJobs(
           tOptions.value.itemsPerPage,
@@ -303,6 +302,7 @@ onMounted(() => {
         ),
       5000
     );
+}
 });
 watch(
   filter,

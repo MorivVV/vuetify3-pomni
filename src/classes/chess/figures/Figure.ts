@@ -17,7 +17,7 @@ export class Figure {
   name: FigureNames;
   id: number;
 
-  constructor(color: Colors, cell: Cell) {
+  constructor (color: Colors, cell: Cell) {
     this.color = color;
     this.cell = cell;
     this.cell.figure = this;
@@ -25,13 +25,13 @@ export class Figure {
     this.id = Math.random();
   }
 
-  canMove(target: Cell): boolean {
+  canMove (target: Cell): boolean {
     if (target.figure?.color === this.color) return false;
     // if (target.figure?.name === FigureNames.KING) return false;
     return true;
   }
 
-  moveFigure(target: Cell) {
+  moveFigure (target: Cell) {
     console.log(target);
   }
 }

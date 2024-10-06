@@ -2,7 +2,7 @@ import { BasicPlanform, between } from "./BasicPlatform";
 
 export class Player extends BasicPlanform {
   private lastX = 0;
-  constructor(
+  constructor (
     canvas: CanvasRenderingContext2D,
     pointX: number,
     pointY: number,
@@ -30,7 +30,8 @@ export class Player extends BasicPlanform {
     );
     this.gravity = true;
   }
-  setCoord(x: number, y: number) {
+
+  setCoord (x: number, y: number) {
     // console.log(x, this.pointX);
     if (x > 0 && x % 20 === 0 && this.lastX !== x) {
       this.cropX -= 240;
@@ -51,7 +52,7 @@ export class Player extends BasicPlanform {
     this.lastX = x;
   }
 
-  cross(obj: BasicPlanform) {
+  cross (obj: BasicPlanform) {
     const check = super.cross(obj);
     if (check && !obj.canDestroy()) {
       if (

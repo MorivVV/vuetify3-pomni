@@ -1,22 +1,21 @@
 <template>
   <v-row class="ma-0 pr-1 pl-1">
-    <v-col cols="12" class="ma-0 pa-0">
+    <v-col class="ma-0 pa-0" cols="12">
       <v-row
         v-if="nextDate"
         class="ma-0 pa-0 light-blue darken-3"
         justify="center"
       >
-        <v-col cols="auto" class="pa-1 white--text font-weight-bold">
-          {{ moment(message.date_add).format("DD MMMM YYYY") }}</v-col
-        >
+        <v-col class="pa-1 white--text font-weight-bold" cols="auto">
+          {{ moment(message.date_add).format("DD MMMM YYYY") }}</v-col>
       </v-row>
       <v-row
         v-if="doubleMessage"
+        align="end"
         class="ma-0 pa-0 mt-1"
         :justify="!otherUser ? 'end' : 'start'"
-        align="end"
       >
-        <v-col cols="auto" class="ma-0 pa-0" :order="otherUser ? 1 : 2">
+        <v-col class="ma-0 pa-0" cols="auto" :order="otherUser ? 1 : 2">
           <v-card
             class="ma-0 pa-1 lighten-3"
             :class="otherUser ? 'green' : 'blue'"
@@ -31,21 +30,21 @@
         </v-col>
       </v-row>
       <v-row
+        align="center"
         class="ma-0 pa-0"
         :justify="!otherUser ? 'end' : 'start'"
-        align="center"
       >
         <v-col
           v-if="nextMinute"
-          cols="auto"
           class="ma-0 pa-0"
+          cols="auto"
           :order="!otherUser ? 1 : 2"
         >
           <v-card class="ma-0 pa-0 ml-1 mr-1 text-caption">
             {{ moment(message.date_add).format("HH:mm") }}
           </v-card>
         </v-col>
-        <v-col cols="auto" class="ma-0 pa-0" :order="otherUser ? 1 : 2">
+        <v-col class="ma-0 pa-0" cols="auto" :order="otherUser ? 1 : 2">
           <v-card class="ma-0">
             <span v-html="message.text" />
           </v-card>
@@ -56,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, computed, toRefs } from "vue";
+import { computed, PropType, toRefs } from "vue";
 import UserFioVue from "../UserFio.vue";
 import { useWebsocketStore } from "@/store/modules/websocket";
 import { useAutorizationStore } from "@/store/modules/autorization";

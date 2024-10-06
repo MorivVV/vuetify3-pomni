@@ -7,7 +7,7 @@
         </v-card-title>
 
         <v-card-text class="text-center">
-          <video id="videoElement" width="720" controls />
+          <video id="videoElement" controls width="720" />
         </v-card-text>
 
         <v-divider />
@@ -23,92 +23,64 @@
 
     <table>
       <colgroup>
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
-        <col />
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
+        <col>
       </colgroup>
       <thead>
         <tr>
           <th rowspan="2">
-            <span
-              ><div><span>Канал</span><span /></div
-            ></span>
+            <span><div><span>Канал</span><span /></div></span>
           </th>
           <th rowspan="2">
-            <span
-              ><div><span>Ипя потока</span><span /></div
-            ></span>
+            <span><div><span>Ипя потока</span><span /></div></span>
           </th>
           <th rowspan="2">
-            <span
-              ><div><span>ID</span><span /></div
-            ></span>
+            <span><div><span>ID</span><span /></div></span>
           </th>
           <th rowspan="2">
-            <span
-              ><div><span>IP</span><span /></div
-            ></span>
+            <span><div><span>IP</span><span /></div></span>
           </th>
           <th colspan="3">
-            <span
-              ><div><span>Audio</span><span /></div
-            ></span>
+            <span><div><span>Audio</span><span /></div></span>
           </th>
           <th colspan="3">
-            <span
-              ><div><span>Video</span><span /></div
-            ></span>
+            <span><div><span>Video</span><span /></div></span>
           </th>
           <th rowspan="2">
-            <span
-              ><div><span>Запуск</span><span /></div
-            ></span>
+            <span><div><span>Запуск</span><span /></div></span>
           </th>
           <th rowspan="2">
-            <span
-              ><div><span>Зрители</span><span /></div
-            ></span>
+            <span><div><span>Зрители</span><span /></div></span>
           </th>
         </tr>
         <tr>
           <th>
-            <span
-              ><div><span>кодек</span><span /></div
-            ></span>
+            <span><div><span>кодек</span><span /></div></span>
           </th>
           <th>
-            <span
-              ><div><span>частота</span><span /></div
-            ></span>
+            <span><div><span>частота</span><span /></div></span>
           </th>
           <th>
-            <span
-              ><div><span>канал</span><span /></div
-            ></span>
+            <span><div><span>канал</span><span /></div></span>
           </th>
           <th>
-            <span
-              ><div><span>кодек</span><span /></div
-            ></span>
+            <span><div><span>кодек</span><span /></div></span>
           </th>
           <th>
-            <span
-              ><div><span>разрешение</span><span /></div
-            ></span>
+            <span><div><span>разрешение</span><span /></div></span>
           </th>
           <th>
-            <span
-              ><div><span>fps</span><span /></div
-            ></span>
+            <span><div><span>fps</span><span /></div></span>
           </th>
         </tr>
       </thead>
@@ -120,9 +92,9 @@
           v-for="(stream, index) in streamChanel"
           :key="'stream' + chanelName + index"
           :chanel-name="chanelName"
-          :stream-name="index"
           :stream="stream"
-          @viewPlayer="viewPlayer"
+          :stream-name="index"
+          @view-player="viewPlayer"
         />
       </tbody>
     </table>
@@ -139,7 +111,7 @@ export default defineComponent({
   components: {
     StreamInfoVue,
   },
-  data() {
+  data () {
     return {
       streamList: {} as StreamMedia,
       flvPlayer: {} as FlvJs.Player,
@@ -148,7 +120,7 @@ export default defineComponent({
     };
   },
   watch: {
-    activatePlayer(newVal) {
+    activatePlayer (newVal) {
       if (newVal) {
         this.$nextTick(() => {
           if (flvjs.isSupported()) {
@@ -169,20 +141,20 @@ export default defineComponent({
       }
     },
   },
-  mounted() {
+  mounted () {
     this.getStreams();
     this.interval = setInterval(() => {
       this.getStreams();
     }, 5000);
   },
-  beforeDestroy() {
+  beforeUnmount () {
     clearInterval(this.interval);
   },
   methods: {
-    viewPlayer() {
+    viewPlayer () {
       this.activatePlayer = true;
     },
-    getStreams() {
+    getStreams () {
       fetch("http://" + location.hostname + ":8000/api/streams", {
         headers: {
           method: "GET",

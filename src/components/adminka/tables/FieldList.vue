@@ -1,55 +1,55 @@
 <template>
   <v-row
     v-if="fieldList.length > 0"
+    align="end"
     class="ma-1 mt-4"
     justify="end"
-    align="end"
   >
     <v-col>
       <BtnIconsV
-        title="Интерфейс"
-        icon="mdi-clipboard-text"
-        color="green"
         :action="
           () => {
             createInterface(space, table, fieldList);
           }
         "
+        color="green"
+        icon="mdi-clipboard-text"
+        title="Интерфейс"
       />
     </v-col>
-    <v-col cols="auto" class="text-h5">
+    <v-col class="text-h5" cols="auto">
       Просмотр полей и данных в таблице
     </v-col>
-    <v-col cols="12" md="6" lg="4">
+    <v-col cols="12" lg="4" md="6">
       <AutocompleteV
         v-model="localTable"
-        label="Выбрать таблицу"
-        :items="tableList"
         item-text="tablename"
         item-value="tablename"
+        :items="tableList"
+        label="Выбрать таблицу"
         @input="viewFields"
       />
     </v-col>
     <v-col cols="4">
       <TextFielsV
         v-model="searchFields"
-        prepend-icon="mdi-magnify"
         label="Поиск полей в таблице"
+        prepend-icon="mdi-magnify"
       />
     </v-col>
     <v-col cols="12">
       <v-data-table
         v-model="selectedFields"
-        dense
-        show-select
-        :single-select="false"
-        :search="searchFields"
         :caption="'Поля в таблице ' + space + '.' + table"
+        class="elevation-1 striped purple lighten-5"
+        dense
         :headers="Object.keys(fieldList[0]).map((r) => ({ text: r, value: r }))"
         item-key="column_name"
         :items="fieldList"
         :items-per-page="10"
-        class="elevation-1 striped purple lighten-5"
+        :search="searchFields"
+        show-select
+        :single-select="false"
       />
     </v-col>
   </v-row>

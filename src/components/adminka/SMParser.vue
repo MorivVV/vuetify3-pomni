@@ -21,62 +21,62 @@
           <td>
             <v-text-field
               v-model="p.pattern"
-              outlined
-              hide-details
-              dense
-              type="text"
               :class="p.link_style"
+              dense
+              hide-details
+              outlined
+              type="text"
             />
           </td>
           <td>
             <v-text-field
               v-model="p.file"
-              outlined
-              hide-details
               dense
+              hide-details
+              outlined
               type="text"
             />
           </td>
           <td>
             <v-text-field
               v-model="p.query"
-              outlined
-              hide-details
               dense
+              hide-details
+              outlined
               type="text"
             />
           </td>
           <td>
             <v-text-field
               v-model="p.link_style"
-              outlined
-              hide-details
-              dense
-              type="text"
               :class="p.link_style"
+              dense
+              hide-details
+              outlined
+              type="text"
             />
           </td>
           <td>
             <v-select
               v-if="urlResource.length > 0"
               v-model="p.kod_resource"
-              outlined
-              hide-details
               dense
-              :items="urlResource"
-              item-value="id"
+              hide-details
               item-text="url_name"
+              item-value="id"
+              :items="urlResource"
+              outlined
             />
           </td>
           <td>
-            <v-switch v-model="p.avcive" hide-details class="pa-0 ma-0" />
+            <v-switch v-model="p.avcive" class="pa-0 ma-0" hide-details />
           </td>
           <td>
             <BtnIconsVVue
+              :action="editRegPattern.bind(this, p)"
               class="btn-small blue darken-2"
               icon="save"
               title="Сохранить изменения"
-              :action="editRegPattern.bind(this, p)"
             />
           </td>
         </tr>
@@ -84,36 +84,36 @@
           <td>
             <v-text-field
               v-model="newPat.pattern"
-              outlined
-              hide-details
               dense
+              hide-details
+              outlined
               type="text"
             />
           </td>
           <td>
             <v-text-field
               v-model="newPat.file"
-              outlined
-              hide-details
               dense
+              hide-details
+              outlined
               type="text"
             />
           </td>
           <td>
             <v-text-field
               v-model="newPat.query"
-              outlined
-              hide-details
               dense
+              hide-details
+              outlined
               type="text"
             />
           </td>
           <td>
             <v-text-field
               v-model="newPat.link_style"
-              outlined
-              hide-details
               dense
+              hide-details
+              outlined
               type="text"
             />
           </td>
@@ -121,24 +121,24 @@
             <v-select
               v-if="urlResource.length > 0"
               v-model="newPat.kod_resource"
-              outlined
-              hide-details
               dense
-              :items="urlResource"
-              item-value="id"
+              hide-details
               item-text="url_name"
+              item-value="id"
+              :items="urlResource"
+              outlined
             />
           </td>
           <td>
-            <v-switch v-model="newPat.avcive" hide-details class="pa-0 ma-0" />
+            <v-switch v-model="newPat.avcive" class="pa-0 ma-0" hide-details />
           </td>
           <td>
             <BtnIconsVVue
-              colorbtn="indigo"
+              :action="addRegPattern.bind(this, newPat)"
               color="white"
+              colorbtn="indigo"
               icon="add"
               title="Добавить"
-              :action="addRegPattern.bind(this, newPat)"
             />
           </td>
         </tr>
@@ -160,11 +160,11 @@ export default defineComponent({
     SMurlService,
     BtnIconsVVue,
   },
-  setup() {
+  setup () {
     const { fetchDataGet, fetchData, r_ajax } = dataApiComposition();
     return { fetchDataGet, fetchData, r_ajax };
   },
-  data() {
+  data () {
     return {
       newPat: {
         pattern: "",
@@ -180,17 +180,17 @@ export default defineComponent({
     ...mapGetters(useServiceManagerStore, ["urlResource"]),
     ...mapState(useServiceManagerStore, ["sm_url_patterns"]),
   },
-  mounted() {
+  mounted () {
     this.getRegPattern();
   },
   methods: {
-    getRegPattern() {
+    getRegPattern () {
       this.fetchDataGet({
         module: useServiceManagerStore,
         tables: ["url_resource", "sm_url_patterns"],
       });
     },
-    editRegPattern(p) {
+    editRegPattern (p) {
       this.fetchData({
         data: { sqlname: "editSMParser", ...p },
       }).then((res) => {
@@ -201,7 +201,7 @@ export default defineComponent({
         }
       });
     },
-    addRegPattern(p) {
+    addRegPattern (p) {
       this.r_ajax({ sqlname: "addSMParser", ...p }).then((res) => {
         if (res.count == 1) {
           this.$toast({ html: "Добавление успешно" });

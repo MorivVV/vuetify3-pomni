@@ -38,12 +38,12 @@ export const getRsktsTasksFilters = (
   }
 
   if (clusterList.length) {
-    filter["kod_cluster"] = clusterList.map((e) => ({ "ci.kod_cluster": e }));
+    filter.kod_cluster = clusterList.map((e) => ({ "ci.kod_cluster": e }));
   }
 
   if (groupList.length) {
-    filter["kod_group"] = groupList.map((e) => ({ "wg.kod_group": e }));
-    filter["kod_group"] = filter["kod_group"].concat(
+    filter.kod_group = groupList.map((e) => ({ "wg.kod_group": e }));
+    filter.kod_group = filter.kod_group.concat(
       groupList.map((e) => ({ "wg.id": e }))
     );
   }
@@ -106,8 +106,8 @@ export const getRsktsTasks = (
         "rskt.p_open_time",
         "rskt.p_plan_finish",
         "rskt.p_hpc_next_breach",
-        "rskt.p_description", //для указания условий подсветки полей - иначе подстветка не работает
-        "rskt.p_action", //вывод ИНФО в мониторинге
+        "rskt.p_description", // для указания условий подсветки полей - иначе подстветка не работает
+        "rskt.p_action", // вывод ИНФО в мониторинге
         "CASE WHEN (rskt.p_plan_finish is null or rskt.p_plan_finish > rskt.p_hpc_next_breach or rskt.p_sla_breach = 't') THEN 'Нарушение КПЭ есть' ELSE 'Нарушения КПЭ нет' END:breach_plan_time_work",
       ],
       filter,

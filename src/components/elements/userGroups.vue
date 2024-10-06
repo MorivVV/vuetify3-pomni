@@ -21,7 +21,7 @@ export default defineComponent({
   },
   computed: {
     ...mapGetters(useAuditDataStore, ["userList"]),
-    groupUserList() {
+    groupUserList () {
       const ug: any = [];
       const id = +this.g.ID;
       for (const key in this.userList) {

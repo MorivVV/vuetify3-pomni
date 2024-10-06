@@ -7,15 +7,15 @@
           <v-col cols="4">
             <TextFielsV
               v-model="newRole.naimen"
-              prepend-icon="dns"
               label="Новая роль"
+              prepend-icon="mdi-dns"
             />
           </v-col>
           <v-col cols="6">
             <TextFielsV v-model="newRole.description" label="Описание роли" />
           </v-col>
           <v-col cols="auto">
-            <BtnIconsV color="blue" icon="add" :action="addRoles" />
+            <BtnIconsV :action="addRoles" color="blue" icon="plus" />
           </v-col>
         </v-row>
       </v-card-title>
@@ -25,11 +25,11 @@
           <v-col cols="5"> Описание </v-col>
           <v-col cols="3">
             <v-row>
-              <v-col cols="4" class="text-right text-subtitle-2">
+              <v-col class="text-right text-subtitle-2" cols="4">
                 Полный доступ
               </v-col>
-              <v-col cols="4" class="text-right"> Вкл. </v-col>
-              <v-col cols="4" class="text-right"> + </v-col>
+              <v-col class="text-right" cols="4"> Вкл. </v-col>
+              <v-col class="text-right" cols="4"> + </v-col>
             </v-row>
           </v-col>
         </v-row>
@@ -37,13 +37,13 @@
           <v-expansion-panel v-for="role in roles" :key="'role_' + role.id">
             <v-expansion-panel-header class="green lighten-5">
               <v-row align="center">
-                <v-col cols="4" class="text-h5 pt-0 pb-0">
+                <v-col class="text-h5 pt-0 pb-0" cols="4">
                   {{ role.naimen }}
                 </v-col>
-                <v-col cols="6" class="pt-0 pb-0">
+                <v-col class="pt-0 pb-0" cols="6">
                   {{ role.description }}
                 </v-col>
-                <v-col cols="1" class="pt-0 pb-0">
+                <v-col class="pt-0 pb-0" cols="1">
                   <div
                     @click.stop="
                       setRole(role.id, 'full_access', role.full_access)
@@ -55,7 +55,7 @@
                     />
                   </div>
                 </v-col>
-                <v-col cols="1" class="pt-0 pb-0">
+                <v-col class="pt-0 pb-0" cols="1">
                   <div @click.stop="setRole(role.id, 'active', role.active)">
                     <CheckBoxTitleV
                       v-model="role.active"
@@ -70,7 +70,7 @@
                 <v-col>
                   <RoleUsersVue
                     :role-id="role.id"
-                    @RolesUsers="getRolesUsers"
+                    @roles-users="getRolesUsers"
                   />
                 </v-col>
               </v-row>
@@ -78,7 +78,7 @@
                 <v-col>
                   <RolePartitionsVue
                     :role-id="role.id"
-                    @RolesAccess="getRolesAccess"
+                    @roles-access="getRolesAccess"
                   />
                 </v-col>
               </v-row>
@@ -108,10 +108,10 @@ import { routeAccessLevelCalculate } from "@/compositionApi/accessLevelCalculate
 import TextFielsV from "../basic/TextFielsV.vue";
 import BtnIconsV from "../basic/BtnIconsV.vue";
 import {
-  getRolesAccess,
-  getRoles,
-  getRolesUsers,
   getPartitions,
+  getRoles,
+  getRolesAccess,
+  getRolesUsers,
 } from "./AllowUsers/accessMetods";
 import CheckBoxTitleV from "../basic/CheckBoxTitleV.vue";
 

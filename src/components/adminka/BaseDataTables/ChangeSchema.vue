@@ -1,22 +1,22 @@
 <template>
   <v-row class="row center ma-2" justify="center">
-    <v-col cols="12" md="6" lg="4">
+    <v-col cols="12" lg="4" md="6">
       <AutocompleteV
         v-model="kod_database_tuz"
-        label="ТУЗ (данные со смежных БД)"
-        :items="[{ id: 0, naimen: 'Нет' }].concat(bd_list_tuz)"
         item-text="naimen"
         item-value="id"
+        :items="[{ id: 0, naimen: 'Нет' }].concat(bd_list_tuz)"
+        label="ТУЗ (данные со смежных БД)"
         prepend-icon="account_box"
       />
     </v-col>
-    <v-col cols="12" md="6" lg="4">
+    <v-col cols="12" lg="4" md="6">
       <AutocompleteV
         v-model="schema"
-        label="Схема"
-        :items="pg_namespace"
         item-text="nspname"
         item-value="nspname"
+        :items="pg_namespace"
+        label="Схема"
       />
     </v-col>
   </v-row>

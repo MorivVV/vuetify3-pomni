@@ -88,23 +88,23 @@ const genDynamicFilter = (
   >;
   if (filter.value.parameters) {
     lFilter["j.parameters"] = `~*:${filter.value.parameters}`;
-    routerFilter["parameters"] = filter.value.parameters;
+    routerFilter.parameters = filter.value.parameters;
   }
   if (filter.value.naimen) {
     lFilter["j.naimen"] = `~*:${filter.value.naimen}`;
-    routerFilter["naimen"] = filter.value.naimen;
+    routerFilter.naimen = filter.value.naimen;
   }
   if (filter.value.cron_host_ip) {
     lFilter["j.cron_host_ip"] = `~*:${filter.value.cron_host_ip}`;
-    routerFilter["cron_host_ip"] = filter.value.cron_host_ip;
+    routerFilter.cron_host_ip = filter.value.cron_host_ip;
   }
   if (filter.value.kod_script) {
     lFilter["j.kod_script"] = filter.value.kod_script;
-    routerFilter["kod_script"] = String(filter.value.kod_script);
+    routerFilter.kod_script = String(filter.value.kod_script);
   }
   if (filter.value.kod_user) {
     lFilter["j.kod_user"] = filter.value.kod_user;
-    routerFilter["kod_user"] = String(filter.value.kod_user);
+    routerFilter.kod_user = String(filter.value.kod_user);
   }
   if (filter.value.active !== null) {
     if (typeof filter.value.active === "boolean") {
@@ -115,17 +115,17 @@ const genDynamicFilter = (
             fields: ["1"],
             from: [containerJC],
             filter: {
-              "jc.job_chain": `@@=:j.naimen`,
+              "jc.job_chain": "@@=:j.naimen",
               "jc.active": true,
             },
           } as any,
         },
       ];
-      routerFilter["active"] = String(filter.value.active);
+      routerFilter.active = String(filter.value.active);
     } else {
       switch (filter.value.active) {
         case "runing":
-          lFilter["EXISTS"] = {
+          lFilter.EXISTS = {
             from: [
               {
                 fields: ["a.result"],
@@ -158,7 +158,7 @@ const genDynamicFilter = (
           break;
 
         case "error_all":
-          lFilter["EXISTS"] = {
+          lFilter.EXISTS = {
             from: [
               {
                 fields: ["a.result", "a.success", "a.time_end"],
@@ -179,7 +179,7 @@ const genDynamicFilter = (
           break;
 
         case "error_on":
-          lFilter["EXISTS"] = {
+          lFilter.EXISTS = {
             from: [
               {
                 fields: ["a.result", "a.success", "a.time_end"],
@@ -213,7 +213,7 @@ const genDynamicFilter = (
           break;
 
         case "error_off":
-          lFilter["EXISTS"] = {
+          lFilter.EXISTS = {
             from: [
               {
                 fields: ["a.result", "a.success", "a.time_end"],
@@ -237,7 +237,7 @@ const genDynamicFilter = (
         default:
           break;
       }
-      routerFilter["active"] = String(filter.value.active);
+      routerFilter.active = String(filter.value.active);
     }
   }
   return lFilter;

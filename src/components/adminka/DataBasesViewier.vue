@@ -1,16 +1,16 @@
 <template>
   <div>
     <SelectShcema
-      :space="space"
       :kod-database-tuz="kod_database_tuz"
-      @changeSpace="changeSpace"
-      @changeTuz="changeTuz"
+      :space="space"
+      @change-space="changeSpace"
+      @change-tuz="changeTuz"
     />
 
     <TableList
-      :space="space"
       :kod-database-tuz="kod_database_tuz"
-      @viewFields="viewFields"
+      :space="space"
+      @view-fields="viewFields"
     />
     {{ space }}.{{ table }}
     <FieldList
@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { reactive, ref } from "vue";
 import { usePostgreStore } from "@/store/modules/postgre";
 import { storeToRefs } from "pinia";
 import SelectShcema from "./tables/SelectShcema.vue";

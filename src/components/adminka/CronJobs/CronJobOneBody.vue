@@ -77,7 +77,7 @@
                 class="mr-2"
                 color="blue"
                 :disabled="!editLevel() || changeVal"
-                icon="save"
+                icon="content-save"
                 title="Сохранить изменения"
               />
             </v-col>

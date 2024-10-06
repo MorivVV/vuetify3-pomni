@@ -27,17 +27,17 @@ div
 
 <script lang="ts">
 import moment from "moment";
-window.moment = moment;
 import { defineComponent } from "vue";
 import { mapState } from "pinia";
 import HoursJobsVue from "./HoursJobs.vue";
 import { TaskJobSchedule } from "@/classes/cronjob/TaskJobSchedule";
 import { useDateConstStore } from "@/store/modules/dateConst";
 import { useAdminStore } from "@/store/modules/admin";
+window.moment = moment;
 
 export default defineComponent({
   components: { HoursJobsVue },
-  data() {
+  data () {
     return {
       type: "day",
       types: ["month", "week", "day", "4day"],
@@ -74,7 +74,7 @@ export default defineComponent({
       "minutes",
     ]),
     ...mapState(useAdminStore, ["jobs", "job_scripts"]),
-    taskJobs(): TaskJobSchedule[] {
+    taskJobs (): TaskJobSchedule[] {
       return this.jobs.map(
         (e) =>
           new TaskJobSchedule(
@@ -94,11 +94,11 @@ export default defineComponent({
       );
     },
   },
-  mounted() {
+  mounted () {
     // this.$projectDebug(this.taskJobs);
   },
   methods: {
-    getEvents({
+    getEvents ({
       start,
       end,
     }: {
@@ -136,10 +136,10 @@ export default defineComponent({
       }
       this.events = events;
     },
-    getEventColor(event: IVCalendarItem) {
+    getEventColor (event: IVCalendarItem) {
       return event.color;
     },
-    rnd(a: number, b: number) {
+    rnd (a: number, b: number) {
       return Math.floor((b - a + 1) * Math.random()) + a;
     },
   },

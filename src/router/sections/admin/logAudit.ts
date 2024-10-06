@@ -1,16 +1,18 @@
-export const routelogAudit = {
+import { Route } from "@/types/global";
+
+export const routelogAudit: Route = {
   path: "audit",
   order: 1000,
   name: "AdminAudit",
   title: "Аудит и логи",
-  icon: "access_time",
-  class: "blue--text",
+  icon: "mdi-timer-alert",
+  class: "text-blue",
   component: () => import("@/components/elements/RouterLink.vue"),
   meta: {
     requiresAuth: true,
     title: "Аудит и логи",
-    icon: "access_time",
-    class: "blue--text",
+    icon: "mdi-timer-alert",
+    class: "text-blue",
   },
   children: [
     {
@@ -18,14 +20,14 @@ export const routelogAudit = {
       order: 10,
       name: "AdminAudit",
       title: "Аудит",
-      icon: "access_time",
-      class: "blue--text",
+      icon: "mdi-access-point",
+      class: "text-blue",
       component: () => import("@/components/adminka/Audit.vue"),
       meta: {
         requiresAuth: true,
         title: "Аудит",
-        icon: "access_time",
-        class: "blue--text",
+        icon: "mdi-access-point",
+        class: "text-blue",
       },
     },
     {
@@ -37,8 +39,8 @@ export const routelogAudit = {
       meta: {
         requiresAuth: true,
         title: "Получение логов с сервера",
-        icon: "view_list",
-        class: "blue--text",
+        icon: "mdi-view-list",
+        class: "text-blue",
       },
     },
   ],

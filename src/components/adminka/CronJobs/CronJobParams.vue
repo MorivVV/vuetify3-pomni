@@ -11,8 +11,8 @@
       <CronParamVue
         :key="'job_' + param.default_var"
         :param="param"
-        @changeParam="changeParam"
-        @changeStart="$emit('changeStart')"
+        @change-param="changeParam"
+        @change-start="$emit('changeStart')"
       />
     </v-col>
   </v-row>
@@ -33,7 +33,7 @@ export default defineComponent({
     paramValue: { type: String, required: true },
   },
   computed: {
-    jobParamValues(): IKnowledgebaseCronScriptParams[] {
+    jobParamValues (): IKnowledgebaseCronScriptParams[] {
       const values = JSON.parse(this.paramValue);
 
       const param = this.jobParams.map((e) => {
@@ -54,7 +54,7 @@ export default defineComponent({
     },
   },
   methods: {
-    changeParam(e: string, p: IKnowledgebaseCronScriptParams) {
+    changeParam (e: string, p: IKnowledgebaseCronScriptParams) {
       try {
         const values = JSON.parse(this.paramValue);
         values[p.order_var - 1] = JSON.parse(e);

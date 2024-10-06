@@ -3,20 +3,20 @@
     <ChangeSchema
       :kod-database-tuz="kod_database_tuz"
       :space="space"
-      @set-tuz="setTuz"
       @set-schema="setSchema"
+      @set-tuz="setTuz"
     />
-    <v-row class="ma-1" align="center">
-      <v-col cols="12" class="ma-0 pa-1">
+    <v-row align="center" class="ma-1">
+      <v-col class="ma-0 pa-1" cols="12">
         <v-divider />
       </v-col>
-      <v-col v-if="tableList.length" cols="12" class="ma-0 pa-1">
+      <v-col v-if="tableList.length" class="ma-0 pa-1" cols="12">
         <SchemaTables :space="space" @view-fields="(t) => viewFields(t)" />
       </v-col>
     </v-row>
 
-    <v-row v-if="fieldList.length > 0" class="ma-1" justify="end" align="end">
-      <v-col cols="12" class="ma-0 pa-1">
+    <v-row v-if="fieldList.length > 0" align="end" class="ma-1" justify="end">
+      <v-col class="ma-0 pa-1" cols="12">
         <TableFields
           :space="space"
           :table="table"
@@ -36,80 +36,80 @@
         </v-card-text>
       </v-card>
     </v-row>
-    <v-row class="ma-0 mt-4" align="center">
-      <v-col cols="12" md="auto" class="text-h5 pa-1"> Выборка из БД </v-col>
-      <v-col cols="4" md="1" class="ma-0 pa-1">
+    <v-row align="center" class="ma-0 mt-4">
+      <v-col class="text-h5 pa-1" cols="12" md="auto"> Выборка из БД </v-col>
+      <v-col class="ma-0 pa-1" cols="4" md="1">
         <TextFielsV
           v-model="limit"
-          type="number"
-          min="1"
-          label="Лимит записей"
           :clearable="false"
+          label="Лимит записей"
+          min="1"
+          type="number"
         />
       </v-col>
-      <v-col cols="4" md="1" class="ma-0 pa-1">
+      <v-col class="ma-0 pa-1" cols="4" md="1">
         <TextFielsV
           v-model="page"
           :clearable="false"
-          type="number"
-          min="1"
           label="Сдвиг страницы"
+          min="1"
+          type="number"
         />
       </v-col>
-      <v-col cols="8" class="ma-0 pa-0">
-        <v-row class="ma-0 pa-1" align="end">
+      <v-col class="ma-0 pa-0" cols="8">
+        <v-row align="end" class="ma-0 pa-1">
           <v-col class="ma-0 pa-0">
             <v-row
               v-for="fltr in baseFilters"
               :key="'filter_' + fltr.name"
               class="ma-0 pa-0 pb-1"
             >
-              <v-col cols="12" md="4" class="ma-0 pa-0">
+              <v-col class="ma-0 pa-0" cols="12" md="4">
                 <AutocompleteV
                   v-model="fltr.name"
-                  label="Поле поиска"
-                  :items="fieldList"
                   item-text="column_name"
                   item-value="column_name"
+                  :items="fieldList"
+                  label="Поле поиска"
                 />
               </v-col>
               <v-col class="ma-0 pa-0">
                 <AutocompleteV
                   v-model="fltr.op"
                   class="pa-0"
-                  single-line
-                  label="Оператор сравнения"
-                  :items="operators"
                   item-text="name"
                   item-value="id"
+                  :items="operators"
+                  label="Оператор сравнения"
+                  single-line
                 />
               </v-col>
-              <v-col cols="12" md="4" class="ma-0 pa-0">
+              <v-col class="ma-0 pa-0" cols="12" md="4">
                 <TextFielsV
                   v-model="fltr.value"
                   label="Введите поисковую фразу"
                 />
               </v-col>
-              <v-col cols="12" md="auto" class="ma-0 pa-0">
+              <v-col class="ma-0 pa-0" cols="12" md="auto">
                 <BtnIconsV
-                  icon="remove"
-                  color="red"
-                  title="Удалить фильтр"
                   :action="() => removeFilter(fltr)"
+                  color="red"
+                  icon="tag-remove"
+                  title="Удалить фильтр"
                 />
               </v-col>
             </v-row>
           </v-col>
-          <v-col cols="auto" class="ma-0 pa-0 pb-1 pl-1">
-            <BtnIconsV icon="add" title="Добавить фильтр" :action="addFilter" />
+          <v-col class="ma-0 pa-0 pb-1 pl-1" cols="auto">
+            <BtnIconsV :action="addFilter" icon="plus" title="Добавить фильтр" />
           </v-col>
         </v-row>
       </v-col>
 
       <v-col cols="auto">
         <BtnIconsV
-          color="green"
           :action="() => getDataTableLocal(table)"
+          color="green"
           icon="autorenew"
           title="Применить фильтры"
         />
@@ -120,22 +120,22 @@
         <v-divider />
       </v-col>
 
-      <v-col cols="12" class="ma-1">
+      <v-col class="ma-1" cols="12">
         <ViewDataFromTable
           :space="space"
           :table="table"
           :work-data="workData"
-          @getDataTableLocal="getDataTableLocal"
+          @get-data-table-local="getDataTableLocal"
         />
       </v-col>
     </v-row>
-    <XlsxParserVue :table="table" :fields="fieldList" :space="space" />
+    <XlsxParserVue :fields="fieldList" :space="space" :table="table" />
 
     <v-divider />
 
     <template v-if="adminSuperLevel()">
       <v-container>
-        <v-row class="ma-0" align="center">
+        <v-row align="center" class="ma-0">
           <v-col cols="4">
             <div class="text-h4 mt-2 mb-1">Создать новую таблицу</div>
           </v-col>
@@ -143,7 +143,7 @@
             <TextFielsV v-model="tableName" label="Название таблицы" />
           </v-col>
         </v-row>
-        <v-row class="ma-0" align="center">
+        <v-row align="center" class="ma-0">
           <v-col cols="3">
             <TextFielsV v-model="nfield.fname" label="Имя поля" />
           </v-col>
@@ -151,10 +151,10 @@
             <AutocompleteV
               v-if="dataTypes.length > 0"
               v-model="nfield.ftype"
-              label="Тип данных"
-              :items="dataTypes"
               item-text="type_name"
               item-value="type_name"
+              :items="dataTypes"
+              label="Тип данных"
             />
           </v-col>
           <v-col cols="2">
@@ -172,27 +172,27 @@
           </v-col>
           <v-col cols="auto">
             <BtnIconsV
-              :disabled="!addLevel()"
-              color="blue"
               :action="addField"
-              icon="add"
+              color="blue"
+              :disabled="!addLevel()"
+              icon="plus"
               title="Добавить поле"
             />
           </v-col>
         </v-row>
         <DataTableV
           v-if="fields.length > 0"
+          :caption="'Структура таблицы ' + tableName"
           class="green lighten-4"
           :items="fields"
-          :caption="'Структура таблицы ' + tableName"
         />
         <v-row v-if="fields.length > 0" class="ma-1">
           <v-col class="center">
             <BtnIconsV
-              :disabled="!adminLevel()"
-              icon="flash_auto"
-              color="blue darken-1"
               :action="addTable"
+              color="blue darken-1"
+              :disabled="!adminLevel()"
+              icon="flash-auto"
               title="Создать таблицу"
             />
           </v-col>
@@ -207,9 +207,9 @@
       <v-col cols="12">
         <DataTableV
           caption="Список всех типов БД PostgreSQL"
+          class="yellow lighten-5"
           :items="dataTypes"
           :items-per-page="5"
-          class="yellow lighten-5"
         />
       </v-col>
     </v-row>
@@ -229,18 +229,19 @@ import ChangeSchema from "./BaseDataTables/ChangeSchema.vue";
 import SchemaTables from "./BaseDataTables/SchemaTables.vue";
 import TableFields from "./BaseDataTables/TableFields.vue";
 import {
-  getDatabaseTUZ,
-  reloadSchema,
-  getData,
   getColumnInfo,
+  getData,
+  getDatabaseTUZ,
   getDataTable,
   getPrimaryKeys,
   IFilterFields,
+  reloadSchema,
 } from "./BaseDataTables/tableFunctions";
 import { useRoute, useRouter } from "vue-router";
 import ViewDataFromTable from "./BaseDataTables/ViewDataFromTable.vue";
 import BtnIconsV from "../basic/BtnIconsV.vue";
 import SwitchV from "../basic/SwitchV.vue";
+import { FieldList, Nfield } from "@/types/global";
 
 const router = useRouter();
 const route = useRoute();
@@ -276,7 +277,7 @@ const workData = computed((): Record<string, string>[] => {
   return d;
 });
 
-//функции
+// функции
 const addFilter = () => {
   const filter: IFilterFields = { name: "", op: "=:", value: "" };
   baseFilters.value.push(filter);
@@ -286,7 +287,7 @@ const removeFilter = (filter: IFilterFields) => {
     (e) => JSON.stringify(e) !== JSON.stringify(filter)
   );
 };
-const getDataTableLocal = (t) =>
+const getDataTableLocal = (t: string) =>
   getDataTable(
     space.value,
     t,
@@ -329,10 +330,10 @@ const addTable = () => {
   }).then(() => getData(space.value, kod_database_tuz.value));
 };
 
-//отслеживание изменений
+// отслеживание изменений
 watch(kod_database_tuz, () => reloadSchema(kod_database_tuz.value));
 watch(space, (newVal) => {
-  if (newVal !== String(route.query["scheme"])) {
+  if (newVal !== String(route.query.scheme)) {
     router.push({
       query: {
         scheme: newVal,
@@ -342,7 +343,7 @@ watch(space, (newVal) => {
   }
 });
 watch(table, (newVal) => {
-  if (newVal !== String(route.query["table"])) {
+  if (newVal !== String(route.query.table)) {
     router.push({
       query: {
         ...route.query,
@@ -352,14 +353,14 @@ watch(table, (newVal) => {
   }
 });
 
-//предзагрузка
+// предзагрузка
 getDatabaseTUZ();
 onMounted(() => {
-  if ("scheme" in route.query && route.query["scheme"]) {
-    space.value = String(route.query["scheme"]);
+  if ("scheme" in route.query && route.query.scheme) {
+    space.value = String(route.query.scheme);
   }
-  if ("table" in route.query && route.query["table"]) {
-    table.value = String(route.query["table"]);
+  if ("table" in route.query && route.query.table) {
+    table.value = String(route.query.table);
     viewFields(table.value);
   }
   getData(space.value, kod_database_tuz.value);

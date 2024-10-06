@@ -1,28 +1,28 @@
 <template>
-  <v-row class="darken-4" :class="modalClass" align="center">
+  <v-row align="center" class="darken-4" :class="modalClass">
     <v-col class="text-h5 white--text pa-0 text-center">
       {{ title }}
     </v-col>
     <BtnCubicVue
       v-if="formDelete"
-      icon="delete"
       :action="formDelete"
-      :disabled="disable"
-      title="Удалить"
       class="btn-small red accent-4 right"
+      :disabled="disable"
+      icon="delete"
+      title="Удалить"
     />
     <BtnCubicVue
       :action="formOk"
+      class="btn-small green right"
       :disabled="disable"
       title="Добавить"
-      class="btn-small green right"
     />
     <BtnCubicVue
-      icon="close"
-      :disabled="disable"
-      title="Отменить"
       :action="formCancel"
       class="btn-small red right"
+      :disabled="disable"
+      icon="close"
+      title="Отменить"
     />
   </v-row>
 </template>
@@ -42,7 +42,7 @@ export default defineComponent({
     formDelete: Function,
     formOk: Function,
   },
-  data() {
+  data () {
     return {
       disable: false,
     };

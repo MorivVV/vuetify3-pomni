@@ -1,27 +1,27 @@
 <template>
   <div>
     <DataTableV
-      multi-sort
       calculate-widths
+      :caption="`Данные из ${space}.${table}`"
       fixed-header
       height="80vh"
-      :items-per-page="15"
-      :caption="`Данные из ${space}.${table}`"
       :items="workData"
+      :items-per-page="15"
+      multi-sort
     >
       <template #expanded-top="">
         <v-row class="ma-1">
-          <v-col cols="auto" class="pa-1">
+          <v-col class="pa-1" cols="auto">
             <BtnIconsV
+              :action="genExcel"
               color="green"
               icon="mdi-microsoft-excel"
               title="Скачать XLSX"
-              :action="genExcel"
             />
             <BtnIconsV
-              :disabled="!addLevel()"
-              color="purple"
               :action="addModalRow"
+              color="purple"
+              :disabled="!addLevel()"
               icon="add"
               title="Добавить"
             />
@@ -38,13 +38,13 @@
       </template>
 
       <template #[`item.id`]="{ item }">
-        <v-menu offset-x max-width="80px">
+        <v-menu max-width="80px" offset-x>
           <template #activator="{ on: menu, attrs }">
             <v-tooltip top>
               <template #activator="{ on: tooltip }">
                 <v-btn
-                  small
                   block
+                  small
                   v-bind="attrs"
                   v-on="{ ...tooltip, ...menu }"
                 >
@@ -60,17 +60,17 @@
               <v-card-actions>
                 <BtnIconsV
                   :action="() => deleteRow(pkey, item[pkey])"
-                  :disabled="!editLevel()"
-                  title="Удалить запись"
                   color="red"
+                  :disabled="!editLevel()"
                   icon="delete"
+                  title="Удалить запись"
                 />
                 <BtnIconsV
                   :action="() => editModalRow(item)"
-                  :disabled="!editLevel()"
-                  title="Редактировать запись"
                   color="green"
+                  :disabled="!editLevel()"
                   icon="edit"
+                  title="Редактировать запись"
                 />
               </v-card-actions>
             </v-card>
@@ -78,7 +78,7 @@
         </v-menu>
       </template>
     </DataTableV>
-    <v-dialog v-model="editDialog" persistent max-width="800px">
+    <v-dialog v-model="editDialog" max-width="800px" persistent>
       <v-card>
         <v-card-title>
           <span class="text-h5">Реадктировать запись {{ table }}</span>
@@ -105,31 +105,31 @@
                 <v-text-field
                   v-else-if="['integer', 'numeric'].includes(field.data_type)"
                   v-model.number="dataRows[modalRow][field.column_name]"
-                  type="number"
+                  :color="field.column_name === pkey ? 'red' : 'green'"
+                  dense
+                  :hint="
+                    field.data_type +
+                      (field.column_name === pkey ? ' (Primary Key)' : '')
+                  "
+                  :label="field.column_name"
+                  outlined
                   :readonly="
                     field.column_name === pkey || field.column_name === 'id'
                   "
-                  :color="field.column_name === pkey ? 'red' : 'green'"
-                  :hint="
-                    field.data_type +
-                    (field.column_name === pkey ? ' (Primary Key)' : '')
-                  "
-                  outlined
-                  dense
-                  :label="field.column_name"
+                  type="number"
                 />
                 <v-textarea
                   v-else
                   v-model="dataRows[modalRow][field.column_name]"
-                  counter
                   :color="field.column_name === pkey ? 'red' : 'green'"
+                  counter
+                  dense
                   :hint="
                     field.data_type +
-                    (field.column_name === pkey ? ' (Primary Key)' : '')
+                      (field.column_name === pkey ? ' (Primary Key)' : '')
                   "
-                  outlined
-                  dense
                   :label="field.column_name"
+                  outlined
                 />
               </v-col>
             </v-row>
@@ -167,7 +167,7 @@ import { dataToExcel } from "@/compositionApi/dataToExcel";
 import { EKNOWLEGEBASE } from "@/const/schemaEnums";
 import projectDebug from "@/functions/projectDebug";
 import { usePostgreStore } from "@/store/modules/postgre";
-import { PropType, computed, ref, toRefs } from "vue";
+import { computed, PropType, ref, toRefs } from "vue";
 type TSTATUS = "edit" | "select" | "new";
 type TFieldData = Record<string, string | number[]>;
 const emit = defineEmits(["getDataTableLocal"]);

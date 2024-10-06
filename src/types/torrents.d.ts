@@ -1,13 +1,13 @@
-interface ServerData {
-  TorrServer: FileData;
-}
-interface FileData {
-  Files: FileStats[];
-}
 interface FileStats {
   id: number;
   path: string;
   length: number;
+}
+interface FileData {
+  Files: FileStats[];
+}
+interface ServerData {
+  TorrServer: FileData;
 }
 interface TorrentInfo {
   title: string;

@@ -1,5 +1,5 @@
-import moment from "moment";
-import { Moment } from "moment";
+import moment, { Moment } from "moment";
+
 const timeDiff = (time1: Moment, time2: Moment) => {
   return time1.unix() - time2.unix();
 };
@@ -18,7 +18,7 @@ export class TaskJobSchedule {
   private interval: number | 0;
   private active: boolean;
 
-  constructor(
+  constructor (
     naimen: string,
     start: string,
     end: null | string,
@@ -47,15 +47,17 @@ export class TaskJobSchedule {
     this.active = active;
     this.result = result;
   }
-  private checkBasic(currentValue: number | null, otherValue: number): boolean {
+
+  private checkBasic (currentValue: number | null, otherValue: number): boolean {
     if (!currentValue) {
       return true;
     } else {
       return currentValue === otherValue;
     }
   }
+
   // проверка месяца
-  checkMonth(month: number) {
+  checkMonth (month: number) {
     if (!this.month) {
       if (!this.day || this.day < 29) {
         return true;
@@ -78,24 +80,29 @@ export class TaskJobSchedule {
       return this.month === month + 1;
     }
   }
+
   // проверка недели
-  checkWeek(week: number) {
+  checkWeek (week: number) {
     return this.checkBasic(this.week, week + 1);
   }
+
   // проверка дня
-  checkDay(day: number) {
+  checkDay (day: number) {
     return this.checkBasic(this.day, day);
   }
+
   // проверка часа
-  checkHour(hour: number) {
+  checkHour (hour: number) {
     return this.checkBasic(this.hour, hour);
   }
+
   // проверка минут
-  checkMinute(minute: number) {
+  checkMinute (minute: number) {
     return this.checkBasic(this.minute, minute);
   }
+
   // проверка интервала
-  checkInterval(new_period: Date) {
+  checkInterval (new_period: Date) {
     if (this.interval < 2) {
       return true;
     } else {
@@ -112,8 +119,9 @@ export class TaskJobSchedule {
       }
     }
   }
+
   // проверка периода выполнения
-  checkPeriod(new_period: Date) {
+  checkPeriod (new_period: Date) {
     const start = new Date(this.start);
     const start_ms = start.getTime();
     const new_period_ms = new_period.getTime();
@@ -128,8 +136,9 @@ export class TaskJobSchedule {
       return true;
     }
   }
+
   // все проверки
-  checkAll(year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0) {
+  checkAll (year = 0, month = 0, week = 0, day = 0, hour = 0, minute = 0) {
     if (year === 0) {
       const cur_period = new Date();
       year = cur_period.getFullYear();
@@ -165,7 +174,7 @@ export class TaskJobSchedule {
     return true;
   }
 
-  nextRun(startDate = moment()) {
+  nextRun (startDate = moment()) {
     if (
       moment(this.start) > startDate ||
       (this.end && moment(this.end) < startDate)
@@ -249,7 +258,7 @@ export class TaskJobSchedule {
     return nextTime.toDate();
   }
 
-  getWorkTime() {
+  getWorkTime () {
     if (!this.last_run) return "-";
     const begin = moment(this.last_run).unix();
     const end =
@@ -259,7 +268,7 @@ export class TaskJobSchedule {
     return end - begin;
   }
 
-  getTaskRunList(
+  getTaskRunList (
     period_beg = new Date(),
     period_end = new Date(Date.now() + 1000 * 60 * 60 * 24)
   ) {
@@ -274,11 +283,11 @@ export class TaskJobSchedule {
     return list;
   }
 
-  getActive() {
+  getActive () {
     return this.active;
   }
 
-  getName() {
+  getName () {
     return this.naimen;
   }
 }

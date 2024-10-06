@@ -5,12 +5,12 @@ import { Cell } from "../Cell";
 export class Pawn extends Figure {
   isFirstStep = true;
 
-  constructor(color: Colors, cell: Cell) {
+  constructor (color: Colors, cell: Cell) {
     super(color, cell);
     this.name = FigureNames.PAWN;
   }
 
-  canMove(target: Cell): boolean {
+  canMove (target: Cell): boolean {
     if (!super.canMove(target)) return false;
     const direction = this.cell.figure?.color === Colors.BLACK ? 1 : -1;
     const firstStepDirection =
@@ -36,7 +36,7 @@ export class Pawn extends Figure {
     return false;
   }
 
-  moveFigure(target: Cell) {
+  moveFigure (target: Cell) {
     super.moveFigure(target);
     this.isFirstStep = false;
   }

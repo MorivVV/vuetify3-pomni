@@ -1,8 +1,8 @@
 <template>
   <v-expansion-panel>
     <v-expansion-panel-header
-      style="min-height: 32px"
       class="ma-0 pa-0 pl-2"
+      style="min-height: 32px"
       @click="open = true"
     >
       <v-row class="ma-0 pa-0">
@@ -29,12 +29,12 @@
         <v-row class="ma-1">
           <v-col cols="12">
             <AutocompleteV
-              label="Доступные разделы"
-              :value="partAllow"
-              :items="partitions"
-              item-value="id"
               item-text="namien"
+              item-value="id"
+              :items="partitions"
+              label="Доступные разделы"
               multiple
+              :value="partAllow"
               @input="changeAccess"
             >
               <template #selection="{ attrs, item, selected }">
@@ -42,7 +42,6 @@
                   class="mt-1 ml-1"
                   v-bind="attrs"
                   close
-                  small
                   :color="
                     levels.find(
                       (e) =>
@@ -55,12 +54,12 @@
                     )?.color
                   "
                   :input-value="selected"
-                  @click:close="remove(item)"
+                  small
                   @click.stop="changehLevel(item)"
+                  @click:close="remove(item)"
                 >
                   <v-icon color="red"> place </v-icon>
-                  <span>{{ item.namien }}</span
-                  >&nbsp;
+                  <span>{{ item.namien }}</span>&nbsp;
                   <span>({{ item.path }})</span>
                 </v-chip>
               </template>
@@ -68,10 +67,10 @@
           </v-col>
           <v-col offset-md="11">
             <BtnIconsVVue
-              :disabled="!editLevel()"
+              :action="allAllow"
               color="white"
               colorbtn="green darken-3"
-              :action="allAllow"
+              :disabled="!editLevel()"
               icon="filter_9_plus"
               title="Предоставить все доступы"
             />
@@ -85,7 +84,7 @@
 <script setup lang="ts">
 import BtnIconsVVue from "@/components/basic/BtnIconsV.vue";
 import { useAdminStore } from "@/store/modules/admin";
-import { PropType, computed, ref, toRefs } from "vue";
+import { computed, PropType, ref, toRefs } from "vue";
 import { dataApiComposition, toast } from "@/compositionApi/dataApi";
 import { IKnowledgebaseBzUsers } from "@/types/database/schemas/knowledgebase";
 import { addAccess, delAccess, getAccess } from "./accessMetods";

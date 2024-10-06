@@ -70,18 +70,18 @@ export const useAuditDataStore = defineStore("auditData", {
   }),
 
   getters: {
-    reasonList(state) {
+    reasonList (state) {
       const reason = convertToObject(state.reason, "ID");
       return reason;
     },
-    svodList(state) {
+    svodList (state) {
       return state.svod;
     },
-    operationList(state) {
+    operationList (state) {
       const operations = convertToObject(state.operations, "ID");
       return operations;
     },
-    operationFilterList(state) {
+    operationFilterList (state) {
       const object = state.operations;
       const result: IAJAXgetOperations[] = [];
       const min = state.resultMin;
@@ -111,18 +111,18 @@ export const useAuditDataStore = defineStore("auditData", {
       });
       return result;
     },
-    userList(state) {
+    userList (state) {
       const user = convertToObject(state.users, "ID");
       return user;
     },
-    groupList(state) {
+    groupList (state) {
       const gr = convertToObject(state.groups, "ID");
       return gr;
     },
-    resultList(state) {
+    resultList (state) {
       return state.result;
     },
-    topicDecode(state) {
+    topicDecode (state) {
       return state.topicCode;
     },
   },

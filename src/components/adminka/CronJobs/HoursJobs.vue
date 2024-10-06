@@ -1,22 +1,22 @@
 <template lang="pug">
 v-row.ma-0.d-flex( v-if="active" :class="current")
   MinutesJobsVue(
-v-for="m in minutes.filter(e=>e.id>=0)" 
-  :key="'w'+week+'_h'+hour+'_m'+m.id" 
-  :hour="hour" 
-  :minute="Number(m.id)" 
+v-for="m in minutes.filter(e=>e.id>=0)"
+  :key="'w'+week+'_h'+hour+'_m'+m.id"
+  :hour="hour"
+  :minute="Number(m.id)"
   :week="week" )
-v-row.ma-0.d-flex( v-else)  
+v-row.ma-0.d-flex( v-else)
   v-col.pa-0.grey( cols="auto" style="width: 50px; height: 25px;" )
 </template>
 
 <script lang="ts">
 import moment from "moment";
-window.moment = moment;
 import { defineComponent } from "vue";
 import { mapState } from "pinia";
 import MinutesJobsVue from "./MinutesJobs.vue";
 import { useDateConstStore } from "@/store/modules/dateConst";
+window.moment = moment;
 
 export default defineComponent({
   components: { MinutesJobsVue },
@@ -24,14 +24,14 @@ export default defineComponent({
     hour: { type: Number, required: true },
     week: { type: Number, required: true },
   },
-  data() {
+  data () {
     return {
       active: false,
     };
   },
   computed: {
     ...mapState(useDateConstStore, ["minutes"]),
-    current(): string {
+    current (): string {
       const week = this.week as number;
       const hour = this.hour;
       const date = this.$moment().date() + week - this.$moment().day();
@@ -53,7 +53,7 @@ export default defineComponent({
       return color;
     },
   },
-  mounted() {
+  mounted () {
     setTimeout(() => {
       this.active = true;
     }, 5);

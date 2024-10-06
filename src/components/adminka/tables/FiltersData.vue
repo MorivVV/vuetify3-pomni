@@ -1,31 +1,31 @@
 <template>
-  <v-row class="ma-0 mt-4" align="center">
-    <v-col cols="12" md="2" class="text-h5"> Выборка из БД </v-col>
+  <v-row align="center" class="ma-0 mt-4">
+    <v-col class="text-h5" cols="12" md="2"> Выборка из БД </v-col>
     <v-col cols="4" md="1">
       <TextFielsV v-model="limit" label="Отобразить записей" />
     </v-col>
     <v-col cols="4" md="1">
-      <TextFielsV v-model="page" type="number" min="1" label="Номер страницы" />
+      <TextFielsV v-model="page" label="Номер страницы" min="1" type="number" />
     </v-col>
     <v-col cols="12" md="2">
       <AutocompleteV
         v-model="fieldName"
-        label="Поле поиска"
-        :items="fieldList"
         item-text="column_name"
         item-value="column_name"
+        :items="fieldList"
+        label="Поле поиска"
       />
     </v-col>
     <v-col cols="12" md="2">
       <SelectV
         v-if="operators.length"
         v-model="operator"
-        clearable
         class="pa-0"
-        label="Оператор сравнения"
-        :items="operators"
+        clearable
         item-text="name"
         item-value="id"
+        :items="operators"
+        label="Оператор сравнения"
       />
     </v-col>
     <v-col cols="12" md="2">
@@ -33,8 +33,8 @@
     </v-col>
     <v-col cols="auto">
       <BtnIconsV
-        color="green"
         :action="() => getDataTable(table)"
+        color="green"
         icon="autorenew"
         title="Применить фильтр"
       />

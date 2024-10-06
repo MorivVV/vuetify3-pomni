@@ -1,31 +1,31 @@
 <template>
-  <v-row v-if="tableList.length > 0" class="ma-1" align="center">
+  <v-row v-if="tableList.length > 0" align="center" class="ma-1">
     <v-col cols="12">
-      <v-divider></v-divider>
+      <v-divider />
     </v-col>
-    <v-col cols="5" class="text-h4 text-right">Список таблиц в схеме</v-col>
+    <v-col class="text-h4 text-right" cols="5">Список таблиц в схеме</v-col>
     <v-col cols="5">
       <TextFielsV
         v-model="searchTable"
-        prepend-icon="mdi-magnify"
         label="Общий поиск"
-      ></TextFielsV>
+        prepend-icon="mdi-magnify"
+      />
     </v-col>
     <v-col cols="12">
       <v-data-table
+        class="elevation-1 striped blue lighten-5"
         dense
-        :search="searchTable"
         :headers="Object.keys(tableList[0]).map((r) => ({ text: r, value: r }))"
         :items="tableList"
         :items-per-page="10"
-        class="elevation-1 striped blue lighten-5"
+        :search="searchTable"
       >
         <template #[`item.tablename`]="{ item }">
           <v-btn
-            outlined
-            small
             block
             class="text-lowercase"
+            outlined
+            small
             @click="viewFields(item.tablename)"
           >
             {{ item.tablename }}
@@ -49,8 +49,8 @@ import TextFielsV from "@/components/basic/TextFielsV.vue";
 import { dataApiComposition } from "@/compositionApi/dataApi";
 import { usePostgreStore } from "@/store/modules/postgre";
 import { storeToRefs } from "pinia";
-const emit = defineEmits(["viewFields"]);
 import { ref } from "vue";
+const emit = defineEmits(["viewFields"]);
 const { r_get } = dataApiComposition();
 const { tableList } = storeToRefs(usePostgreStore());
 const searchTable = ref("");

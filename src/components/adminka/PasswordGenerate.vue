@@ -2,94 +2,82 @@
   <v-container>
     <v-row class="ma-1">
       <v-col cols="5">
-        <v-text-field
+        <TextFielsV
           v-model="password"
-          outlined
-          prepend-icon="graphic_eq"
           label="открытый пароль"
-          dense
-          hide-details
+          prepend-icon="mdi-equalizer"
         />
       </v-col>
       <v-col cols="5">
-        <v-text-field
+        <TextFielsV
           v-model="master_password"
-          outlined
-          prepend-icon="fingerprint"
           label="мастер-пароль"
-          dense
-          hide-details
+          prepend-icon="mdi-fingerprint"
         />
       </v-col>
       <v-col cols="1">
         <BtnIconsV
-          :disabled="!(master_password && password)"
-          color="white"
-          colorbtn="red"
-          icon="lock"
-          title="Зашифровать"
           :action="
             () => {
               encripted = AESencrypt(password, master_password);
             }
           "
+          color="white"
+          colorbtn="red"
+          :disabled="!(master_password && password)"
+          icon="lock"
+          title="Зашифровать"
         />
       </v-col>
       <v-col cols="1">
         <BtnIconsV
-          :disabled="!(master_password && password)"
-          color="white"
-          colorbtn="green"
-          icon="lock_open"
-          title="Расшифровать"
           :action="
             () => {
               decripted = AESdecrypt(password, master_password);
             }
           "
+          color="white"
+          colorbtn="green"
+          :disabled="!(master_password && password)"
+          icon="lock-open"
+          title="Расшифровать"
         />
       </v-col>
-      <v-col cols="11" class="ma-0 text-center text-h4">
-        <v-text-field
-          v-model="decripted"
-          outlined
-          hide-details
-          dense
-          label="Расшифрованный результат"
-        ></v-text-field>
+      <v-col class="ma-0 text-center text-h4" cols="11">
+        <TextFielsV v-model="decripted" label="Расшифрованный результат" />
       </v-col>
       <v-col cols="1">
         <BtnIconsV
-          color="white"
-          colorbtn="blue"
-          icon="content_copy"
-          title="Копировать в буфер обмена"
           :action="
             () => {
               copyToClipboard(decripted);
             }
           "
+          color="white"
+          colorbtn="blue"
+          icon="content-copy"
+          title="Копировать в буфер обмена"
         />
       </v-col>
-      <v-col cols="11" class="ma-0 text-center text-h4">
-        <v-text-field
+      <v-col class="ma-0 text-center text-h4" cols="11">
+        <TextFielsV
           v-model="encripted"
-          outlined
           dense
           label="Зашифрованный результат"
-        ></v-text-field>
+          outlined
+        />
       </v-col>
       <v-col cols="1">
         <BtnIconsV
-          color="white"
-          colorbtn="blue"
-          icon="content_copy"
-          title="Копировать в буфер обмена"
           :action="
             () => {
               copyToClipboard(encripted);
             }
           "
+          color="white"
+          colorbtn="blue"
+          icon="content-copy"
+          title="Копировать в буфер обмена"
         />
       </v-col>
     </v-row>
@@ -109,34 +97,20 @@
   </v-container>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import AESdecrypt from "@/store/function/aesdecrypt";
 import AESencrypt from "@/store/function/aesencript";
 import { toast } from "@/compositionApi/dataApi";
-import { defineComponent, ref } from "vue";
+import { ref } from "vue";
 import BtnIconsV from "../basic/BtnIconsV.vue";
+import TextFielsV from "../basic/TextFielsV.vue";
 
-export default defineComponent({
-  components: { BtnIconsV },
-  setup() {
-    const password = ref("");
-    const master_password = ref("");
-    const encripted = ref("");
-    const decripted = ref("");
-    const copyToClipboard = (text: string) => {
-      navigator.clipboard.writeText(text);
-      toast.info("Скопировано в буфер обмена");
-    };
-
-    return {
-      password,
-      master_password,
-      encripted,
-      decripted,
-      AESdecrypt,
-      AESencrypt,
-      copyToClipboard,
-    };
-  },
-});
+const password = ref("");
+const master_password = ref("");
+const encripted = ref("");
+const decripted = ref("");
+const copyToClipboard = (text: string) => {
+  navigator.clipboard.writeText(text);
+  toast.info("Скопировано в буфер обмена");
+};
 </script>

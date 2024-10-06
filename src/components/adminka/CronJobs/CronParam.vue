@@ -8,11 +8,11 @@
       <v-textarea
         v-if="['object', 'array'].includes(param.type_var)"
         v-model.lazy="param_value"
-        rows="2"
-        row-height="20"
-        outlined
         dense
         hide-details
+        outlined
+        row-height="20"
+        rows="2"
       />
       <TextFielsV
         v-if="param.type_var === 'string'"
@@ -33,13 +33,13 @@
           (param.type_var === 'string' ||
             param.type_var === 'number' ||
             param.type_var === 'array') &&
-          param.rest_get
+            param.rest_get
         "
         v-model.lazy="param_value"
-        :multiple="Array.isArray(param_value)"
         class="mt-2"
-        label="Жесткая привязка к данным"
         :items="autoData"
+        label="Жесткая привязка к данным"
+        :multiple="Array.isArray(param_value)"
       />
       <CheckBoxTitleV
         v-if="param.type_var === 'boolean'"
@@ -91,10 +91,8 @@ if (props.param.type_var === "array") {
 const sql_param_value = ref<string[]>([]);
 if (props.param.rest_get && props.param.default_var) {
   let perfix = "";
-  if (props.param.rest_get.includes("sys_sql_query"))
-    perfix = "/admin/database/querysetting?sql_name=";
-  if (props.param.rest_get.includes("cron_jobs"))
-    perfix = "/admin/cronjobs?naimen=";
+  if (props.param.rest_get.includes("sys_sql_query")) { perfix = "/admin/database/querysetting?sql_name="; }
+  if (props.param.rest_get.includes("cron_jobs")) { perfix = "/admin/cronjobs?naimen="; }
   if (perfix) {
     if (
       props.param.default_var?.startsWith("[") &&

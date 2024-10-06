@@ -1,25 +1,25 @@
 <template>
   <v-select
     v-model="lazyValue"
-    auto-select-first
-    :clearable="clearable"
-    :append-outer-icon="appendOuterIcon"
-    dense
     :append-icon="appendIcon"
-    hide-details
+    :append-outer-icon="appendOuterIcon"
+    auto-select-first
+    :chips="chips"
+    :clearable="clearable"
+    :deletable-chips="deletableChips"
+    dense
+    :disabled="disabled"
     :filter="filter"
+    hide-details
     :hide-selected="hideSelected"
+    :item-text="itemText"
+    :item-value="itemValue"
+    :items="items"
+    :label="label"
     :multiple="multiple"
     :open-on-clear="openOnClear"
-    :chips="chips"
     outlined
-    :disabled="disabled"
-    :deletable-chips="deletableChips"
-    :label="label"
-    :items="items"
-    :item-value="itemValue"
     :placeholder="placeholder"
-    :item-text="itemText"
     :prepend-icon="prependIcon"
     :small-chips="smallChips"
     @input="$emit('input', lazyValue)"

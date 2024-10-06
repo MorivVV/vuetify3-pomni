@@ -15,9 +15,9 @@ import { ICreateTableFields } from "@/types/database/service";
 // import { mqlFetchQuery } from "@morivvv/json-sql-builder/dist/functions/fetchQuery";
 import {
   IAliasTableFields,
-  TMergeTInterface,
   IJMQL,
   mqlFetchQuery,
+  TMergeTInterface,
 } from "@morivvv/json-sql-builder";
 
 const { r_get, r_delete, r_getFile, r_update } = dataApiComposition();

@@ -5,26 +5,23 @@
       <v-col cols="auto" xl="6">
         <v-dialog
           v-model="dialog"
-          transition="dialog-top-transition"
           max-width="600"
+          transition="dialog-top-transition"
         >
           <template #activator="{ on, attrs }">
-            <v-btn small color="primary" v-bind="attrs" v-on="on">
+            <v-btn color="primary" small v-bind="attrs" v-on="on">
               <span style="text-transform: none"> Добавить</span>
             </v-btn>
           </template>
 
           <v-card>
-            <v-toolbar dense color="primary" dark>
+            <v-toolbar color="primary" dark dense>
               Название нового раздела
             </v-toolbar>
             <v-card-text class="pa-2">
-              <v-text-field
+              <TextFielsV
                 v-model="nameBlock"
                 label="Раздел"
-                dense
-                hide-details
-                outlined
               />
             </v-card-text>
             <v-card-actions class="justify-end">
@@ -38,26 +35,23 @@
         <v-dialog
           v-if="_blocks.length > 0"
           v-model="dialogInside"
-          transition="dialog-top-transition"
           max-width="600"
+          transition="dialog-top-transition"
         >
           <template #activator="{ on, attrs }">
-            <v-btn small color="primary" v-bind="attrs" v-on="on">
+            <v-btn color="primary" small v-bind="attrs" v-on="on">
               Расширить
             </v-btn>
           </template>
 
           <v-card>
-            <v-toolbar dense color="primary" dark>
+            <v-toolbar color="primary" dark dense>
               Название вложенного раздела
             </v-toolbar>
             <v-card-text class="pa-2">
-              <v-text-field
+              <TextFielsV
                 v-model="nameBlock"
                 label="Раздел"
-                dense
-                hide-details
-                outlined
               />
             </v-card-text>
             <v-card-actions class="justify-end">

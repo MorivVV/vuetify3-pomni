@@ -1,7 +1,7 @@
 import { GameBlock } from "./GameBlock";
 
 export class BonusBlock extends GameBlock {
-  constructor(
+  constructor (
     canvas: CanvasRenderingContext2D,
     pointX: number,
     pointY: number,

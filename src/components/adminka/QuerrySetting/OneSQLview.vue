@@ -2,30 +2,30 @@
   <v-container fluid>
     <v-card>
       <SqlHeader
+        color-class="red lighten-5"
         :need-check="need_check"
         :ssq="ssq"
-        color-class="red lighten-5"
         :use-query="useQuery"
         :view-change="viewChange"
+        @clone-s-s-q="cloneSSQ"
+        @del-s-s-q="delSSQ"
         @edit-sql="
           () => {
             $emit('edit-sql', true);
           }
         "
-        @delSSQ="delSSQ"
-        @cloneSSQ="cloneSSQ"
       />
       <v-divider />
       <v-row class="ma-1">
         <v-col cols="12">
           <BodySQL
+            color="red lighten-5"
             :sql-query="String(ssq.sql_query)"
             :sql-query-mod="
               sqlAudit.length && sqlAudit[0].status === 'NEED_CHECK'
                 ? String(sqlAudit[0].sql_query)
                 : String(ssq.sql_query)
             "
-            color="red lighten-5"
           />
         </v-col>
       </v-row>
@@ -36,17 +36,16 @@
               <label
                 v-bind="attrs"
                 class="text-caption"
-                @click="copyCB"
                 v-on="on"
-                >Интерфейс возвращаемого результа</label
-              >
+                @click="copyCB"
+              >Интерфейс возвращаемого результа</label>
             </template>
             <p class="pre">
               {{ ssq.interface }}
             </p>
           </v-tooltip>
         </v-col>
-        <v-col cols="auto" class="text-caption pa-0 ma-0">
+        <v-col class="text-caption pa-0 ma-0" cols="auto">
           <div>
             <UserFioVue :user_id="ssq.kod_user_add" />
             {{ $moment(ssq.date_add).format(" доб. YYYY-MM-DD HH:mm") }}
@@ -70,9 +69,10 @@
       </v-row>
       <v-divider />
       <v-row v-if="jobs.length" class="ma-0 pa-0">
-        <v-col class="ma-0 pa-0 pl-1" cols="auto"
-          >Используется {{ ssq.cnt_script }} в заданиях:</v-col
-        >
+        <v-col
+          class="ma-0 pa-0 pl-1"
+          cols="auto"
+        >Используется {{ ssq.cnt_script }} в заданиях:</v-col>
         <v-col
           v-for="job in jobs"
           :key="'job_' + job.naimen"
@@ -83,48 +83,47 @@
             :class="job.active ? 'green--text' : 'red--text'"
             :href="
               '/admin/cronjobs?kod_script=' +
-              job.kod_script +
-              '&naimen=' +
-              job.naimen +
-              '&active=' +
-              job.active
+                job.kod_script +
+                '&naimen=' +
+                job.naimen +
+                '&active=' +
+                job.active
             "
             target="_blank"
-            >{{ job.naimen }}</a
-          >
+          >{{ job.naimen }}</a>
         </v-col>
       </v-row>
       <v-divider />
       <v-row class="ma-0">
-        <v-col cols="auto" class="pa-1">
+        <v-col class="pa-1" cols="auto">
           <LoaderCircle v-if="loading_result" />
           <BtnIconsVVue
             v-else
             :action="testSQL"
+            color="blue"
             :disabled="!ssq.sql_query"
             icon="play_arrow"
-            color="blue"
             title="Выполнить скрипт и получить результат"
           />
         </v-col>
-        <v-col v-if="useChart" cols="auto" class="pa-1">
+        <v-col v-if="useChart" class="pa-1" cols="auto">
           <LoaderCircle v-if="loading_diagramm" />
           <BtnIconsVVue
             v-else
+            :action="() => getExcelChart(ssq.sql_name, params)"
             color="red"
             icon="assessment"
             title="Скачать XLSX диаграму"
-            :action="() => getExcelChart(ssq.sql_name, params)"
           />
         </v-col>
-        <v-col v-if="useQuery" cols="auto" class="pa-1">
+        <v-col v-if="useQuery" class="pa-1" cols="auto">
           <LoaderCircle v-if="loading_xlsx" />
           <BtnIconsVVue
             v-else
+            :action="() => getExcel(ssq.sql_name, params)"
             color="green"
             icon="mdi-microsoft-excel"
             title="Скачать XLSX"
-            :action="() => getExcel(ssq.sql_name, params)"
           />
         </v-col>
 
@@ -133,13 +132,13 @@
             <v-col
               v-for="p in qParam"
               :key="ssq.sql_name + p"
-              cols="1"
               class="pa-1"
+              cols="1"
             >
               <TextFielsV v-model="params[p]" :label="p" />
             </v-col>
             <v-spacer />
-            <v-col cols="auto" class="pa-0 ma-0">
+            <v-col class="pa-0 ma-0" cols="auto">
               <div
                 v-if="ssq.run_time"
                 title="Продолжительность выполнения запроса"
@@ -152,13 +151,13 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col cols="auto" class="pa-1">
+        <v-col class="pa-1" cols="auto">
           <BtnIconsVVue
             v-if="+ssq.cnt_all > 0"
+            :action="getHistory"
             color="blue"
             icon="history"
             title="Просмотр истории изменения"
-            :action="getHistory"
           />
         </v-col>
       </v-row>
@@ -166,14 +165,14 @@
         <v-col cols="12">
           <DataTableV
             v-if="!loading_result"
-            :items="queryResult"
-            :label="ssq.sql_name"
-            multi-sort
-            :caption="ssq.sql_name"
             calculate-widths
+            :caption="ssq.sql_name"
             fixed-header
             :height="queryResult.length < 15 ? 'auto' : '60vh'"
+            :items="queryResult"
             :items-per-page="15"
+            :label="ssq.sql_name"
+            multi-sort
             no-data-text="данные не найдены"
           />
         </v-col>
@@ -182,50 +181,49 @@
     <template v-for="ssqA in sqlAudit">
       <v-card v-if="ssqA.status === 'NEED_CHECK'" :key="'audit_' + ssqA.id">
         <SqlHeader
+          color-class="green lighten-5"
           :need-check="need_check"
           :ssq="ssqA"
-          color-class="green lighten-5"
           :use-query="useQuery"
           :view-change="viewChange"
+          @accept-s-s-q="acceptSSQ"
+          @clone-s-s-q="cloneSSQ"
+          @del-s-s-q="delSSQ"
           @edit-sql="
             () => {
               $emit('edit-sql', true);
             }
           "
-          @delSSQ="delSSQ"
-          @cloneSSQ="cloneSSQ"
-          @acceptSSQ="acceptSSQ"
-          @rejectSSQ="rejectSSQ"
+          @reject-s-s-q="rejectSSQ"
         />
         <v-divider />
         <v-row class="ma-1">
           <v-col cols="12">
             <BodySQL
+              color="green lighten-5"
               :sql-query="String(ssqA.sql_query)"
               :sql-query-mod="String(ssq.sql_query)"
-              color="green lighten-5"
             />
           </v-col>
         </v-row>
         <v-row class="ma-1" justify="center">
-          <v-col cols="auto" class="pa-0 ma-0">
-            <span v-if="ssqA.date_add" class="text-caption"
-              ><UserFioVue
-                v-if="ssqA.kod_user_change"
-                :user_id="ssqA.kod_user_change"
-              />{{
-                $moment(ssqA.date_add).format(" изм. YYYY-MM-DD HH:mm")
-              }}</span
-            >
+          <v-col class="pa-0 ma-0" cols="auto">
+            <span
+              v-if="ssqA.date_add"
+              class="text-caption"
+            ><UserFioVue
+              v-if="ssqA.kod_user_change"
+              :user_id="ssqA.kod_user_change"
+            />{{
+              $moment(ssqA.date_add).format(" изм. YYYY-MM-DD HH:mm")
+            }}</span>
             <span class="ml-2">
               - Ссылка для подтверждения:
               <a
+                class="purple--text text-decoration-none"
                 :href="'?sql_name=' + ssq.sql_name"
                 target="_blank"
-                class="purple--text text-decoration-none"
-                >{{ ssqA.sql_name }}</a
-              ></span
-            >
+              >{{ ssqA.sql_name }}</a></span>
           </v-col>
         </v-row>
         <v-divider />
@@ -235,29 +233,28 @@
       <v-card>
         <v-card-title class="pa-0 ma-0 grey lighten-3">
           <v-row class="ma-1">
-            <v-col class="pa-0"
-              >История изменений запроса {{ ssq.sql_name }}</v-col
-            >
+            <v-col class="pa-0">История изменений запроса {{ ssq.sql_name }}</v-col>
             <v-col class="pa-0" cols="auto">
               <BtnIconsVVue
-                icon="close"
-                color="red"
-                title="Закрыть окно"
                 :action="() => (dialogHistory = false)"
+                color="red"
+                icon="close"
+                title="Закрыть окно"
               />
             </v-col>
           </v-row>
         </v-card-title>
         <div v-for="(hist, ind) in historyList" :key="hist.id" class="white">
           <v-row class="ma-1">
-            <v-col cols="auto" class="pa-0"
-              >{{ historyList.length - ind }})
+            <v-col
+              class="pa-0"
+              cols="auto"
+            >{{ historyList.length - ind }})
 
               {{ $moment(hist.date_add).format(` добавил ${momentFormatFull} `)
-              }}<UserFioVue :user_id="hist.kod_user_change"
-            /></v-col>
-            <v-col cols="1"></v-col>
-            <v-col cols="auto" class="pa-0">
+              }}<UserFioVue :user_id="hist.kod_user_change" /></v-col>
+            <v-col cols="1" />
+            <v-col class="pa-0" cols="auto">
               <span>
                 {{
                   $moment(hist.date_check).format(
@@ -269,22 +266,22 @@
           </v-row>
           <v-divider />
           <SqlHeader
-            :need-check="need_check"
-            :ssq="hist"
-            no-btn
             color-class="green lighten-5"
+            :need-check="need_check"
+            no-btn
+            :ssq="hist"
             :use-query="useQuery"
             :view-change="viewChange"
           />
           <v-divider />
           <BodySQL
+            color="red lighten-5"
             :sql-query="String(hist.sql_query)"
             :sql-query-mod="
               ind
                 ? String(historyList[ind - 1].sql_query)
                 : String(ssq.sql_query)
             "
-            color="red lighten-5"
           />
           <v-divider />
         </div>
@@ -298,16 +295,16 @@ import LoaderCircle from "@/components/basic/LoaderCircle.vue";
 
 import {
   computed,
+  defineEmits,
+  defineProps,
   PropType,
   ref,
   toRefs,
-  defineEmits,
-  defineProps,
   watch,
 } from "vue";
 import BtnIconsVVue from "@/components/basic/BtnIconsV.vue";
 import UserFioVue from "@/components/elements/UserFio.vue";
-import { dataApiComposition } from "@/compositionApi/dataApi";
+import { dataApiComposition, toast } from "@/compositionApi/dataApi";
 import {
   IKnowledgebaseCronJobs,
   IKnowledgebaseSysSqlQuery,
@@ -315,7 +312,6 @@ import {
 } from "@/types/database/schemas/knowledgebase";
 import moment from "moment";
 import { useAutorizationStore } from "@/store/modules/autorization";
-import { toast } from "@/compositionApi/dataApi";
 import projectDebug from "@/functions/projectDebug";
 import { currentTimestamp } from "@/const/globalRestAPI";
 import DataTableV from "@/components/basic/DataTableV.vue";
@@ -441,7 +437,7 @@ const rejectSSQ = (id = 0) => {
       status: "REJECT",
     },
     filter: {
-      id: id,
+      id,
     },
   })
     .then(checkDataModify)
@@ -537,8 +533,7 @@ const cloneSSQ = () => {
         r,
         "Аjax запрос клонирован с названием " + clone_ssq.sql_name
       )
-    )
-      emit("getSSQ");
+    ) { emit("getSSQ"); }
   });
 };
 const delSSQ = () => {

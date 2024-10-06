@@ -2,21 +2,21 @@
   <v-list-item class="pa-0 ma-0">
     <v-list-item-content class="ma-0 pl-1 pa-0">
       <v-row align="center" class="ma-0" justify="center">
-        <v-col cols="5" class="text-h5 pl-1 pa-0 ma-0">
-          <UserFioVue :user_id="user.kod_user" type-name="full" />
+        <v-col class="text-h5 pl-1 pa-0 ma-0" cols="5">
+          <UserFioVue type-name="full" :user_id="user.kod_user" />
         </v-col>
-        <v-col cols="5" class="text-h6 pl-1 pa-0 ma-0">
-          <UserFioVue :user_id="user.kod_user" type-name="login" />
+        <v-col class="text-h6 pl-1 pa-0 ma-0" cols="5">
+          <UserFioVue type-name="login" :user_id="user.kod_user" />
         </v-col>
-        <v-col cols="1" class="pl-1 pa-1 ma-0" :class="nameLevel?.color">
+        <v-col class="pl-1 pa-1 ma-0" :class="nameLevel?.color" cols="1">
           {{ nameLevel?.name }} ({{ user.access_level }})
         </v-col>
-        <v-col cols="1" class="text-right pl-1 pa-0 ma-0">
+        <v-col class="text-right pl-1 pa-0 ma-0" cols="1">
           <BtnIconsV
-            icon="delete"
-            colorbtn="red"
-            color="white"
             :action="delUser"
+            color="white"
+            colorbtn="red"
+            icon="delete"
             title="Удалить пользователя"
           />
         </v-col>
@@ -27,10 +27,9 @@
 
 <script setup lang="ts">
 import UserFioVue from "@/components/elements/UserFio.vue";
-import { computed, toRefs } from "vue";
+import { computed, PropType, toRefs } from "vue";
 import { dataApiComposition } from "@/compositionApi/dataApi";
 import { useAdminStore } from "@/store/modules/admin";
-import { PropType } from "vue";
 import BtnIconsV from "@/components/basic/BtnIconsV.vue";
 
 const { r_delete, checkDataModify } = dataApiComposition();

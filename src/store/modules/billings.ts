@@ -4,8 +4,8 @@ import {
   IBillingMeters,
   IBillingPrices,
   IBillingResources,
+  IMonitoringZdorovie,
 } from "@/types/database/schemas/billing";
-import { IMonitoringZdorovie } from "@/types/database/schemas/billing";
 import { defineStore } from "pinia";
 interface ICalcMeter extends IBillingMeters {
   calc_sum: number;

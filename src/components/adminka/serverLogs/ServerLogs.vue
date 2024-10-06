@@ -7,11 +7,11 @@
           <v-select
             v-model="filter.typeLog"
             clearable
-            outlined
-            hide-details=""
             dense
-            label="Расширение файлов"
+            hide-details=""
             :items="typesLogs"
+            label="Расширение файлов"
+            outlined
             prepend-icon="settings_input_hdmi"
           />
         </v-col>
@@ -19,51 +19,51 @@
           <DatetimePickerV
             v-model="filter.datebeg"
             class="v-input--dense v-text-field--outlined"
-            :time-picker-props="timeProps"
             :date-picker-props="{ 'first-day-of-week': 1 }"
-            time-format="HH:mm:ss"
             datetime="timestamp"
             label="Период с"
+            time-format="HH:mm:ss"
+            :time-picker-props="timeProps"
           />
         </v-col>
         <v-col cols="2">
           <DatetimePickerV
             v-model="filter.dateend"
             class="v-input--dense v-text-field--outlined"
-            :time-picker-props="timeProps"
             :date-picker-props="{ 'first-day-of-week': 1 }"
-            time-format="HH:mm:ss"
             datetime="timestamp"
             label="Период по"
+            time-format="HH:mm:ss"
+            :time-picker-props="timeProps"
           />
         </v-col>
 
         <v-col cols="3">
           <v-text-field
             v-model="filter.fileName"
-            outlined
-            hide-details=""
-            dense
             clearable
+            dense
+            hide-details=""
             label="Совпадение в названии файла"
+            outlined
           />
         </v-col>
         <v-col cols="1">
           <BtnIconsV
-            colorbtn="blue darken-2"
-            color="white"
-            class="small-btn"
             :action="getServerLogs"
+            class="small-btn"
+            color="white"
+            colorbtn="blue darken-2"
             icon="cloud_download"
             title="Скачать логи с сервера"
           />
         </v-col>
         <v-col cols="1">
           <BtnIconsV
-            colorbtn="blue darken-4"
-            color="white"
-            class="small-btn"
             :action="getServerLogList"
+            class="small-btn"
+            color="white"
+            colorbtn="blue darken-4"
             icon="pageview"
             title="Посмотреть список файлов на сервере"
           />
@@ -94,8 +94,8 @@
     </v-card>
     <DataTableV
       caption="Список файлов на сервере"
-      :items="fileList"
       :headers="HeadersServerFiles"
+      :items="fileList"
     >
       <template #[`item.stat.atime`]="{ item }">
         {{ moment(item.stat.ctime).format(momentFormatFull) }}
@@ -109,10 +109,10 @@
         </span>
         <span v-else> {{ Number(item.stat.size / 1024).toFixed(2) }} Кб </span>
         <BtnIconsV
-          colorbtn="blue darken-2"
-          color="white"
-          class="small-btn"
           :action="() => getServerFile(item)"
+          class="small-btn"
+          color="white"
+          colorbtn="blue darken-2"
           icon="cloud_download"
           title="Скачать файл"
         />

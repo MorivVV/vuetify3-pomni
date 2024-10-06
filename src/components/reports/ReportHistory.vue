@@ -3,14 +3,14 @@
     <router-view v-if="'stateId' in $route.params && $route.params.stateId" />
     <DataTableV
       v-else
-      show-expand
       :caption="props.reportName"
-      :items="reportsState"
-      :headers="tableHeaderReportHistory"
       class="blue lighten-5"
+      :headers="tableHeaderReportHistory"
+      :items="reportsState"
+      show-expand
     >
       <template #expanded-top>
-        <v-col cols="auto" class="pa-1">
+        <v-col class="pa-1" cols="auto">
           <v-row>
             <v-col cols="auto">
               Все поля по умолчанию приведены к строковому типу.
@@ -29,19 +29,12 @@
       </template>
       <template #[`item.naimen`]="{ item }">
         <a
-          target="_blank"
           :href="`/reports/page/${item.kod_report}/view/${item.id}`"
-          >{{ item.naimen }}</a
-        >
+          target="_blank"
+        >{{ item.naimen }}</a>
       </template>
       <template #[`item.delete`]="{ item }">
         <BtnIconsV
-          icon="delete"
-          title="Удалить"
-          color="red"
-          :colorbtn="loadingDeleteReport ? 'red' : 'white'"
-          :disabled="!moderatorLevel()"
-          :loading="loadingDeleteReport"
           :action="
             () => {
               loadingDeleteReport = true;
@@ -50,15 +43,16 @@
               );
             }
           "
+          color="red"
+          :colorbtn="loadingDeleteReport ? 'red' : 'white'"
+          :disabled="!moderatorLevel()"
+          icon="delete"
+          :loading="loadingDeleteReport"
+          title="Удалить"
         />
       </template>
       <template #[`item.xlsx`]="{ item }">
         <BtnIconsV
-          color="green"
-          :colorbtn="loadingXLSXreport ? 'green' : 'white'"
-          icon="mdi-microsoft-excel"
-          title="Скачать XLSX"
-          :loading="loadingXLSXreport"
           :action="
             () => {
               loadingXLSXreport = true;
@@ -67,10 +61,15 @@
               );
             }
           "
+          color="green"
+          :colorbtn="loadingXLSXreport ? 'green' : 'white'"
+          icon="mdi-microsoft-excel"
+          :loading="loadingXLSXreport"
+          title="Скачать XLSX"
         />
       </template>
       <template #expanded-item="{ headers, item }">
-        <td :colspan="headers.length" class="ma-0 pa-0">
+        <td class="ma-0 pa-0" :colspan="headers.length">
           <ReportView :report-id="report_id" :report-state-id="item.id" />
         </td>
       </template>

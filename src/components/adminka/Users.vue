@@ -7,11 +7,11 @@
       <v-col cols="4">
         <v-text-field
           v-model="search"
-          outlined
-          hide-details
           dense
-          prepend-icon="search"
+          hide-details
           :label="'Поиск по ФИО, логину, IP'"
+          outlined
+          prepend-icon="search"
         />
       </v-col>
     </v-row>
@@ -45,29 +45,29 @@ export default defineComponent({
     LoaderCircle,
   },
   mixins: [],
-  setup() {
+  setup () {
     const { r_ajax } = dataApiComposition();
     return { r_ajax };
   },
-  data() {
+  data () {
     return {
       search: "",
       loading: true,
     };
   },
   watch: {
-    search(newVal) {
+    search (newVal) {
       this.getUsers(newVal);
     },
   },
   computed: {
     ...mapState(useUserDataStore, ["users"]),
   },
-  mounted() {
+  mounted () {
     this.getUsers("");
   },
   methods: {
-    getUsers(s) {
+    getUsers (s) {
       this.loading = true;
       this.r_ajax(
         {

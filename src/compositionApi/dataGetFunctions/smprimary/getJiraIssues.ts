@@ -55,8 +55,8 @@ export const getJiraFilters = (
   }
 
   if (groupList.length) {
-    filter["kod_group"] = groupList.map((e) => ({ "wg.kod_group": `=:${e}` }));
-    filter["kod_group"] = filter["kod_group"].concat(
+    filter.kod_group = groupList.map((e) => ({ "wg.kod_group": `=:${e}` }));
+    filter.kod_group = filter.kod_group.concat(
       groupList.map((e) => ({ "wg.id": `=:${e}` }))
     );
   }

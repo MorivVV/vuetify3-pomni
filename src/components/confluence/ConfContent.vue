@@ -1,17 +1,17 @@
 <template>
-  <v-container fluid class="ma-0 pa-0 amber lighten-5">
+  <v-container class="ma-0 pa-0 amber lighten-5" fluid>
     <v-row class="ma-0">
-      <v-hover v-slot="{ hover }" open-delay="100" close-delay="100">
-        <v-col cols="12" class="overflow-auto">
+      <v-hover v-slot="{ hover }" close-delay="100" open-delay="100">
+        <v-col class="overflow-auto" cols="12">
           <v-row class="ma-0 pa-0" justify="end">
-            <v-col cols="1" offset="11" class="text-right">
+            <v-col class="text-right" cols="1" offset="11">
               <v-tooltip v-if="hover" bottom>
                 <template #activator="{ on, attrs }">
                   <v-btn
                     v-bind="attrs"
-                    dark
-                    color="green"
                     absolute
+                    color="green"
+                    dark
                     fab
                     x-small
                     v-on="on"
@@ -54,11 +54,11 @@
 
       <v-dialog
         v-model="dialog"
-        transition="dialog-top-transition"
         max-width="1200"
+        transition="dialog-top-transition"
       >
         <v-card>
-          <v-toolbar dense color="green" dark>
+          <v-toolbar color="green" dark dense>
             Редактирование параграфа
           </v-toolbar>
           <v-card-text class="pa-2 text-center">
@@ -70,13 +70,13 @@
                   class="over-y"
                   label="Содержание записи"
                 />
-                <v-progress-circular v-else indeterminate color="primary" />
+                <v-progress-circular v-else color="primary" indeterminate />
               </v-col>
             </v-row>
             <v-row
               v-if="content_versions.length > 0"
-              class="ma-0"
               align="center"
+              class="ma-0"
             >
               <v-col cols="12">
                 <v-tabs v-model="tab">
@@ -97,11 +97,11 @@
             class="justify-end"
           >
             <v-row class="ma-1">
-              <v-col cols="auto" class="text-caption">
+              <v-col class="text-caption" cols="auto">
                 Автор:
                 <UserFioVue :user_id="dataContent.kod_user" />
               </v-col>
-              <v-col cols="auto" class="text-caption">
+              <v-col class="text-caption" cols="auto">
                 {{
                   $moment(dataContent.date_add).format(
                     " доб. DD.MM.YYYY HH:mm:ss"
@@ -110,8 +110,8 @@
               </v-col>
               <v-col
                 v-if="dataContent.date_modify"
-                cols="auto"
                 class="text-caption"
+                cols="auto"
               >
                 {{
                   $moment(dataContent.date_modify).format(
@@ -121,8 +121,8 @@
               </v-col>
               <v-col
                 v-if="dataContent.kod_user_modify"
-                cols="auto"
                 class="text-caption"
+                cols="auto"
               >
                 <UserFioVue :user_id="dataContent.kod_user_modify" />
               </v-col>
@@ -130,8 +130,8 @@
             <v-row class="ma-1">
               <v-col cols="auto">
                 <v-btn
-                  :disabled="!moderatorLevel()"
                   color="red"
+                  :disabled="!moderatorLevel()"
                   @click="deleteContent"
                 >
                   Удалить все
@@ -141,20 +141,20 @@
               <v-col cols="2">
                 <v-text-field
                   v-model="orderContent"
-                  type="number"
-                  label="Позиция среди блоков"
-                  title="Позиция среди блоков"
                   dense
                   hide-details
+                  label="Позиция среди блоков"
                   outlined
+                  title="Позиция среди блоков"
+                  type="number"
                 />
               </v-col>
               <v-col cols="auto">
                 <v-btn
+                  color="red lighten-2"
                   :disabled="
                     content_versions[tab].version === dataContent.version
                   "
-                  color="red lighten-2"
                   @click="deleteVersion"
                 >
                   Удалить вер.{{ content_versions[tab].version }}
@@ -162,10 +162,10 @@
               </v-col>
               <v-col cols="auto">
                 <v-btn
+                  color="green lighten-2"
                   :disabled="
                     content_versions[tab].version !== dataContent.version
                   "
-                  color="green lighten-2"
                   @click="editContent"
                 >
                   Сохранить
@@ -190,7 +190,7 @@
 <script lang="ts">
 import { currentAuthUser, currentTimestamp } from "@/const/globalRestAPI";
 import { useConfaStore } from "@/store/modules/confa";
-import { PropType, defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import { mapState } from "pinia";
 import TextTinyMCEVue from "../basic/TextTinyMCE.vue";
 import UserFioVue from "../elements/UserFio.vue";
@@ -205,7 +205,7 @@ export default defineComponent({
   props: {
     dataContent: { type: Object as PropType<ConfContent>, required: true },
   },
-  setup() {
+  setup () {
     const { urlParser } = smURLparserComposition();
     const { moderatorLevel } = routeAccessLevelCalculate();
     const { r_state, r_get, r_delete, r_insert, r_update, checkDataModify } =
@@ -221,7 +221,7 @@ export default defineComponent({
       moderatorLevel,
     };
   },
-  data() {
+  data () {
     return {
       dialog: false,
       editor: false,
@@ -232,17 +232,17 @@ export default defineComponent({
   },
   computed: {
     ...mapState(useConfaStore, ["content_versions"]),
-    content(): string {
+    content (): string {
       return this.urlParser(this.dataContent.content_text);
     },
   },
   watch: {
-    dialog(newVal) {
+    dialog (newVal) {
       if (newVal === false) {
         this.r_state(useConfaStore, "content_versions", []);
       }
     },
-    tab(newVal) {
+    tab (newVal) {
       // this.$projectDebug(newVal);
       // this.$projectDebug(this.content_versions);
 
@@ -262,12 +262,12 @@ export default defineComponent({
       }
     },
   },
-  mounted() {
+  mounted () {
     this.content_text = this.dataContent.content_text;
     this.orderContent = this.dataContent.position;
   },
   methods: {
-    loadVersion() {
+    loadVersion () {
       this.r_get<
         | ICreateTableFields<keyof IConfaContent, "cc1">
         | ICreateTableFields<keyof IConfaContent, "cc2">
@@ -297,18 +297,18 @@ export default defineComponent({
         },
         "content_versions",
         useConfaStore
-      ).then((/*r: ConfContent[]*/) => {
+      ).then((/* r: ConfContent[] */) => {
         this.tab = 0;
       });
     },
-    activeEdit() {
+    activeEdit () {
       this.dialog = true;
       this.loadVersion();
       setTimeout(() => {
         this.editor = true;
       }, 200);
     },
-    deleteVersion() {
+    deleteVersion () {
       this.r_delete({
         from: "confa.content",
         filter: {
@@ -323,7 +323,7 @@ export default defineComponent({
           }
         });
     },
-    deleteContent() {
+    deleteContent () {
       this.r_delete({
         from: "confa.content",
         filter: {
@@ -348,7 +348,7 @@ export default defineComponent({
           }
         });
     },
-    editContent() {
+    editContent () {
       this.$projectDebug(this.content_text);
       this.r_update<keyof IConfaContent>({
         to: "confa.content",

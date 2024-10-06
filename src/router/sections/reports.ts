@@ -1,16 +1,18 @@
-const routeReports = {
+import { Route } from "@/types/global";
+
+const routeReports:Route = {
   path: "/reports",
   order: 16,
   name: "ReportsHistory",
   title: "Отчеты",
-  icon: "report",
-  class: "blue--text",
+  icon: "mdi-file-chart",
+  class: "text-blue",
   component: () => import("@/components/reports/ReportsPages.vue"),
   meta: {
     requiresAuth: true,
     title: "Отчеты",
-    icon: "report",
-    class: "blue--text",
+    icon: "mdi-file-chart",
+    class: "text-blue",
   },
   children: [
     {
@@ -20,8 +22,8 @@ const routeReports = {
       meta: {
         requiresAuth: true,
         title: "История отчета",
-        icon: "assessment",
-        class: "purple--text",
+        icon: "mdi-tooltip-check",
+        class: "text-purple",
       },
       children: [
         {
@@ -31,8 +33,8 @@ const routeReports = {
           meta: {
             requiresAuth: true,
             title: "Просмотр Отчета",
-            icon: "format_list_numbered",
-            class: "purple--text",
+            icon: "mdi-format-list-numbered",
+            class: "text-purple",
           },
         },
       ],

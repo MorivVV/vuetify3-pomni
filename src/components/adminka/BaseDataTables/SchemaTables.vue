@@ -1,21 +1,19 @@
 <template>
   <DataTableV
-    :items="tableList"
     :caption="`Список таблиц в схеме ${props.space}`"
-    :items-per-page="10"
     class="blue lighten-5"
+    :items="tableList"
+    :items-per-page="10"
   >
     <template #expanded-top="">
-      <v-col class="pa-1"
-        >Для выбора таблицы кликните по кнопке с названием таблицы</v-col
-      >
+      <v-col class="pa-1">Для выбора таблицы кликните по кнопке с названием таблицы</v-col>
     </template>
     <template #[`item.tablename`]="{ item }">
       <v-btn
-        outlined
-        small
         block
         class="text-lowercase"
+        outlined
+        small
         @click="viewFields(item.tablename)"
       >
         {{ item.tablename }}

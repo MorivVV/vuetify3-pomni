@@ -29,8 +29,8 @@ export const getRisksFilters = (
     "rsk.p_status@2": "<>:5 Выполнен",
     "rsk.p_status@3": "<>:4 На контроле",
     "rsk.p_status@4": "<>:3 Минимизация",
-    //"rsk.p_status@1": "=:1 Новый",
-    //"rsk.p_status@2": "=:2 Оценка и анализ",
+    // "rsk.p_status@1": "=:1 Новый",
+    // "rsk.p_status@2": "=:2 Оценка и анализ",
     "rsk.p_sb_category": "=:Риск простоя",
   };
 
@@ -41,12 +41,12 @@ export const getRisksFilters = (
   }
 
   if (clusterList.length) {
-    filter["kod_cluster"] = clusterList.map((e) => ({ "ci.kod_cluster": e }));
+    filter.kod_cluster = clusterList.map((e) => ({ "ci.kod_cluster": e }));
   }
 
   if (groupList.length) {
-    filter["kod_group"] = groupList.map((e) => ({ "wg.kod_group": e }));
-    filter["kod_group"] = filter["kod_group"].concat(
+    filter.kod_group = groupList.map((e) => ({ "wg.kod_group": e }));
+    filter.kod_group = filter.kod_group.concat(
       groupList.map((e) => ({ "wg.id": e }))
     );
   }
@@ -119,10 +119,11 @@ export const getHpcauditsbriskm1 = (risk_audit: string[] = []) => {
           "audit_rsk.p_id"?: `=:${string}`;
         }[]
       | undefined;
-    if (risk_audit.length)
+    if (risk_audit.length) {
       risks = risk_audit.map((e) => ({
         "audit_rsk.p_id": `=:${e}`,
       }));
+    }
     r_get<string>(
       {
         from: [`${ESMPRIMARY.hpcauditsbriskm1}:audit_rsk`],

@@ -1,21 +1,21 @@
 <template>
   <DataTableV
     v-model="selectedFields"
+    :caption="'Поля в таблице ' + props.space + '.' + props.table"
+    class="purple lighten-5"
+    item-key="column_name"
+    :items="fieldList"
+    :items-per-page="10"
     show-select
     :single-select="false"
-    :items="fieldList"
-    :caption="'Поля в таблице ' + props.space + '.' + props.table"
-    item-key="column_name"
-    :items-per-page="10"
-    class="purple lighten-5"
   >
     <template #expanded-top="">
       <v-col>
         <BtnIconsV
-          title="Интерфейс"
-          icon="mdi-clipboard-text"
-          color="green"
           :action="() => createInterface(space, table, fieldList)"
+          color="green"
+          icon="mdi-clipboard-text"
+          title="Интерфейс"
         />
       </v-col>
     </template>
