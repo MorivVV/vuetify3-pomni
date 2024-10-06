@@ -9,7 +9,7 @@
       <v-row align="center" justify="center">
         <v-col> {{ dns_product.last_price }}</v-col>
         <v-col class="text-subtitle-1">
-          от {{ $moment(dns_product.last_date).format("YYYY-MM-DD") }}</v-col>
+          от {{ moment(dns_product.last_date).format("YYYY-MM-DD") }}</v-col>
       </v-row>
     </v-card-title>
     <v-card-text>

@@ -48,21 +48,21 @@
         <v-col class="text-caption pa-0 ma-0" cols="auto">
           <div>
             <UserFioVue :user_id="ssq.kod_user_add" />
-            {{ $moment(ssq.date_add).format(" доб. YYYY-MM-DD HH:mm") }}
+            {{ moment(ssq.date_add).format(" доб. YYYY-MM-DD HH:mm") }}
           </div>
           <div v-if="ssq.date_modify">
             <UserFioVue
               v-if="ssq.kod_user_modify"
               :user_id="ssq.kod_user_modify"
             />
-            {{ $moment(ssq.date_modify).format(" изм. YYYY-MM-DD HH:mm") }}
+            {{ moment(ssq.date_modify).format(" изм. YYYY-MM-DD HH:mm") }}
           </div>
           <span>внесено правок: {{ ssq.cnt_all }} </span>
           <div v-if="ssq.status">
             <UserFioVue :user_id="ssq.kod_user_check" />
             {{ ssq.status }}
             <span v-if="ssq.date_check">{{
-              $moment(ssq.date_check).format(" согл. YYYY-MM-DD HH:mm")
+              moment(ssq.date_check).format(" согл. YYYY-MM-DD HH:mm")
             }}</span>
           </div>
         </v-col>
@@ -102,7 +102,7 @@
             :action="testSQL"
             color="blue"
             :disabled="!ssq.sql_query"
-            icon="play_arrow"
+            icon="play"
             title="Выполнить скрипт и получить результат"
           />
         </v-col>
@@ -112,7 +112,7 @@
             v-else
             :action="() => getExcelChart(ssq.sql_name, params)"
             color="red"
-            icon="assessment"
+            icon="chart-line"
             title="Скачать XLSX диаграму"
           />
         </v-col>
@@ -122,7 +122,7 @@
             v-else
             :action="() => getExcel(ssq.sql_name, params)"
             color="green"
-            icon="mdi-microsoft-excel"
+            icon="microsoft-excel"
             title="Скачать XLSX"
           />
         </v-col>
@@ -146,7 +146,7 @@
                 {{ ssq.run_time }}ms
               </div>
               <div v-if="ssq.last_run" title="Время последнего запроса">
-                {{ $moment(ssq.last_run).format("YYYY-MM-DD HH:mm:ss,SSS") }}
+                {{ moment(ssq.last_run).format("YYYY-MM-DD HH:mm:ss,SSS") }}
               </div>
             </v-col>
           </v-row>
@@ -215,7 +215,7 @@
               v-if="ssqA.kod_user_change"
               :user_id="ssqA.kod_user_change"
             />{{
-              $moment(ssqA.date_add).format(" изм. YYYY-MM-DD HH:mm")
+              moment(ssqA.date_add).format(" изм. YYYY-MM-DD HH:mm")
             }}</span>
             <span class="ml-2">
               - Ссылка для подтверждения:
@@ -251,13 +251,13 @@
               cols="auto"
             >{{ historyList.length - ind }})
 
-              {{ $moment(hist.date_add).format(` добавил ${momentFormatFull} `)
+              {{ moment(hist.date_add).format(` добавил ${momentFormatFull} `)
               }}<UserFioVue :user_id="hist.kod_user_change" /></v-col>
             <v-col cols="1" />
             <v-col class="pa-0" cols="auto">
               <span>
                 {{
-                  $moment(hist.date_check).format(
+                  moment(hist.date_check).format(
                     ` подтвердил ${momentFormatFull} `
                   )
                 }}<UserFioVue :user_id="hist.kod_user_check" />

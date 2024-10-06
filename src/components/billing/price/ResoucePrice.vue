@@ -18,7 +18,7 @@
         <BtnIconsVVue
           :action="addPrice"
           color="green"
-          icon="save"
+          icon="content-save"
           title="Добавить"
         />
       </v-col>
@@ -32,7 +32,7 @@
       :items-per-page="-1"
     >
       <template #[`item.date_beg`]="{ item }">
-        {{ $moment(item.date_beg).format("YYYY-MM-DD") }}
+        {{ moment(item.date_beg).format("YYYY-MM-DD") }}
       </template>
     </v-data-table>
   </td>
@@ -43,8 +43,9 @@ import BtnIconsVVue from "@/components/basic/BtnIconsV.vue";
 import DatePickerVVue from "@/components/basic/DatePickerV.vue";
 import { dataApiComposition } from "@/compositionApi/dataApi";
 import { IBillingPrices } from "@/types/database/schemas/billing";
+import { TTipsDTH } from "@/types/database/service";
+import moment from "moment";
 import { defineComponent, ref } from "vue";
-import { DataTableHeader } from "vuetify";
 
 export default defineComponent({
   components: { BtnIconsVVue, DatePickerVVue },
@@ -67,16 +68,16 @@ export default defineComponent({
         },
       });
     const getPrice = () =>
-      r_get<keyof IBillingPrices>({
+      r_get<keyof IBillingPrices, IBillingPrices>({
         from: "billing.prices",
         sort: ["-date_beg"],
         filter: {
           kod_resource: props.kod_resource,
         },
-      }).then((r: IBillingPrices[]) => {
+      }).then((r) => {
         prices.value = r;
       });
-    const headerPrices: DataTableHeader[] = [
+    const headerPrices: TTipsDTH[] = [
       { value: "date_beg", text: "действует с" },
       { value: "billing", text: "Расценки" },
     ];
@@ -92,6 +93,7 @@ export default defineComponent({
       prices,
       billing,
       date_beg,
+moment,
     };
   },
 });

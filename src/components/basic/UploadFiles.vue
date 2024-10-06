@@ -60,7 +60,7 @@
         />
       </template>
       <template #[`item.create_time`]="{ item }">
-        {{ $moment(item.create_time).format("DD MMMM YYYY hh:mm:ss") }}
+        {{ moment(item.create_time).format("DD MMMM YYYY hh:mm:ss") }}
       </template>
     </v-data-table>
   </div>
@@ -72,9 +72,9 @@ import FilesForm from "./FilesForm.vue";
 import { defineComponent, ref, toRefs } from "vue";
 import { dataApiComposition } from "@/compositionApi/dataApi";
 import { useAdminStore } from "@/store/modules/admin";
-import { DataTableHeader } from "vuetify";
 import UserFio from "../elements/UserFio.vue";
 import SwitchV from "./SwitchV.vue";
+import { TTipsDTH } from "@/types/database/service";
 
 export default defineComponent({
   components: {
@@ -88,7 +88,7 @@ export default defineComponent({
     const files = ref("");
     const page = ref(1);
     const limit = ref(50);
-    const uploadFilesHeader: DataTableHeader[] = [
+    const uploadFilesHeader: TTipsDTH[] = [
       { text: "#", value: "n", divider: true },
       { text: "Файл", value: "original_name", divider: true },
       { text: "Размер", value: "file_size", divider: true },

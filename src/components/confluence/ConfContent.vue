@@ -24,7 +24,7 @@
                   <div>Версия №{{ dataContent.version }}</div>
                   <div v-if="dataContent.date_modify">
                     {{
-                      $moment(dataContent.date_modify).format(
+                      moment(dataContent.date_modify).format(
                         " изм. DD.MM.YYYY HH:mm:ss"
                       )
                     }}
@@ -34,7 +34,7 @@
                   </div>
                   <span>
                     {{
-                      $moment(dataContent.date_add).format(
+                      moment(dataContent.date_add).format(
                         " доб. DD.MM.YYYY HH:mm:ss"
                       )
                     }}
@@ -103,7 +103,7 @@
               </v-col>
               <v-col class="text-caption" cols="auto">
                 {{
-                  $moment(dataContent.date_add).format(
+                  moment(dataContent.date_add).format(
                     " доб. DD.MM.YYYY HH:mm:ss"
                   )
                 }}
@@ -114,7 +114,7 @@
                 cols="auto"
               >
                 {{
-                  $moment(dataContent.date_modify).format(
+                  moment(dataContent.date_modify).format(
                     " изм. DD.MM.YYYY HH:mm:ss"
                   )
                 }}
@@ -199,6 +199,7 @@ import { dataApiComposition } from "@/compositionApi/dataApi";
 import { routeAccessLevelCalculate } from "@/compositionApi/accessLevelCalculate";
 import { ICreateTableFields } from "@/types/database/service";
 import { IConfaContent } from "@/types/database/schemas/confa.t";
+import moment from "moment";
 
 export default defineComponent({
   components: { TextTinyMCEVue, UserFioVue },
@@ -219,6 +220,7 @@ export default defineComponent({
       r_insert,
       r_update,
       moderatorLevel,
+moment,
     };
   },
   data () {

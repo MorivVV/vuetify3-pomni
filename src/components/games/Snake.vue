@@ -57,6 +57,7 @@ import { defineComponent, ref } from "vue";
 import BtnIconsVVue from "../basic/BtnIconsV.vue";
 import TableDataVue from "../basic/TableData.vue";
 import SnakeCellVue from "./snake/SnakeCell.vue";
+import moment from "moment";
 enum KEY {
   LEFT = 37,
   UP = 38,
@@ -228,7 +229,7 @@ export default defineComponent({
         limit: 10,
       });
     };
-    return { r_get, r_insert, move, demoAI, demoRUN, testApi };
+    return { r_get, r_insert, move, demoAI, demoRUN, testApi, moment };
   },
   data () {
     return {
@@ -265,7 +266,7 @@ export default defineComponent({
         {
           key_field: "date_add",
           name: "Дата",
-          func: (e: string) => this.$moment(e).format("YYYY-MM-DD HH:mm:ss"),
+          func: (e: string) => this.moment(e).format("YYYY-MM-DD HH:mm:ss"),
         },
       ];
     },

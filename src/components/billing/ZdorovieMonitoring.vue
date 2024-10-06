@@ -42,7 +42,7 @@
       <v-col cols="12">
         <DataTableV :headers="zdorovieHeader" :items="zdorovie">
           <template #[`item.time_add`]="{ item }">
-            {{ $moment(item.time_add).format(momentFormatFullShort) }}
+            {{ moment(item.time_add).format(momentFormatFullShort) }}
           </template>
         </DataTableV>
       </v-col>
@@ -61,10 +61,10 @@ import { IMonitoringZdorovie } from "@/types/database/schemas/billing";
 import { computed, ref, toRefs } from "vue";
 import { useBillingsStore } from "@/store/modules/billings";
 import TextFielsV from "../basic/TextFielsV.vue";
-import { TipsDTH } from "../monitoring/monsm/monSmHeaders";
 import { momentFormatFullShort } from "@/const/timeFormats";
 import LineChart from "../basic/charts/LineChart.vue";
 import moment from "moment";
+import { TTipsDTH } from "@/types/database/service";
 const { r_get, r_insert, checkDataModify } = dataApiComposition();
 const { zdorovie } = toRefs(useBillingsStore());
 interface IZdorovie {
@@ -72,7 +72,7 @@ interface IZdorovie {
   pressure_down: number;
   heartbeat: number;
 }
-const zdorovieHeader: TipsDTH[] = [
+const zdorovieHeader: TTipsDTH<IMonitoringZdorovie>[] = [
   { text: "Верхнее", value: "pressure_up", tip: "Верхний показатель давления" },
   { text: "Нижне", value: "pressure_down", tip: "Нижний показатель давления" },
   { text: "ЧСС", value: "heartbeat", tip: "Частота сердечных сокращений" },

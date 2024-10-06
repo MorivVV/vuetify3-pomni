@@ -42,12 +42,12 @@
     </template>
     <template #[`item.time_start`]="{ item }">
       <span v-if="item.time_start">{{
-        $moment(item.time_start).format(momentFormatFull)
+        moment(item.time_start).format(momentFormatFull)
       }}</span>
     </template>
     <template #[`item.time_end`]="{ item }">
       <span v-if="item.time_end">{{
-        $moment(item.time_end).format(momentFormatFull)
+        moment(item.time_end).format(momentFormatFull)
       }}</span>
     </template>
     <template #[`item.kod_user`]="{ item }">
@@ -80,11 +80,11 @@ import DataTableV from "@/components/basic/DataTableV.vue";
 import { momentFormatFull } from "@/const/timeFormats";
 import SwitchV from "@/components/basic/SwitchV.vue";
 import BtnIconsV from "@/components/basic/BtnIconsV.vue";
+import moment from "moment";
 const props = defineProps({
   kodJob: { type: Number, required: true },
 });
 const emit = defineEmits(["getCronJobs"]);
-
 const autoupdate = ref(false);
 const killLoading = ref(false);
 const intervalTime = ref(10);

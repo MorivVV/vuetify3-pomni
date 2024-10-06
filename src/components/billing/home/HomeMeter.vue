@@ -49,7 +49,7 @@
             >
               <label>с
                 {{
-                  $moment(lastMeterPrice.date_beg).format("YYYY-MM-DD")
+                  moment(lastMeterPrice.date_beg).format("YYYY-MM-DD")
                 }}</label><br>
               <div>{{ lastMeterPrice.billing / 100 }}р.</div>
             </v-col>
@@ -138,6 +138,7 @@ import { useBillingsStore } from "@/store/modules/billings";
 import { dataApiComposition } from "@/compositionApi/dataApi";
 import { IBillingBillings } from "@/types/database/schemas/billing";
 import CheckBoxTitleV from "@/components/basic/CheckBoxTitleV.vue";
+import moment from "moment";
 
 export default defineComponent({
   components: {
@@ -199,6 +200,7 @@ export default defineComponent({
       prices,
       dates,
       total,
+moment,
     };
   },
   computed: {
@@ -207,13 +209,13 @@ export default defineComponent({
         .filter((e: { kod_meter: any }) => e.kod_meter === this.meter.id)
         .map((e: { date_bil: any }) => ({
           ...e,
-          date_bil: this.$moment(e.date_bil).format("YYYY-MM-DD"),
+          date_bil: this.moment(e.date_bil).format("YYYY-MM-DD"),
         }));
     },
     charData (): { labels: string[]; datasets: any[] } {
       const char = {
         labels: this.meterBilling.map((e: { date_bil: any }) =>
-          this.$moment(e.date_bil).format("DD MMM YY")
+          this.moment(e.date_bil).format("DD MMM YY")
         ),
         datasets: [
           {

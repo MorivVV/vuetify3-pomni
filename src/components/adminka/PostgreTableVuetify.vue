@@ -94,7 +94,7 @@
                 <BtnIconsV
                   :action="() => removeFilter(fltr)"
                   color="red"
-                  icon="tag-remove"
+                  icon="filter-off"
                   title="Удалить фильтр"
                 />
               </v-col>

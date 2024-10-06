@@ -90,7 +90,7 @@
             class="ma-1"
             color="green"
             :disabled="!eLevel || (!useQuery && !admLevel) || needCheck"
-            icon="edit"
+            icon="pencil"
             title="Редактировать"
           />
           <BtnIconsV
@@ -99,7 +99,7 @@
             class="ma-1"
             color="purple"
             :disabled="!eLevel"
-            icon="control_point_duplicate"
+            icon="content-duplicate"
             title="Клонировать"
           />
           <BtnIconsV
