@@ -1,8 +1,10 @@
 <template>
   <v-container class="center">
-    <canvas id="example" :height="height" :width="width"
-      >Обновите браузер</canvas
-    >
+    <canvas
+      id="example"
+      :height="height"
+      :width="width"
+    >Обновите браузер</canvas>
     <!-- <v-row>
       <v-row>
         <v-col cols="2" v-for="(h, ind) in position[0]" :key="h + ind" v-html="ind"></div>
@@ -28,14 +30,14 @@ const machine = { w: 320, h: 32 };
 const g = 0.81;
 let startx, starty;
 
-function intersects(a, b) {
+function intersects (a, b) {
   const ax2 = a.x + a.w;
   const bx2 = b.x + b.w;
   const ay2 = a.y + a.h;
   const by2 = b.y + b.h;
   return a.y < by2 && ay2 > b.y && ax2 > b.x && a.x < bx2;
 }
-function randomColor() {
+function randomColor () {
   const allowed = "ABCDEF0123456789";
   let S = "#";
 
@@ -46,11 +48,11 @@ function randomColor() {
 }
 
 export default defineComponent({
-  setup() {
+  setup () {
     const { r_get } = dataApiComposition();
     return { r_get };
   },
-  data() {
+  data () {
     return {
       ctx: {} as CanvasRenderingContext2D,
       blockSize: 32,
@@ -66,12 +68,12 @@ export default defineComponent({
       "gameObjects",
       "gameObjectParams",
     ]),
-    gameObjectsList(): IGameObjects[] {
+    gameObjectsList (): IGameObjects[] {
       const o = this.gameObjectParams.filter((e) => +e.speed > 0);
       return o;
     },
   },
-  mounted() {
+  mounted () {
     const example = document.getElementById("example") as HTMLCanvasElement;
     this.ctx = example?.getContext("2d") as CanvasRenderingContext2D;
     addEventListener("keydown", this.PressKey);
@@ -87,7 +89,7 @@ export default defineComponent({
         const touchobj = e.changedTouches[0]; // первая точка прикосновения
         startx = touchobj.clientX; // положение точки касания по x, относительно левого края браузера
         starty = touchobj.clientY;
-        //e.preventDefault()
+        // e.preventDefault()
       },
       false
     );
@@ -102,29 +104,29 @@ export default defineComponent({
         if (tou > 0) tou += Number(disty > 0);
         else tou += Number(distx > 0);
         switch (tou) {
-          case 0: //лево
+          case 0: // лево
             step = 37;
             break;
-          case 1: //право
+          case 1: // право
             step = 39;
             break;
-          case 2: //вверх
+          case 2: // вверх
             step = 38;
             break;
-          case 3: //вниз
+          case 3: // вниз
             step = 40;
             break;
           default:
             step = 65;
             break;
         }
-        //e.preventDefault()
+        // e.preventDefault()
       },
       false
     );
   },
   methods: {
-    genObject(name) {
+    genObject (name) {
       const data = this.gameObjects.filter(
         (e) => e.namien === name || e.kod_object == name
       );
@@ -132,7 +134,7 @@ export default defineComponent({
         this.fr(e.x, e.y, e.width, e.heigth, e.color);
       });
     },
-    fr(x, y, wei, hei, color = "") {
+    fr (x, y, wei, hei, color = "") {
       if (color !== "") {
         this.ctx.fillStyle = color;
       }
@@ -143,7 +145,7 @@ export default defineComponent({
         (hei * this.blockSize) / this.pixelOnBlock
       );
     },
-    crush() {
+    crush () {
       for (let i = 1; i < this.position.length; i++) {
         if (intersects(this.position[0], this.position[i])) {
           console.log(this.position[0], this.position[i]);
@@ -152,10 +154,9 @@ export default defineComponent({
       }
       return false;
     },
-    brick() {
+    brick () {
       const x = this.width;
-      if (this.position.length > 1 && this.position[1].x < -this.position[1].w)
-        this.position.splice(1, 1);
+      if (this.position.length > 1 && this.position[1].x < -this.position[1].w) { this.position.splice(1, 1); }
       const y = Math.floor(Math.random() * (510 - 290) + 290);
       if (
         this.position.length < 4 &&
@@ -165,7 +166,7 @@ export default defineComponent({
         potok += 5;
       }
     },
-    gowall(ofset) {
+    gowall (ofset) {
       this.ctx.fillStyle = "#3333cc";
       this.ctx.fillRect(0, 0, this.width, this.height);
       if (ofset === 0) {
@@ -212,45 +213,43 @@ export default defineComponent({
 
       setTimeout(this.gowall, uscor, ofset - speed);
     },
-    PressKey(e) {
+    PressKey (e) {
       step = e.keyCode;
       switch (step) {
-        case 37: //лево
-        case 65: //A
+        case 37: // лево
+        case 65: // A
           uscor += 1;
           if (uscor > 20) uscor = 20;
           this.position[0].x -= speed;
           if (this.position[0].x < 0) this.position[0].x = 0;
           break;
-        case 38: //вверх
-        case 87: //W
+        case 38: // вверх
+        case 87: // W
           this.position[0].y -= speed;
           if (this.position[0].y < 0) this.position[0].y = 0;
           break;
-        case 32: //Пробел
+        case 32: // Пробел
           this.position[0].y -= speed;
           this.position[0].t = -5;
           if (this.position[0].y < 0) this.position[0].y = 0;
           break;
-        case 39: //право
-        case 68: //D
+        case 39: // право
+        case 68: // D
           uscor -= 1;
           if (uscor < 1) uscor = 1;
           this.position[0].x += speed;
-          if (this.position[0].x + this.position[0].w > this.width)
-            this.position[0].x = this.width - this.position[0].w;
+          if (this.position[0].x + this.position[0].w > this.width) { this.position[0].x = this.width - this.position[0].w; }
           break;
-        case 40: //вниз
-        case 83: //S
+        case 40: // вниз
+        case 83: // S
           this.position[0].y += speed;
-          if (this.position[0].y + this.position[0].h < this.height)
-            this.position[0].y = this.height - this.position[0].h;
+          if (this.position[0].y + this.position[0].h < this.height) { this.position[0].y = this.height - this.position[0].h; }
           break;
         default:
           break;
       }
     },
-    getObjects() {
+    getObjects () {
       return this.r_get(
         {
           fields: [

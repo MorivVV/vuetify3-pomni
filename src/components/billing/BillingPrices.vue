@@ -2,13 +2,13 @@
   <v-row>
     <v-col>
       <v-data-table
-        show-expand
-        :headers="headerResources"
-        :items="resources"
         class="striped blue lighten-4"
         dense
+        :headers="headerResources"
         hide-default-footer
+        :items="resources"
         :items-per-page="-1"
+        show-expand
       >
         <template #expanded-item="{ item, headers }">
           <ResoucePrice :colspan="headers.length" :kod_resource="item.id" />

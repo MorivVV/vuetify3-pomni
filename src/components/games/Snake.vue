@@ -12,9 +12,9 @@
     </v-row>
     <v-row>
       <v-col cols="3">
-        <TableDataVue :data="snake" :test="testScore" :allrow="false" />
+        <TableDataVue :allrow="false" :data="snake" :test="testScore" />
       </v-col>
-      <v-col cols="auto" class="text-center">
+      <v-col class="text-center" cols="auto">
         <table class="center" style="width: auto">
           <tbody>
             <tr v-for="y in fieldSize" :key="y + 'tr'">
@@ -22,10 +22,10 @@
                 v-for="x in fieldSize"
                 :key="y + 'td' + x"
                 :apples="apples"
-                :snake="shake"
                 :b="x"
                 :i="y"
-              ></SnakeCellVue>
+                :snake="shake"
+              />
             </tr>
           </tbody>
         </table>
@@ -66,7 +66,7 @@ enum KEY {
 
 export default defineComponent({
   components: { TableDataVue, SnakeCellVue, BtnIconsVVue },
-  setup() {
+  setup () {
     const demoRUN = ref(true);
 
     const move = (key: number): Point => {
@@ -230,7 +230,7 @@ export default defineComponent({
     };
     return { r_get, r_insert, move, demoAI, demoRUN, testApi };
   },
-  data() {
+  data () {
     return {
       fieldSize: 24,
       shake: [] as Point[],
@@ -245,7 +245,7 @@ export default defineComponent({
   computed: {
     ...mapState(useGamesStore, ["snake"]),
     ...mapGetters(useUserDataStore, ["usersFioArray"]),
-    testScore(): { [x: string]: any }[] {
+    testScore (): { [x: string]: any }[] {
       return [
         {
           key_field: "kod_user",
@@ -271,17 +271,17 @@ export default defineComponent({
     },
   },
   watch: {
-    "point.x"(newVal) {
+    "point.x" (newVal) {
       if (this.checkField(newVal, "x")) {
         this.progress();
       }
     },
-    "point.y"(newVal) {
+    "point.y" (newVal) {
       if (this.checkField(newVal, "y")) {
         this.progress();
       }
     },
-    speed(newVal) {
+    speed (newVal) {
       if (this.timer) {
         clearInterval(this.timer);
       }
@@ -292,7 +292,7 @@ export default defineComponent({
       }, newVal);
     },
   },
-  mounted() {
+  mounted () {
     this.testApi();
     this.getScores();
 
@@ -306,7 +306,7 @@ export default defineComponent({
     this.speed = 400;
   },
   methods: {
-    checkField(newVal: number, coord: keyof Point) {
+    checkField (newVal: number, coord: keyof Point) {
       let change = true;
       if (newVal > this.fieldSize) {
         this.point[coord] = 1;
@@ -318,7 +318,7 @@ export default defineComponent({
       }
       return change;
     },
-    getScores() {
+    getScores () {
       return this.r_get<ICreateTableFields<keyof ISnakeScore, "ss">>(
         {
           fields: ["ss.id", "ss.score", "ss.kod_user", "ss.date_add"],
@@ -330,7 +330,7 @@ export default defineComponent({
         useGamesStore
       );
     },
-    setScores() {
+    setScores () {
       return this.r_insert({
         to: `${EGAMES.snake_score}`,
         fields: {
@@ -342,7 +342,7 @@ export default defineComponent({
         this.getScores();
       });
     },
-    progress() {
+    progress () {
       if (this.crash()) {
         if (this.shake.length - this.startSnake.length > 1) {
           this.setScores();
@@ -365,7 +365,7 @@ export default defineComponent({
         }
       }
     },
-    newApple() {
+    newApple () {
       let x = Math.ceil(Math.random() * 20);
       let y = Math.ceil(Math.random() * 20);
       while (
@@ -378,7 +378,7 @@ export default defineComponent({
       this.apples.push({ x, y });
       console.log(this.apples);
     },
-    getApple() {
+    getApple () {
       let result = false;
       const s = this.shake[this.shake.length - 1];
       if (this.apples.findIndex((e) => e.x === s.x && e.y === s.y) > -1) {
@@ -386,7 +386,7 @@ export default defineComponent({
       }
       return result;
     },
-    crash() {
+    crash () {
       let result = false;
       const s = this.shake[this.shake.length - 1];
       const body = this.shake.findIndex((e) => e.x === s.x && e.y === s.y);
@@ -395,7 +395,7 @@ export default defineComponent({
       }
       return result;
     },
-    pressKey(e: any) {
+    pressKey (e: any) {
       this.key = e.keyCode;
       this.demoRUN = false;
     },

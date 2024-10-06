@@ -6,20 +6,19 @@
       </v-col>
     </v-row>
     <DataTableV
+      :headers="mvideoHeaders"
+      :items="products"
       :items-per-page="25"
       show-expand
-      :items="products"
-      :headers="mvideoHeaders"
     >
       <template #[`item.name`]="{ item }">
         <a
-          target="_blank"
           :href="'https://www.mvideo.ru/products/' + item.id"
-          >{{ item.name }}</a
-        >
+          target="_blank"
+        >{{ item.name }}</a>
       </template>
       <template #[`item.last_isfinalprice`]="{ item }">
-        <CheckBoxTitleV v-model="item.last_isfinalprice" readonly color="red" />
+        <CheckBoxTitleV v-model="item.last_isfinalprice" color="red" readonly />
       </template>
       <template #[`item.date_price`]="{ item }">
         {{ moment(item.date_price).format(momentFormatDate) }}
@@ -28,7 +27,7 @@
         {{ moment(item.date_add).format(momentFormatDate) }}
       </template>
       <template #expanded-item="{ headers, item }">
-        <td :colspan="headers.length" class="ma-0 pa-0">
+        <td class="ma-0 pa-0" :colspan="headers.length">
           <v-expansion-panels>
             <ProductVue :product="item" />
           </v-expansion-panels>

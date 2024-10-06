@@ -15,7 +15,7 @@ export default Vue.extend({
     available: { type: Boolean },
   },
   computed: {
-    colorClass(): string {
+    colorClass (): string {
       let color = "";
 
       color = ["c-" + this.color, this.figure?.name, this.figure?.color].join(
@@ -28,7 +28,7 @@ export default Vue.extend({
     },
   },
   methods: {
-    activate() {
+    activate () {
       this.$emit("activeteCell");
     },
   },

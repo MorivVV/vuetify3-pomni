@@ -1,23 +1,23 @@
 <template>
   <div>
     <v-row class="ma-1 pa-0">
-      <v-col cols="5" class="ma-0 pa-1">
-        <TextFielsV readonly :value="currentPrice" label="Цена" />
+      <v-col class="ma-0 pa-1" cols="5">
+        <TextFielsV label="Цена" readonly :value="currentPrice" />
       </v-col>
       <v-col class="ma-0 pa-1">
         <TextFielsV v-model="count" label="Количество" type="number" />
       </v-col>
       <v-col class="ma-0 pa-1">
-        <TextFielsV :value="sum" label="Сумма" />
+        <TextFielsV label="Сумма" :value="sum" />
       </v-col>
-      {{ currentBillings?.value }}<br />
+      {{ currentBillings?.value }}<br>
       {{ lastBillings?.value }}
     </v-row>
   </div>
 </template>
 
 <script setup lang="ts">
-import { PropType, computed, onMounted, ref, toRefs, watch } from "vue";
+import { computed, onMounted, PropType, ref, toRefs, watch } from "vue";
 import TextFielsV from "../basic/TextFielsV.vue";
 import { IBillingMeters } from "@/types/database/schemas/billing";
 import { useBillingsStore } from "@/store/modules/billings";
@@ -38,13 +38,13 @@ const currentPrice = computed(() => {
 });
 const currentBillings = computed(() => {
   const bill = billings.value.find((e) => e.kod_meter === props.meter.id);
-  return bill ? bill : { value: 0 };
+  return bill || { value: 0 };
 });
 const lastBillings = computed(() => {
   const bill = billings.value.find(
     (e) => e.kod_meter === props.meter.id && e.id !== currentBillings.value?.id
   );
-  return bill ? bill : currentBillings.value;
+  return bill || currentBillings.value;
 });
 watch(sum, (newVal, oldVal) => emit("calc", newVal - oldVal));
 watch([currentBillings, lastBillings], () => {

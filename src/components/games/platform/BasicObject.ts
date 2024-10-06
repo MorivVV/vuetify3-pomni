@@ -4,7 +4,7 @@ export class BasicObject {
   color: string;
   id: number;
 
-  constructor(height: number, width: number, color: string) {
+  constructor (height: number, width: number, color: string) {
     this.height = height;
     this.width = width;
     this.color = color;

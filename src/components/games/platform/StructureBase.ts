@@ -10,13 +10,13 @@ export class StructureBase {
   mirrorY = 0;
   scaleX = 1;
   scaleY = 1;
-  constructor(canvas: CanvasRenderingContext2D, size = 1) {
+  constructor (canvas: CanvasRenderingContext2D, size = 1) {
     this.canvas = canvas;
     this.scaleX = size;
     this.scaleY = size;
   }
 
-  addObject(
+  addObject (
     x: number,
     y: number,
     height: number,
@@ -32,11 +32,12 @@ export class StructureBase {
     }
     this.elements.push(obj);
   }
-  rotate(grad: number) {
+
+  rotate (grad: number) {
     this.degree = grad;
   }
 
-  paint(offsetX: number, offsetY: number) {
+  paint (offsetX: number, offsetY: number) {
     this.canvas.setTransform(
       this.scaleX,
       this.mirrorX,

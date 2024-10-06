@@ -4,11 +4,11 @@
       <v-col>
         <v-text-field
           v-model="billing"
-          label="расценки"
-          outlined
           dense
           hide-details
-        ></v-text-field>
+          label="расценки"
+          outlined
+        />
       </v-col>
       <v-col>{{ date_beg }}</v-col>
       <v-col>
@@ -16,19 +16,19 @@
       </v-col>
       <v-col>
         <BtnIconsVVue
-          title="Добавить"
+          :action="addPrice"
           color="green"
           icon="save"
-          :action="addPrice"
+          title="Добавить"
         />
       </v-col>
     </v-row>
     <v-data-table
-      :headers="headerPrices"
-      :items="prices"
       class="striped purple lighten-5"
       dense
+      :headers="headerPrices"
       hide-default-footer
+      :items="prices"
       :items-per-page="-1"
     >
       <template #[`item.date_beg`]="{ item }">
@@ -52,7 +52,7 @@ export default defineComponent({
     kod_resource: { type: Number, required: true },
     colspan: Number,
   },
-  setup(props) {
+  setup (props) {
     const { r_get, r_insert } = dataApiComposition();
     const prices = ref<IBillingPrices[]>([]);
     const billing = ref("");

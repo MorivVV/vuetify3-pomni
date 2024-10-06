@@ -1,34 +1,46 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" md="3" class="pa-1"
-        ><TextFielsV
-          v-model="newMonitorinng.pressure_up"
-          type="number"
-          label="Верхнее"
+      <v-col
+        class="pa-1"
+        cols="12"
+        md="3"
+      ><TextFielsV
+        v-model="newMonitorinng.pressure_up"
+        label="Верхнее"
+        type="number"
       /></v-col>
-      <v-col cols="12" md="3" class="pa-1"
-        ><TextFielsV
-          v-model="newMonitorinng.pressure_down"
-          type="number"
-          label="Нижнее"
+      <v-col
+        class="pa-1"
+        cols="12"
+        md="3"
+      ><TextFielsV
+        v-model="newMonitorinng.pressure_down"
+        label="Нижнее"
+        type="number"
       /></v-col>
-      <v-col cols="12" md="3" class="pa-1"
-        ><TextFielsV
-          v-model="newMonitorinng.heartbeat"
-          type="number"
-          label="ЧСС"
+      <v-col
+        class="pa-1"
+        cols="12"
+        md="3"
+      ><TextFielsV
+        v-model="newMonitorinng.heartbeat"
+        label="ЧСС"
+        type="number"
       /></v-col>
-      <v-col cols="12" md="3" class="pa-1"
-        ><BtnIconsV
-          icon="add"
-          title="Добавить в дневник"
-          :action="addMonZdorov"
+      <v-col
+        class="pa-1"
+        cols="12"
+        md="3"
+      ><BtnIconsV
+        :action="addMonZdorov"
+        icon="add"
+        title="Добавить в дневник"
       /></v-col>
     </v-row>
     <v-row>
       <v-col cols="12">
-        <DataTableV :items="zdorovie" :headers="zdorovieHeader">
+        <DataTableV :headers="zdorovieHeader" :items="zdorovie">
           <template #[`item.time_add`]="{ item }">
             {{ $moment(item.time_add).format(momentFormatFullShort) }}
           </template>

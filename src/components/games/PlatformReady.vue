@@ -4,9 +4,12 @@
       <LoaderCircle v-if="loading" />
     </div>
 
-    <canvas ref="canvas" map="" width="900" height="900"
-      >Обновите браузер</canvas
-    >
+    <canvas
+      ref="canvas"
+      height="900"
+      map=""
+      width="900"
+    >Обновите браузер</canvas>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div ref="matter"></div>
+    <div ref="matter" />
   </v-container>
 </template>
 
@@ -15,27 +15,27 @@
 // };
 import Vue from "vue";
 import {
-  Engine,
-  Render,
-  Composite,
   Bodies,
-  Runner,
-  MouseConstraint,
-  Mouse,
-  Vector,
-  Composites,
   Body,
+  Composite,
+  Composites,
   Constraint,
+  Engine,
+  Mouse,
+  MouseConstraint,
+  Render,
+  Runner,
+  Vector,
 } from "matter-js";
 export default Vue.extend({
-  async mounted() {
+  async mounted () {
     // create an engine
     const engine = Engine.create();
 
     // create a renderer
     const render = Render.create({
-      element: this.$refs["matter"] as HTMLElement,
-      engine: engine,
+      element: this.$refs.matter as HTMLElement,
+      engine,
       options: {
         width: 64 * 20,
         height: 64 * 12,
@@ -221,7 +221,7 @@ export default Vue.extend({
     );
 
     const catapult = Bodies.rectangle(400, 520, 600, 10, {
-      collisionFilter: { group: group },
+      collisionFilter: { group },
       render: { fillStyle: "#A60a19" },
     });
 
@@ -237,7 +237,7 @@ export default Vue.extend({
       0,
       function (x: number, y: number) {
         return Bodies.rectangle(x - 20, y, x, 10, {
-          collisionFilter: { group: group },
+          collisionFilter: { group },
           chamfer: { radius: 5 },
           density: 0.005,
           frictionAir: 0.05,
@@ -289,7 +289,7 @@ export default Vue.extend({
     ]);
     const mouse = Mouse.create(render.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
-      mouse: mouse,
+      mouse,
       constraint: {
         stiffness: 0.2,
         render: {
@@ -313,7 +313,7 @@ export default Vue.extend({
     Runner.run(runner, engine);
   },
   methods: {
-    loadImage(
+    loadImage (
       src: string,
       name: string
     ): Promise<{ img: HTMLImageElement; name: string }> {

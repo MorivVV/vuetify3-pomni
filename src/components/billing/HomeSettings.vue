@@ -3,28 +3,28 @@
     Настройки {{ msg }}
     <v-col cols="2">
       <AutocompleteV
+        item-text="naimen"
+        item-value="id"
         :items="apartments"
         label="Квартира"
-        item-value="id"
-        item-text="naimen"
       />
     </v-col>
     <v-col cols="2">
       <AutocompleteV
         v-model="msg"
+        item-text="naimen"
+        item-value="id"
         :items="resources"
         label="Ресурсы"
-        item-value="id"
-        item-text="naimen"
       />
     </v-col>
     <v-col cols="2">
       <AutocompleteV
         v-model="msg"
+        item-text="naimen"
+        item-value="id"
         :items="meters"
         label="счетчик"
-        item-value="id"
-        item-text="naimen"
       />
     </v-col>
     <v-col cols="2">

@@ -1,25 +1,25 @@
 <template>
   <div>
     <v-row>
-      <v-spacer></v-spacer>
+      <v-spacer />
       <v-col cols="auto">
         <SelectV
           v-model="multiplier"
-          label="Множитель"
           :items="multiplySet"
+          label="Множитель"
           @input="() => (answers.length = 0)"
         />
       </v-col>
       <v-col cols="auto">
         <BtnIconsV
-          icon="play_arrow"
-          :colorbtn="`${roundId ? 'green' : 'red'}`"
-          color="white"
-          title="Начать"
           :action="startRound"
+          color="white"
+          :colorbtn="`${roundId ? 'green' : 'red'}`"
+          icon="play_arrow"
+          title="Начать"
         />
       </v-col>
-      <v-col v-if="roundInfo.length" cols="auto" class="text-h4">
+      <v-col v-if="roundInfo.length" class="text-h4" cols="auto">
         {{
           Math.floor(
             ((roundInfo[0].time_end
@@ -31,15 +31,15 @@
         }}
         секунд
       </v-col>
-      <v-spacer></v-spacer>
+      <v-spacer />
     </v-row>
     <div v-if="roundId || answers.length === multiplyTable.length">
       <MultiplyElement
         v-for="m in multiplyTable"
         :key="m"
+        :disable="answers.includes(m)"
         :operand1="m"
         :operand2="multiplier"
-        :disable="answers.includes(m)"
         :view-check="answers.length === multiplyTable.length"
         @result="(answer) => resultEvent(answer, m, multiplier)"
       />
@@ -47,8 +47,7 @@
     <v-row v-if="answers.length === multiplyTable.length">
       <v-col class="text-center text-h2 red--text">
         Твоя оценка
-        {{ +roundHistory[0].ans / 2 }}</v-col
-      >
+        {{ +roundHistory[0].ans / 2 }}</v-col>
     </v-row>
     <DataTableV :items="roundHistory" />
   </div>
@@ -61,8 +60,8 @@ import MultiplyElement from "./multiply/MultiplyElement.vue";
 import BtnIconsV from "../basic/BtnIconsV.vue";
 import { dataApiComposition } from "@/compositionApi/dataApi";
 import {
-  IGamesMultiplyRounds,
   IGamesMultiplyResults,
+  IGamesMultiplyRounds,
 } from "@/types/database/schemas/games";
 import { currentAuthUser, currentTimestamp } from "@/const/globalRestAPI";
 import { ICreateTableFields } from "@/types/database/service";
@@ -123,7 +122,7 @@ const startRound = () => {
     to: "games.multiply_rounds",
     fields: {
       kod_user: currentAuthUser,
-      naimen_round: naimen_round,
+      naimen_round,
     },
   })
     .then(() => getRoundInfo(naimen_round))
@@ -136,7 +135,7 @@ const resultEvent = (answer: number, operand1: number, operand2: number) => {
   r_insert<keyof IGamesMultiplyResults>({
     to: "games.multiply_results",
     fields: {
-      answer: answer,
+      answer,
       kod_round: roundId.value,
       operator1: operand1,
       operator2: operand2,
@@ -146,7 +145,7 @@ const resultEvent = (answer: number, operand1: number, operand2: number) => {
       r_get<keyof IGamesMultiplyResults>({
         from: "games.multiply_results",
         filter: {
-          answer: answer,
+          answer,
           kod_round: roundId.value,
           operator1: operand1,
           operator2: operand2,

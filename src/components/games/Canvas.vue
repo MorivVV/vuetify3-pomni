@@ -5,18 +5,13 @@
       ref="canvas"
       :height="height"
       :width="width"
-      @mousemove="showCoordinates"
       @mousedown.stop="startBrush"
+      @mousemove="showCoordinates"
       @mouseup="stopBrush"
-      >Обновите браузер</canvas
-    >
+    >Обновите браузер</canvas>
     <v-row>
-      <v-col col="4"
-        ><v-text-field v-model="x" type="number" label="x"></v-text-field
-      ></v-col>
-      <v-col col="4"
-        ><v-text-field v-model="y" type="number" label="y"></v-text-field
-      ></v-col>
+      <v-col col="4"><v-text-field v-model="x" label="x" type="number" /></v-col>
+      <v-col col="4"><v-text-field v-model="y" label="y" type="number" /></v-col>
     </v-row>
   </v-container>
 </template>
@@ -31,7 +26,7 @@ import { defineComponent } from "vue";
 // import { Enemy } from "@/classes/platform/Enemy";
 
 export default defineComponent({
-  data() {
+  data () {
     return {
       joystick: {
         left: false,
@@ -65,15 +60,15 @@ export default defineComponent({
     };
   },
   watch: {
-    freedom(newVal) {
+    freedom (newVal) {
       if (!newVal) {
         this.soundClick(this.fallDownAudio);
       }
     },
   },
-  mounted() {
-    if ("canvas" in this.$refs && this.$refs["canvas"]) {
-      this.myCanvas = this.$refs["canvas"] as HTMLCanvasElement;
+  mounted () {
+    if ("canvas" in this.$refs && this.$refs.canvas) {
+      this.myCanvas = this.$refs.canvas as HTMLCanvasElement;
       this.canvas = this.myCanvas.getContext("2d") as CanvasRenderingContext2D;
       addEventListener("keydown", this.downKey);
       addEventListener("keyup", this.upKey);
@@ -85,45 +80,45 @@ export default defineComponent({
 
     this.timer = setInterval(this.reloadScreen, 1000 / 120);
   },
-  beforeDestroy() {
+  beforeUnmount () {
     clearInterval(this.timer);
     removeEventListener("keydown", this.downKey);
     removeEventListener("keyup", this.upKey);
   },
   methods: {
-    PressKey(e: { keyCode: any }, value: boolean) {
+    PressKey (e: { keyCode: any }, value: boolean) {
       const step = e.keyCode;
       switch (step) {
-        case 37: //лево
-        case 65: //A
+        case 37: // лево
+        case 65: // A
           this.joystick.left = value;
           break;
-        case 38: //вверх
-        case 87: //W
+        case 38: // вверх
+        case 87: // W
           this.joystick.up = value;
           break;
-        case 32: //Пробел
+        case 32: // Пробел
           this.joystick.jump = value;
           break;
-        case 39: //право
-        case 68: //D
+        case 39: // право
+        case 68: // D
           this.joystick.right = value;
           break;
-        case 40: //вниз
-        case 83: //S
+        case 40: // вниз
+        case 83: // S
           this.joystick.down = value;
           break;
         default:
           break;
       }
     },
-    upKey(e: any) {
+    upKey (e: any) {
       this.PressKey(e, false);
     },
-    downKey(e: any) {
+    downKey (e: any) {
       this.PressKey(e, true);
     },
-    loadImage(
+    loadImage (
       src: string,
       name: string
     ): Promise<{ img: HTMLImageElement; name: string }> {
@@ -134,7 +129,7 @@ export default defineComponent({
         img.src = src;
       });
     },
-    init(x: number, y: number, offset = 0) {
+    init (x: number, y: number, offset = 0) {
       const imageUrls = [
         { name: "brick", url: "/images/Battle_City_bricks.png" },
         {
@@ -165,8 +160,8 @@ export default defineComponent({
         const fon = a.find((e) => e.name === "fon")?.img as HTMLImageElement;
         // const chess = a.find((e) => e.name === "chess")
         //   ?.img as HTMLImageElement;
-        if (offset === 0)
-          this.objects.push(
+        if (offset === 0) {
+ this.objects.push(
             new Texture(
               this.canvas,
               x,
@@ -179,6 +174,7 @@ export default defineComponent({
               this.myCanvas.height
             )
           );
+}
         for (let index = 0; index < 50; index++) {
           this.objects.push(
             new Texture(
@@ -365,7 +361,7 @@ export default defineComponent({
         }
       });
     },
-    offsetMap(x: number, y: number, retry = false) {
+    offsetMap (x: number, y: number, retry = false) {
       this.objects.filter((e) => e.canMove).forEach((e) => e.setCoord(x, y));
       const player = this.objects.filter((e) => e instanceof Player);
 
@@ -406,12 +402,12 @@ export default defineComponent({
 
       return check || retry;
     },
-    soundClick(audio: HTMLAudioElement) {
+    soundClick (audio: HTMLAudioElement) {
       audio.pause();
       audio.currentTime = 0;
       audio.play();
     },
-    reloadScreen() {
+    reloadScreen () {
       if (this.joystick.down) this.y += 1 * this.speed;
       if (this.joystick.up) this.y -= 1 * this.speed;
       if (this.joystick.left) this.x -= 1 * this.speed;
@@ -471,7 +467,7 @@ export default defineComponent({
       canvas.font = "30px Verdana";
       canvas.fillText(String(this.counter), 20, 70);
     },
-    gravity() {
+    gravity () {
       if (this.y > 200) return;
       const y = this.y + 1 * this.speed;
       if (this.offsetMap(this.x, y)) {
@@ -486,15 +482,15 @@ export default defineComponent({
         // this.offsetMap(this.lastX, this.lastY, true);
       }
     },
-    startBrush(e: MouseEvent) {
+    startBrush (e: MouseEvent) {
       this.click = true;
       this.startX = e.offsetX - this.x;
       this.startY = e.offsetY - this.y;
     },
-    stopBrush() {
+    stopBrush () {
       this.click = false;
     },
-    showCoordinates(e: MouseEvent) {
+    showCoordinates (e: MouseEvent) {
       if (this.click) {
         if (e.buttons === 1) {
           const x = e.offsetX - this.startX;

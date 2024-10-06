@@ -8,11 +8,11 @@
             <v-row dense>
               <v-col cols="12" md="6">
                 <AutocompleteV
-                  :value="home"
-                  :items="apartments"
-                  item-value="id"
-                  item-text="naimen"
                   :extend="false"
+                  item-text="naimen"
+                  item-value="id"
+                  :items="apartments"
+                  :value="home"
                   @input="changeHome"
                 />
               </v-col>
@@ -20,39 +20,39 @@
                 <v-menu
                   ref="dateMenu"
                   v-model="menu"
+                  v-model:return-value="date_billing"
                   :close-on-content-click="false"
-                  :return-value.sync="date_billing"
-                  transition="scale-transition"
-                  offset-y
                   min-width="auto"
+                  offset-y
+                  transition="scale-transition"
                 >
                   <template #activator="{ on, attrs }">
                     <v-text-field
-                      :value="date_billing"
-                      label="Дата показаний"
-                      prepend-icon="mdi-calendar"
-                      outlined
                       dense
+                      label="Дата показаний"
+                      outlined
+                      prepend-icon="mdi-calendar"
                       readonly
+                      :value="date_billing"
                       v-bind="attrs"
                       v-on="on"
-                    ></v-text-field>
+                    />
                   </template>
                   <v-date-picker
-                    :value="date_billing"
-                    :events="functionEvents"
                     event-color="green"
+                    :events="functionEvents"
                     no-title
                     scrollable
+                    :value="date_billing"
                     @input="changeDate"
                   >
-                    <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="menu = false">
+                    <v-spacer />
+                    <v-btn color="primary" text @click="menu = false">
                       Отмена
                     </v-btn>
                     <v-btn
-                      text
                       color="primary"
+                      text
                       @click="
                         () => {
                           menu = false;
@@ -71,7 +71,7 @@
         <v-card>
           <v-container>
             <v-row>
-              <v-col md="12" class="text-center">
+              <v-col class="text-center" md="12">
                 <h2 class="text-h2 ma-1">{{ calcSum }}</h2>
               </v-col>
             </v-row>
@@ -80,39 +80,59 @@
         <v-card>
           <v-container class="pa-0">
             <v-row class="ma-0 pa-0 blue white-text">
-              <v-col style="width: 45px" cols="auto">вкл</v-col>
+              <v-col cols="auto" style="width: 45px">вкл</v-col>
               <v-col class="ma-0 pl-0 pr-6">
                 <v-row class="ma-0">
                   <v-col
                     class="col"
                     cols="12"
-                    md="3"
                     lg="10"
-                    xl="3"
+                    md="3"
                     order-md="1"
-                    >Счетчик</v-col
+                    xl="3"
+                  >Счетчик</v-col>
+                  <v-col
+                    class="col"
+                    cols="6"
+                    lg="3"
+                    md="3"
+                    order-md="3"
+                    xl="2"
                   >
-                  <v-col class="col" cols="6" md="3" lg="3" xl="2" order-md="3">
                     Предыдущие
                   </v-col>
-                  <v-col class="col" cols="6" md="3" lg="2" xl="2" order-md="2"
-                    >Расценки</v-col
-                  >
-                  <v-col class="col" cols="6" md="3" lg="3" xl="2" order-md="4"
-                    >Текущие</v-col
-                  >
-                  <v-col class="col" cols="6" md="3" lg="3" xl="1" order-md="5"
-                    >Расход</v-col
-                  >
+                  <v-col
+                    class="col"
+                    cols="6"
+                    lg="2"
+                    md="3"
+                    order-md="2"
+                    xl="2"
+                  >Расценки</v-col>
+                  <v-col
+                    class="col"
+                    cols="6"
+                    lg="3"
+                    md="3"
+                    order-md="4"
+                    xl="2"
+                  >Текущие</v-col>
+                  <v-col
+                    class="col"
+                    cols="6"
+                    lg="3"
+                    md="3"
+                    order-md="5"
+                    xl="1"
+                  >Расход</v-col>
                   <v-col
                     class="col right-align"
                     cols="12"
-                    md="3"
                     lg="3"
-                    xl="2"
+                    md="3"
                     order-md="6"
-                    >Сумма {{ calcSum }}р.</v-col
-                  >
+                    xl="2"
+                  >Сумма {{ calcSum }}р.</v-col>
                 </v-row>
               </v-col>
             </v-row>
@@ -136,7 +156,7 @@
 import { dataApiComposition } from "@/compositionApi/dataApi";
 import { useBillingsStore } from "@/store/modules/billings";
 import moment from "moment";
-import { defineComponent, ref, toRefs, computed, watch } from "vue";
+import { computed, defineComponent, ref, toRefs, watch } from "vue";
 import LoaderCircle from "../basic/LoaderCircle.vue";
 import HomeMeterVue from "./home/HomeMeter.vue";
 import AutocompleteV from "../basic/AutocompleteV.vue";
@@ -154,7 +174,7 @@ export default defineComponent({
     LoaderCircle,
     AutocompleteV,
   },
-  setup() {
+  setup () {
     const { r_get, r_state } = dataApiComposition();
     const loading = ref(true);
     const menu = ref(false);
@@ -214,7 +234,7 @@ export default defineComponent({
       dateMenu,
     };
   },
-  mounted() {
+  mounted () {
     this.$on("calc", (val: number) => {
       console.log("oncalc");
 

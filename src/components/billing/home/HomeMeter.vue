@@ -5,8 +5,8 @@
       :class="meter.active ? 'green' : 'red'"
     >
       <!-- <v-container> -->
-      <v-row dense no-gutters justify="center" align="center">
-        <v-col style="width: 45px" cols="auto">
+      <v-row align="center" dense justify="center" no-gutters>
+        <v-col cols="auto" style="width: 45px">
           <CheckBoxTitleV v-model="meter.active" @click.stop />
         </v-col>
 
@@ -16,10 +16,10 @@
             <v-col
               class="cola ma-0 pa-0"
               cols="12"
-              md="10"
               lg="10"
-              xl="3"
+              md="10"
               order-md="1"
+              xl="3"
             >
               <span class="text-h4">{{ meter.naimen }}</span>
               {{ meter.model }}
@@ -30,44 +30,41 @@
               v-if="lastMeterBilling"
               class="cola pa-0 ma-0"
               cols="6"
-              md="6"
               lg="3"
-              xl="2"
+              md="6"
               order-md="3"
+              xl="2"
             >
-              <label>на {{ lastMeterBilling.date_bil }}</label
-              ><br />
+              <label>на {{ lastMeterBilling.date_bil }}</label><br>
               {{ lastMeterBilling.value / meter.multiplicity }}
             </v-col>
             <!-- Расценки -->
             <v-col
               class="cola pt-1 pb-1"
               cols="6"
-              md="6"
               lg="2"
-              xl="2"
+              md="6"
               order-md="2"
+              xl="2"
             >
-              <label
-                >с
+              <label>с
                 {{
                   $moment(lastMeterPrice.date_beg).format("YYYY-MM-DD")
-                }}</label
-              ><br />
+                }}</label><br>
               <div>{{ lastMeterPrice.billing / 100 }}р.</div>
             </v-col>
             <!-- Текущие показания -->
             <v-col
               class="cola pt-1 pb-1"
-              order-md="4"
-              cols="6"
-              md="6"
-              lg="3"
-              xl="2"
               :class="{
                 'purple-text': meter.counter && meter.id !== meter.kod_drain,
                 'green lighten-3': currentMeterBilling,
               }"
+              cols="6"
+              lg="3"
+              md="6"
+              order-md="4"
+              xl="2"
             >
               <span v-if="currentMeterBilling" class="text-h5 cola">
                 {{ currentMeterBilling.value / meter.multiplicity }}
@@ -78,10 +75,10 @@
             <v-col
               class="text-h5 cola pt-1 pb-1"
               cols="6"
-              md="6"
               lg="3"
-              xl="1"
+              md="6"
               order-md="5"
+              xl="1"
             >
               {{ currentConsumption }}
             </v-col>
@@ -89,12 +86,11 @@
             <v-col
               class="text-h5 cola pt-1 pb-1 right-align text-h5"
               cols="12"
-              md="6"
               lg="3"
-              xl="2"
+              md="6"
               order-md="6"
-              >{{ calcSum }}р.</v-col
-            >
+              xl="2"
+            >{{ calcSum }}р.</v-col>
           </v-row>
         </v-col>
       </v-row>
@@ -105,11 +101,11 @@
         <v-row class="ma-1">
           <v-col cols="9">
             <v-text-field
-              :value="newVal"
-              label="Ввод показаний"
               dense
-              outlined
               hide-details
+              label="Ввод показаний"
+              outlined
+              :value="newVal"
               @input="addBilling"
             />
           </v-col>
@@ -124,10 +120,10 @@
         </v-row>
 
         <LineChartVue
-          class="limhei"
           :chart-data="charData"
-          :height="200"
           :chart-options="options"
+          class="limhei"
+          :height="200"
         />
       </v-container>
     </v-expansion-panel-content>
@@ -165,7 +161,7 @@ export default defineComponent({
       }),
     },
   },
-  setup() {
+  setup () {
     const { r_delete, r_update, r_insert } = dataApiComposition();
     const newVal = ref(0);
     const timer = ref(0);
@@ -206,7 +202,7 @@ export default defineComponent({
     };
   },
   computed: {
-    meterBilling(): any[] {
+    meterBilling (): any[] {
       return this.billings
         .filter((e: { kod_meter: any }) => e.kod_meter === this.meter.id)
         .map((e: { date_bil: any }) => ({
@@ -214,7 +210,7 @@ export default defineComponent({
           date_bil: this.$moment(e.date_bil).format("YYYY-MM-DD"),
         }));
     },
-    charData(): { labels: string[]; datasets: any[] } {
+    charData (): { labels: string[]; datasets: any[] } {
       const char = {
         labels: this.meterBilling.map((e: { date_bil: any }) =>
           this.$moment(e.date_bil).format("DD MMM YY")
@@ -241,30 +237,30 @@ export default defineComponent({
       };
       return char;
     },
-    currentMeterBilling(): any {
+    currentMeterBilling (): any {
       return this.meterBilling.find(
         (e: { date_bil: any }) => e.date_bil === this.date_billing
       );
     },
-    lastMeterBilling(): any {
+    lastMeterBilling (): any {
       if (this.currentMeterBilling) {
         return this.meterBilling[1];
       } else {
         return this.meterBilling[0];
       }
     },
-    meterPrice(): any {
+    meterPrice (): any {
       return this.prices.filter(
         (e: { kod_resource: any }) => e.kod_resource === this.meter.kod_resource
       );
     },
-    lastMeterPrice(): any {
+    lastMeterPrice (): any {
       return this.meterPrice[0];
     },
-    prevMeterPrice(): any {
+    prevMeterPrice (): any {
       return this.meterPrice[1];
     },
-    currentConsumption(): any {
+    currentConsumption (): any {
       let count = 0;
       if (this.currentMeterBilling) {
         if (this.meter.counter) {
@@ -276,7 +272,7 @@ export default defineComponent({
 
       return count / this.meter.multiplicity;
     },
-    calcSum(): string {
+    calcSum (): string {
       let sum = this.currentConsumption * this.lastMeterPrice.billing;
       sum /= 100;
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
@@ -286,7 +282,7 @@ export default defineComponent({
     },
   },
   methods: {
-    clearBilling(e: { stopPropagation: () => void }) {
+    clearBilling (e: { stopPropagation: () => void }) {
       e.stopPropagation();
       console.log(this.currentMeterBilling);
 
@@ -301,7 +297,7 @@ export default defineComponent({
         }
       });
     },
-    addBilling(e: any) {
+    addBilling (e: any) {
       if (this.timer) {
         clearTimeout(this.timer);
       }

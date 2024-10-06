@@ -6,38 +6,38 @@
           <v-col cols="12" lg="4">
             <v-text-field
               v-model="search"
-              outlined
               dense
-              label="Наименование"
               hide-details
-            ></v-text-field>
+              label="Наименование"
+              outlined
+            />
           </v-col>
           <v-col cols="12" lg="2">
             <v-text-field
               v-model="min_price"
-              outlined
               dense
-              label="Цена минимум"
               hide-details
-            ></v-text-field>
+              label="Цена минимум"
+              outlined
+            />
           </v-col>
           <v-col cols="12" lg="2">
             <v-text-field
               v-model="max_price"
-              outlined
               dense
-              label="Цена максимум"
               hide-details
-            ></v-text-field>
+              label="Цена максимум"
+              outlined
+            />
           </v-col>
           <v-col cols="12" lg="2">
             <v-text-field
               v-model="max_date"
-              outlined
               dense
-              label="Дата обновления максимум"
               hide-details
-            ></v-text-field>
+              label="Дата обновления максимум"
+              outlined
+            />
           </v-col>
           <v-col cols="6" lg="1">
             <BtnIconsVVue
@@ -54,19 +54,19 @@
       </v-col>
       <v-progress-circular
         v-if="loading"
-        :size="70"
-        :width="7"
         color="purple"
         indeterminate
-      ></v-progress-circular>
+        :size="70"
+        :width="7"
+      />
       <v-col v-else cols="12" lg="11">
         <v-row id="dns_list" class="ma-0">
           <v-col
             v-for="product in dns_products"
             :key="'_' + product.dns_id"
             cols="12"
-            md="4"
             lg="3"
+            md="4"
           >
             <GoodsCard :dns_product="product" />
           </v-col>

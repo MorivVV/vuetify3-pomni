@@ -6,11 +6,10 @@
     <v-card-title
       class="green lighten-4 font-weight-bold text-h6 pa-1 ma-1 text-center"
     >
-      <v-row justify="center" align="center">
+      <v-row align="center" justify="center">
         <v-col> {{ dns_product.last_price }}</v-col>
         <v-col class="text-subtitle-1">
-          от {{ $moment(dns_product.last_date).format("YYYY-MM-DD") }}</v-col
-        >
+          от {{ $moment(dns_product.last_date).format("YYYY-MM-DD") }}</v-col>
       </v-row>
     </v-card-title>
     <v-card-text>
@@ -25,8 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { PropType, ref, computed } from "vue";
+import { computed, defineComponent, PropType, ref } from "vue";
 import Vue from "vue/types/umd";
 import { storeToRefs } from "pinia";
 import BarChartVue from "../basic/charts/BarChart.vue";
@@ -38,7 +36,7 @@ export default defineComponent({
   components: { BarChartVue },
   directives: {
     scroll: {
-      inserted: function (el, binding) {
+      inserted (el, binding) {
         const f = function (evt: Event) {
           if (binding.value(evt, el)) {
             window.removeEventListener("scroll", f);
@@ -51,7 +49,7 @@ export default defineComponent({
   props: {
     dns_product: { type: Object as PropType<IDNSProdict>, required: true },
   },
-  setup(props) {
+  setup (props) {
     const viewChart = ref(false);
     const { dns_prices } = storeToRefs(useMvideoStore());
     const dns_price = dns_prices.value.filter(
@@ -156,7 +154,7 @@ export default defineComponent({
       chartData,
     };
   },
-  mounted() {
+  mounted () {
     const el = this.$refs[this.dns_product?.id] as Vue;
     this.scrolPosition(undefined, el.$el as HTMLElement);
   },

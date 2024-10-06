@@ -2,8 +2,8 @@
   <v-container>
     Сумма {{ sumVal }}
     <DataTableV
-      :items="meters"
       :headers="headerBillingData"
+      :items="meters"
       :items-per-page="20"
     >
       <template #[`item.calc_sum`]="{ item }">
@@ -15,12 +15,14 @@
       </template>
       <template #expanded-top>
         <v-row class="ma-0">
-          <v-col class="pa-1" cols="8"
-            ><AutocompleteV
-              v-model="home"
-              :items="apartments"
-              item-value="id"
-              item-text="naimen"
+          <v-col
+            class="pa-1"
+            cols="8"
+          ><AutocompleteV
+            v-model="home"
+            item-text="naimen"
+            item-value="id"
+            :items="apartments"
           /></v-col>
           <v-col class="pa-1" cols="4">
             <DatePicker2
@@ -39,11 +41,11 @@
 import { ref, toRefs, watch } from "vue";
 import ChildCalc from "./ChildCalc.vue";
 import {
-  getMeters,
   getAppartamens,
+  getBilling,
+  getMeters,
   getPrices,
   headerBillingData,
-  getBilling,
 } from "./home/billingData";
 import AutocompleteV from "../basic/AutocompleteV.vue";
 import { useBillingsStore } from "@/store/modules/billings";

@@ -1,12 +1,13 @@
 <template>
-  <v-row class="ml-4 text-h5" justify="center" align="center">
-    <v-col cols="auto" xl="1" class="text-right"
-      >{{ operand1 }} x {{ operand2 }} =
+  <v-row align="center" class="ml-4 text-h5" justify="center">
+    <v-col
+      class="text-right"
+      cols="auto"
+      xl="1"
+    >{{ operand1 }} x {{ operand2 }} =
     </v-col>
     <v-col
       class="pa-0"
-      cols="5"
-      xl="1"
       :class="`font-weight-bold ${
         viewCheck
           ? operand1 * operand2 === +result
@@ -14,24 +15,28 @@
             : 'red lighten-3'
           : ''
       } `"
-      ><TextFielsV
-        v-model="result"
-        :disabled="disable"
-        type="number"
-        label="Ответ"
-        @keypress.native.enter="emit('result', result)"
+      cols="5"
+      xl="1"
+    ><TextFielsV
+      v-model="result"
+      :disabled="disable"
+      label="Ответ"
+      type="number"
+      @keypress.native.enter="emit('result', result)"
     /></v-col>
-    <v-col class="pa-0" cols="1" xl="1"
-      ><BtnIconsV
-        v-if="!disable && typeof result !== 'undefined'"
-        :disabled="disable"
-        type="number"
-        label="Ответ"
-        :action="() => emit('result', result)"
-      />
+    <v-col
+      class="pa-0"
+      cols="1"
+      xl="1"
+    ><BtnIconsV
+       v-if="!disable && typeof result !== 'undefined'"
+       :action="() => emit('result', result)"
+       :disabled="disable"
+       label="Ответ"
+       type="number"
+     />
       <span v-if="viewCheck" class="text-blue ml-1">
-        => {{ operand1 * operand2 }}</span
-      >
+        => {{ operand1 * operand2 }}</span>
     </v-col>
   </v-row>
 </template>

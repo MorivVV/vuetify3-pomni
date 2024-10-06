@@ -7,8 +7,8 @@ v-container
       .board
         template(v-for="(cells, j) in gameStatus")
           span(v-for="(cell, i) in cells" :key="'line'+j+i")
-            ChessCellVue( :key="'fig_' +j+ i + cell.color" :id="'fig_' + i + cell.color" 
-            :color="cell.color" 
+            ChessCellVue( :key="'fig_' +j+ i + cell.color" :id="'fig_' + i + cell.color"
+            :color="cell.color"
             :figure="cell.figure"
             :available="cell.available"
             :active="cell.active"
@@ -33,11 +33,11 @@ import ChessCellVue from "./ChessCell.vue";
 
 export default defineComponent({
   components: { ChessCellVue },
-  setup() {
+  setup () {
     const { r_get } = dataApiComposition();
     return { r_get };
   },
-  data() {
+  data () {
     return {
       gameStatus: {} as Cell[][],
       moved: [] as string[],
@@ -49,11 +49,11 @@ export default defineComponent({
     ...mapState(useWebsocketStore, ["wsConnect"]),
     ...mapGetters(useAutorizationStore, ["userId", "userToken"]),
   },
-  mounted() {
+  mounted () {
     this.init();
   },
   methods: {
-    activeteCell(cell: Cell, wsSend = true) {
+    activeteCell (cell: Cell, wsSend = true) {
       console.log(cell);
       if (wsSend) {
         this.msgId = Date.now();
@@ -115,7 +115,7 @@ export default defineComponent({
         cell.active = true;
       }
     },
-    init() {
+    init () {
       const board = new Board();
       board.initCells();
       board.addFigures();

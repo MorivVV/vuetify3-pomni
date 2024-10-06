@@ -5,8 +5,8 @@
       <v-col
         v-for="m in tanksMaps"
         :key="m.id"
-        cols="auto"
         class="pa-1"
+        cols="auto"
         @click="
           () => {
             map = JSON.parse(m.map);
@@ -18,24 +18,24 @@
       </v-col>
     </v-row>
     <v-row justify="center">
-      <v-col cols="12" class="pa-1 text-h4">
+      <v-col class="pa-1 text-h4" cols="12">
         <BtnIconsVVue
+          :action="() => (pause = !pause)"
           color="orange"
-          :action="() => (pause = !pause)"
-          :title="'Пауза'"
           :icon="'pause'"
+          :title="'Пауза'"
         />
         <BtnIconsVVue
+          :action="() => (pause = !pause)"
           color="red"
-          :action="() => (pause = !pause)"
-          :title="'Пауза'"
           :icon="'pause'"
+          :title="'Пауза'"
         />
         <BtnIconsVVue
-          color="blue"
           :action="saveMap"
-          :title="'Сохранить карту'"
+          color="blue"
           :icon="'save'"
+          :title="'Сохранить карту'"
         />
       </v-col>
     </v-row>
@@ -58,14 +58,16 @@
             v-for="k in +player1.health"
             :key="'helth_' + k"
             class="material-icons medium red-text"
-            >favorite</i
-          >
+          >favorite</i>
         </v-row>
       </v-col>
       <v-col cols="5">
-        <canvas id="cnv" map="" width="832" height="832"
-          >Обновите браузер</canvas
-        >
+        <canvas
+          id="cnv"
+          height="832"
+          map=""
+          width="832"
+        >Обновите браузер</canvas>
       </v-col>
       <v-col cols="4">
         <v-row>
@@ -89,44 +91,40 @@
               v-for="k in 10"
               :key="'grede_' + l + '_' + k"
               class="material-icons medium orange-text"
-              >grade</i
-            >
+            >grade</i>
           </template>
           <template v-else>
             <i
               v-for="k in killTanks % 10"
               :key="'grede_' + l + '_' + k"
               class="material-icons medium orange-text"
-              >grade</i
-            >
+            >grade</i>
           </template>
         </v-row>
       </v-col>
     </v-row>
 
     <v-row justify="center">
-      <v-col cols="2"
-        ><AutocompleteV
-          v-if="gameObjectParams.length"
-          :label="'Игрок'"
-          :items="gameObjectParams"
-          :item-value="'namien'"
-          :item-text="'namien'"
-          :extend="false"
-          @input="changeSkin"
+      <v-col cols="2"><AutocompleteV
+        v-if="gameObjectParams.length"
+        :extend="false"
+        :item-text="'namien'"
+        :item-value="'namien'"
+        :items="gameObjectParams"
+        :label="'Игрок'"
+        @input="changeSkin"
       /></v-col>
       <v-col cols="1">
-        <input id="emy" v-model="maxEnemy" type="number" />
+        <input id="emy" v-model="maxEnemy" type="number">
       </v-col>
-      <v-col cols="2"
-        ><AutocompleteV
-          v-if="gameObjectParams.length"
-          v-model="newBlock"
-          :label="'Новый блок'"
-          :items="gameObjectParams"
-          :item-value="'_id'"
-          :item-text="'namien'"
-          :extend="false"
+      <v-col cols="2"><AutocompleteV
+        v-if="gameObjectParams.length"
+        v-model="newBlock"
+        :extend="false"
+        :item-text="'namien'"
+        :item-value="'_id'"
+        :items="gameObjectParams"
+        :label="'Новый блок'"
       /></v-col>
     </v-row>
     <GameObjectVue />
@@ -148,14 +146,14 @@ export default defineComponent({
     BtnIconsVVue,
     AutocompleteV,
   },
-  setup() {
+  setup () {
     const { r_get, r_insert } = dataApiComposition();
     const { tanksMaps, gameObjects, gameObjectParams } = toRefs(
       useGamesStore()
     );
     return { r_get, r_insert, tanksMaps, gameObjects, gameObjectParams };
   },
-  data() {
+  data () {
     return {
       obj: {} as HTMLCanvasElement,
       killTanks: 0,
@@ -177,12 +175,12 @@ export default defineComponent({
     };
   },
   computed: {
-    gameObjectsList(): IGameObjects[] {
+    gameObjectsList (): IGameObjects[] {
       const o = this.gameObjectParams.filter((e) => +e.speed > 0);
       return o;
     },
   },
-  mounted() {
+  mounted () {
     this.getObjectParams()
       .then(() => this.getObjects())
       .then(() => this.getMaps())
@@ -200,26 +198,26 @@ export default defineComponent({
         this.obj.oncontextmenu = (e) => e.preventDefault();
         this.map = JSON.parse(this.tanksMaps[2].map);
         addEventListener("keydown", this.PressKey);
-        //обновление карты
+        // обновление карты
         this.timerId = setInterval(() => {
           if (this.pause) return;
           this.startmove();
           this.enemyMove();
-          //анимация пули
+          // анимация пули
           this.movePule();
         }, 30);
-        //анимация волн
+        // анимация волн
       });
   },
-  beforeDestroy() {
+  beforeUnmount () {
     clearInterval(this.timerId);
   },
   methods: {
-    getTankParameter(name: string): [string, number, number, number] {
+    getTankParameter (name: string): [string, number, number, number] {
       const p = this.gameObjectParams.filter((e) => e.namien === name)[0];
       return [p.namien, p.health, p.speed, this.blockSize];
     },
-    changeSkin(e: string) {
+    changeSkin (e: string) {
       console.log(e);
       this.player1 = new Tank(
         this.blockSize * 8,
@@ -227,12 +225,12 @@ export default defineComponent({
         ...this.getTankParameter(e)
       );
     },
-    intersects(a: { x: number; size: number; y: number }, b: Tank) {
+    intersects (a: { x: number; size: number; y: number }, b: Tank) {
       return (
         Math.abs(a.x - b.x) < a.size + 1 && Math.abs(a.y - b.y) < a.size + 1
       );
     },
-    _checkMap(telo: Tank, stopBlock: any, destroy = 0) {
+    _checkMap (telo: Tank, stopBlock: any, destroy = 0) {
       const pos = this.getVector(telo.move);
       const cloneTelo = { ...telo };
       cloneTelo[pos.coord] += (this.blockSize * pos.vector) / 4;
@@ -268,7 +266,7 @@ export default defineComponent({
 
       return chk;
     },
-    checkMap(telo: Tank, stopBlock: number[], destroy = 0, debug = false) {
+    checkMap (telo: Tank, stopBlock: number[], destroy = 0, debug = false) {
       let x = telo.x;
       let y = telo.y;
       let w = 0;
@@ -283,16 +281,16 @@ export default defineComponent({
       let checkBlock;
       let chk = false;
       switch (telo.move) {
-        case 0: //y--
+        case 0: // y--
           y -= nextWay;
           break;
-        case 90: //x++
+        case 90: // x++
           x += 0;
           break;
-        case 180: //y++
+        case 180: // y++
           y += 0;
           break;
-        case 270: //x--
+        case 270: // x--
           x -= nextWay;
           break;
       }
@@ -302,20 +300,20 @@ export default defineComponent({
         console.log(w, h, telo.move);
       }
       switch (telo.move) {
-        case 0: //y--
+        case 0: // y--
           ofsetx2 = 1;
           if (x % this.blockSize > this.blockSize / 4) {
             ofsetx3 = 2;
           }
           break;
-        case 90: //x++
+        case 90: // x++
           ofsety2 = 1;
           ofsetx1 = ofsetx2 = ofsetx3 = 2;
           if (y % this.blockSize > this.blockSize / 4) {
             ofsety3 = 2;
           }
           break;
-        case 180: //y++
+        case 180: // y++
           ofsety1 = 2;
           ofsety2 = 2;
           ofsetx2 = 1;
@@ -324,7 +322,7 @@ export default defineComponent({
             ofsetx3 = 2;
           }
           break;
-        case 270: //x--
+        case 270: // x--
           ofsety2 = 1;
           if (y % this.blockSize > this.blockSize / 4) {
             ofsety3 = 2;
@@ -371,38 +369,38 @@ export default defineComponent({
       }
       return chk;
     },
-    startPyle(tank: Tank) {
+    startPyle (tank: Tank) {
       const pos = this.getVector(tank.move);
       tank.pulya.x = tank.x;
       tank.pulya.y = tank.y;
       tank.pulya.move = tank.move;
       tank.pulya[pos.coord] += this.blockSize * pos.vector;
     },
-    PressKey(e: { keyCode: any; preventDefault: () => void }) {
+    PressKey (e: { keyCode: any; preventDefault: () => void }) {
       if (this.pause) return;
 
       const step = e.keyCode;
       // console.log(this.player1.x, this.player1.y);
       switch (step) {
-        case 32: //пробел - выстрел
+        case 32: // пробел - выстрел
           if (this.player1.pulya.x <= 0 && this.player1.pulya.y <= 0) {
             this.startPyle(this.player1);
           }
           break;
-        case 37: //лево
-        case 65: //A
+        case 37: // лево
+        case 65: // A
           this.keyMove(270, this.player1);
           break;
-        case 38: //вверх
-        case 87: //W
+        case 38: // вверх
+        case 87: // W
           this.keyMove(0, this.player1);
           break;
-        case 39: //право
-        case 68: //D
+        case 39: // право
+        case 68: // D
           this.keyMove(90, this.player1);
           break;
-        case 40: //вниз
-        case 83: //S
+        case 40: // вниз
+        case 83: // S
           this.keyMove(180, this.player1);
           break;
         default:
@@ -410,7 +408,7 @@ export default defineComponent({
       }
       e.preventDefault();
     },
-    getVector(grad: number) {
+    getVector (grad: number) {
       let coord: "y" | "x" = "y";
       let vector = 1;
       if (grad % 180 === 90) {
@@ -421,7 +419,7 @@ export default defineComponent({
       }
       return { coord, vector };
     },
-    keyMove(grad: number, object: Tank) {
+    keyMove (grad: number, object: Tank) {
       if (object.move != grad) {
         object.move = grad;
       } else {
@@ -436,7 +434,7 @@ export default defineComponent({
         }
       }
     },
-    enemyMove() {
+    enemyMove () {
       this.track = !this.track;
       const stops = this.gameObjectParams
         .filter((e) => +e.speed === 0 && +e.stop)
@@ -473,10 +471,9 @@ export default defineComponent({
         }
       });
     },
-    startmove() {
+    startmove () {
       this.cnv.clearRect(0, 0, this.obj.width, this.obj.height);
-      for (let o = 0; o < 26; o++)
-        for (let m = 0; m < 26; m++) this.changePos(o, m, 0, this.map[m][o]);
+      for (let o = 0; o < 26; o++) { for (let m = 0; m < 26; m++) this.changePos(o, m, 0, this.map[m][o]); }
       this.changePos(
         this.player1.x / this.blockSize,
         this.player1.y / this.blockSize,
@@ -520,7 +517,7 @@ export default defineComponent({
         "bullet"
       );
     },
-    genObject(name: string | number) {
+    genObject (name: string | number) {
       const data = this.gameObjects.filter(
         (e) => e.namien === name || e.kod_object == name
       );
@@ -528,13 +525,13 @@ export default defineComponent({
         this.fr(e.x, e.y, e.width, e.heigth, e.color);
       });
     },
-    movePule() {
+    movePule () {
       this.movePuleOne(this.player1.pulya);
       for (const e of this.enemyTanks) {
         this.movePuleOne(e.pulya);
       }
     },
-    movePuleOne(bull: Tank, debug = false) {
+    movePuleOne (bull: Tank, debug = false) {
       if (bull.x < 0 && bull.y < 0) {
         bull.move = this.player1.move;
         return 0;
@@ -618,7 +615,7 @@ export default defineComponent({
         }
       });
     },
-    changePos(x: number, y: number, grad = 0, obj: string | number = "") {
+    changePos (x: number, y: number, grad = 0, obj: string | number = "") {
       this.cnv.translate(x * this.blockSize, y * this.blockSize);
       this.cnv.rotate((Number(grad) * Math.PI) / 180);
       this.cnv.translate(-this.blockSize, -this.blockSize);
@@ -629,7 +626,7 @@ export default defineComponent({
       this.cnv.rotate((Number(-grad) * Math.PI) / 180);
       this.cnv.translate(-x * this.blockSize, -y * this.blockSize);
     },
-    getMaps() {
+    getMaps () {
       return this.r_get(
         {
           from: "games.battle_city",
@@ -641,7 +638,7 @@ export default defineComponent({
         useGamesStore
       );
     },
-    saveMap() {
+    saveMap () {
       const level = prompt("Введите номер уровня для сохранения");
       this.r_insert({
         fields: {
@@ -652,7 +649,7 @@ export default defineComponent({
         to: "games.battle_city",
       });
     },
-    getObjects() {
+    getObjects () {
       return this.r_get(
         {
           fields: [
@@ -673,7 +670,7 @@ export default defineComponent({
         useGamesStore
       );
     },
-    getObjectParams() {
+    getObjectParams () {
       return this.r_get(
         {
           fields: [
@@ -691,7 +688,7 @@ export default defineComponent({
         useGamesStore
       );
     },
-    mouseClick(e: MouseEvent) {
+    mouseClick (e: MouseEvent) {
       const w = 1 + Math.floor(e.offsetX / this.blockSize);
       const h = 1 + Math.floor(e.offsetY / this.blockSize);
       console.log(e);
@@ -701,7 +698,7 @@ export default defineComponent({
       if (e.button === 2) this.map[h][w] = 0;
       this.startmove();
     },
-    fr(x: number, y: number, wei: number, hei: number, color = "") {
+    fr (x: number, y: number, wei: number, hei: number, color = "") {
       if (color !== "") {
         this.cnv.fillStyle = color;
       }

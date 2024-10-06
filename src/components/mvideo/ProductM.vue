@@ -5,17 +5,16 @@
       <v-icon v-else>add_shopping_cart</v-icon>
       <v-col cols="2">
         <a
-          target="_blank"
           :href="'https://www.mvideo.ru/products/' + product.id"
-          >{{ product.name }}</a
-        >
+          target="_blank"
+        >{{ product.name }}</a>
       </v-col>
       <v-col
-        cols="1 blue lighten-3 text-right"
         :class="{
           'light-green': +priceStatistic.deltaProc < 0,
           orange: +priceStatistic.deltaProc > 0,
         }"
+        cols="1 blue lighten-3 text-right"
       >
         <span class="text-h4">
           {{ product.last_price }}
@@ -25,8 +24,7 @@
       <v-col cols="1">
         <label for="">{{
           moment(product.date_price).format("YYYY-MM-DD")
-        }}</label
-        ><br />{{ (+priceStatistic.deltaProc / 10).toFixed(1) }}%
+        }}</label><br>{{ (+priceStatistic.deltaProc / 10).toFixed(1) }}%
       </v-col>
       <v-col cols="3">{{ priceStatistic.minPrice }}</v-col>
       <v-col cols="3">{{ priceStatistic.maxPrice }}</v-col>
@@ -36,10 +34,10 @@
         <v-row>
           <v-col>
             <LineChartVue
-              class="limhei"
               :chart-data="charData"
-              :height="120"
               :chart-options="options"
+              class="limhei"
+              :height="120"
               :plugins="[ChartDataLabels]"
             />
           </v-col>
@@ -53,14 +51,14 @@
 <script setup lang="ts">
 import LoaderCircle from "../basic/LoaderCircle.vue";
 import LineChartVue from "../basic/charts/LineChart.vue";
-import { PropType, computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, PropType, ref, watch } from "vue";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 // import { useMvideoStore } from "@/store/modules/mvideo";
 import { dataApiComposition } from "@/compositionApi/dataApi";
 import { IGoodsMvideoPrice } from "@/types/database/schemas/goods";
 import moment from "moment";
 const vScroll = {
-  inserted: function (el, binding) {
+  inserted (el, binding) {
     const f = function (evt: Event) {
       if (binding.value(evt, el)) {
         window.removeEventListener("scroll", f);
@@ -90,7 +88,7 @@ const options = {
     },
     datalabels: {
       ancor: "center",
-      color: function (context: any): string {
+      color (context: any): string {
         return context.dataset.borderColor;
       },
       backgroundColor: "white",

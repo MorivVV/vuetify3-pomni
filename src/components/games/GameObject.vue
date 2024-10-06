@@ -4,191 +4,184 @@
       <v-expansion-panel-header>Настройки</v-expansion-panel-header>
       <v-expansion-panel-content>
         <v-row>
-          <v-col cols="2"
-            ><v-select
-              v-if="gameObjectParams.length"
-              v-model="idBlock"
-              outlined
-              hide-details
-              dense
-              :label="'Объект'"
-              :items="gameObjectParams"
-              :item-value="'_id'"
-              :item-text="'namien'"
-              :extend="false"
-              @input="setObject"
+          <v-col cols="2"><v-select
+            v-if="gameObjectParams.length"
+            v-model="idBlock"
+            dense
+            hide-details
+            :item-text="'namien'"
+            :item-value="'_id'"
+            :extend="false"
+            :items="gameObjectParams"
+            :label="'Объект'"
+            outlined
+            @input="setObject"
           /></v-col>
 
           <v-col cols="5 range-field" :style="'background:' + rgb">
-            <label for="red" class="red white-text"
-              >красный {{ color.red }} ({{
-                Number(color.red).toString(16)
-              }})</label
-            >
+            <label
+              class="red white-text"
+              for="red"
+            >красный {{ color.red }} ({{
+              Number(color.red).toString(16)
+            }})</label>
             <input
               id="red"
               v-model="color.red"
-              type="range"
-              min="0"
               max="255"
-            />
-            <label for="green" class="green white-text"
-              >зеленый {{ color.green }} ({{
-                Number(color.green).toString(16)
-              }})</label
+              min="0"
+              type="range"
             >
+            <label
+              class="green white-text"
+              for="green"
+            >зеленый {{ color.green }} ({{
+              Number(color.green).toString(16)
+            }})</label>
             <input
               id="green"
               v-model="color.green"
-              type="range"
-              min="0"
               max="255"
-            />
-            <label for="blue" class="blue white-text"
-              >синий {{ color.blue }} ({{
-                Number(color.blue).toString(16)
-              }})</label
+              min="0"
+              type="range"
             >
+            <label
+              class="blue white-text"
+              for="blue"
+            >синий {{ color.blue }} ({{
+              Number(color.blue).toString(16)
+            }})</label>
             <input
               id="blue"
               v-model="color.blue"
-              type="range"
-              min="0"
               max="255"
-            />
+              min="0"
+              type="range"
+            >
           </v-col>
           <v-col cols="1">
             <BtnIconsVVue
-              :icon="'save'"
-              class="blue btn-small"
               :action="saveObject"
+              class="blue btn-small"
+              :icon="'save'"
               :title="'Сохранить'"
             />
             <BtnIconsVVue
-              :icon="'clear'"
-              class="grey btn-small"
               :action="clearObject"
+              class="grey btn-small"
+              :icon="'clear'"
               :title="'Очистить'"
             />
           </v-col>
           <v-col cols="2">
-            <v-col cols="3"
-              ><v-text-field
-                v-model="mouse.xMove"
-                outlined
-                hide-details
-                dense
-                :label="'x'"
+            <v-col cols="3"><v-text-field
+              v-model="mouse.xMove"
+              dense
+              hide-details
+              :label="'x'"
+              outlined
             /></v-col>
-            <v-col cols="3"
-              ><v-text-field
-                v-model="mouse.yMove"
-                outlined
-                hide-details
-                dense
-                :label="'y'"
+            <v-col cols="3"><v-text-field
+              v-model="mouse.yMove"
+              dense
+              hide-details
+              :label="'y'"
+              outlined
             /></v-col>
-            <v-col cols="3"
-              ><v-text-field
-                outlined
-                hide-details
-                dense
-                :label="'width'"
-                :value="1 + mouse.xMove - mouse.x"
+            <v-col cols="3"><v-text-field
+              dense
+              hide-details
+              :label="'width'"
+              outlined
+              :value="1 + mouse.xMove - mouse.x"
             /></v-col>
-            <v-col cols="3"
-              ><v-text-field
-                outlined
-                hide-details
-                dense
-                :label="'heigth'"
-                :value="1 + mouse.yMove - mouse.y"
+            <v-col cols="3"><v-text-field
+              dense
+              hide-details
+              :label="'heigth'"
+              outlined
+              :value="1 + mouse.yMove - mouse.y"
             /></v-col>
           </v-col>
         </v-row>
         <v-row>
           <v-text-field
             v-model="nBlock.namien"
-            outlined
-            hide-details
-            dense
             class="col s3 white"
+            dense
+            hide-details
             :label="'Имя'"
+            outlined
           /><v-text-field
             v-model="nBlock.namien"
-            outlined
-            hide-details
-            dense
             class="col s3 white"
+            dense
+            hide-details
             :label="'Имя'"
+            outlined
           /><v-text-field
             v-model="nBlock.namien"
-            outlined
-            hide-details
-            dense
             class="col s3 white"
+            dense
+            hide-details
             :label="'Имя'"
+            outlined
           /><v-text-field
             v-model="nBlock.namien"
-            outlined
-            hide-details
-            dense
             class="col s3 white"
+            dense
+            hide-details
             :label="'Имя'"
+            outlined
           /><v-text-field
             v-model="nBlock.namien"
-            outlined
-            hide-details
-            dense
             class="col s3 white"
+            dense
+            hide-details
             :label="'Имя'"
+            outlined
           />
-          <v-col cols="3"
-            ><v-text-field
-              v-model="nBlock.health"
-              outlined
-              hide-details
-              dense
-              class="white"
-              :label="'Броня'"
+          <v-col cols="3"><v-text-field
+            v-model="nBlock.health"
+            class="white"
+            dense
+            hide-details
+            :label="'Броня'"
+            outlined
           /></v-col>
-          <v-col cols="2"
-            ><v-text-field
-              v-model="nBlock.speed"
-              outlined
-              hide-details
-              dense
-              class="white"
-              :label="'Скорость'"
+          <v-col cols="2"><v-text-field
+            v-model="nBlock.speed"
+            class="white"
+            dense
+            hide-details
+            :label="'Скорость'"
+            outlined
           /></v-col>
-          <v-col cols="2"
-            ><v-text-field
-              v-model="nBlock.crash"
-              outlined
-              hide-details
-              dense
-              class="white"
-              :label="'Разрушение'"
+          <v-col cols="2"><v-text-field
+            v-model="nBlock.crash"
+            class="white"
+            dense
+            hide-details
+            :label="'Разрушение'"
+            outlined
           /></v-col>
-          <v-col cols="2"
-            ><v-text-field
-              v-model="nBlock.stop"
-              outlined
-              hide-details
-              dense
-              class="white"
-              :label="'Преграда'"
+          <v-col cols="2"><v-text-field
+            v-model="nBlock.stop"
+            class="white"
+            dense
+            hide-details
+            :label="'Преграда'"
+            outlined
           /></v-col>
         </v-row>
         <div class="row grey">
           <canvas
             id="block"
             class="grey lighten-1"
+            height="32"
             map=""
             width="32"
-            height="32"
-            >Обновите браузер</canvas
-          >
+          >Обновите браузер</canvas>
           <v-col cols="12">
             <div
               v-for="(e, i) in blockData"
@@ -196,11 +189,10 @@
               class="chip"
             >
               <i
-                :style="'color:' + e.color"
                 class="material-icons"
+                :style="'color:' + e.color"
                 @click="getColor(e.color)"
-                >color_lens</i
-              >
+              >color_lens</i>
               {{ e.x }},{{ e.y }} {{ e.width }}-{{ e.heigth }}
               <i class="material-icons" @click="delFrame(e)">close</i>
             </div>
@@ -227,11 +219,11 @@ import {
 
 export default defineComponent({
   components: { BtnIconsVVue },
-  setup() {
+  setup () {
     const { r_get, r_delete, r_insert, r_update } = dataApiComposition();
     return { r_get, r_delete, r_insert, r_update };
   },
-  data() {
+  data () {
     return {
       obj: {} as HTMLCanvasElement,
       mouseIsDown: false,
@@ -247,12 +239,12 @@ export default defineComponent({
   },
   computed: {
     ...mapState(useGamesStore, ["gameObjects", "gameObjectParams"]),
-    rgb(): string {
+    rgb (): string {
       const col = `rgb(${this.color.red},${this.color.green},${this.color.blue})`;
       return col;
     },
   },
-  mounted() {
+  mounted () {
     this.getObjects()
       .then(() => this.getObjectParams())
       .then(() => {
@@ -267,7 +259,7 @@ export default defineComponent({
       });
   },
   methods: {
-    fr(x: number, y: number, wei: number, hei: number, color = "") {
+    fr (x: number, y: number, wei: number, hei: number, color = "") {
       if (color !== "") {
         this.cnv.fillStyle = color;
       }
@@ -278,11 +270,11 @@ export default defineComponent({
         (hei * this.blockSize) / this.pixelOnBlock
       );
     },
-    delFrame(del: IGameObjectsParams) {
+    delFrame (del: IGameObjectsParams) {
       this.blockData = this.blockData.filter((e) => e !== del);
       this.genData(this.blockData);
     },
-    getColor(rgb: string) {
+    getColor (rgb: string) {
       const m = rgb.match(/\d+/g);
       if (m) {
         this.color.red = +m[0];
@@ -290,11 +282,11 @@ export default defineComponent({
         this.color.blue = +m[2];
       }
     },
-    clearObject() {
+    clearObject () {
       this.cnv.clearRect(0, 0, this.obj.width, this.obj.height);
       this.blockData = [];
     },
-    async saveObject() {
+    async saveObject () {
       console.log(this.blockData);
       const block = { ...this.nBlock };
 
@@ -344,7 +336,7 @@ export default defineComponent({
           });
         });
     },
-    setObject(id: string | number) {
+    setObject (id: string | number) {
       const block = this.gameObjectParams.filter((e) => e._id == id);
       if (block.length === 0) {
         return;
@@ -352,7 +344,7 @@ export default defineComponent({
       this.nBlock = block[0];
       this.genObject(id);
     },
-    genObject(id: string | number) {
+    genObject (id: string | number) {
       this.cnv.clearRect(0, 0, this.obj.width, this.obj.height);
       const data = this.gameObjects.filter((e) => e.kod_object == id);
       this.blockData = [];
@@ -362,7 +354,7 @@ export default defineComponent({
       });
       console.log(this.blockData);
     },
-    genData(data: any[]) {
+    genData (data: any[]) {
       this.cnv.clearRect(0, 0, this.obj.width, this.obj.height);
       data.forEach(
         (e: {
@@ -377,7 +369,7 @@ export default defineComponent({
       );
       console.log(this.blockData);
     },
-    MouseKeyD(e: MouseEvent) {
+    MouseKeyD (e: MouseEvent) {
       // console.log(e);
       this.mouseIsDown = true;
       const x = Math.floor((e.offsetX * this.pixelOnBlock) / this.blockSize);
@@ -386,7 +378,7 @@ export default defineComponent({
       this.mouse.y = y;
       this.fr(x, y, 1, 1, this.rgb);
     },
-    MouseKeyM(e: MouseEvent) {
+    MouseKeyM (e: MouseEvent) {
       // console.log(e);
       const x = Math.floor((e.offsetX * this.pixelOnBlock) / this.blockSize);
       const y = Math.floor((e.offsetY * this.pixelOnBlock) / this.blockSize);
@@ -412,7 +404,7 @@ export default defineComponent({
         console.log(x, y);
       }
     },
-    MouseKeyU() {
+    MouseKeyU () {
       this.mouseIsDown = false;
       const data = {
         x: this.mouse.x,
@@ -441,7 +433,7 @@ export default defineComponent({
       }
       this.genData(this.blockData);
     },
-    getObjectParams() {
+    getObjectParams () {
       return this.r_get<ICreateTableFields<keyof IGamesGameObjects, "o">>(
         {
           fields: [
@@ -459,7 +451,7 @@ export default defineComponent({
         useGamesStore
       );
     },
-    getObjects() {
+    getObjects () {
       return this.r_get<
         | ICreateTableFields<keyof IGamesGameObjectParams, "gop">
         | ICreateTableFields<keyof IGamesGameObjects, "o">
